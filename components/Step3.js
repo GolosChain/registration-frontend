@@ -66,11 +66,11 @@ const ButtonPanel = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 18px 0;
+    margin: 20px 0;
 `;
 
 const Description = styled.div`
-    margin-top: 12px;
+    margin-top: 14px;
     font-size: 14px;
     font-weight: 300;
     line-height: 1.4em;

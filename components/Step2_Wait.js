@@ -5,6 +5,11 @@ const Root = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+
+    @media screen and (max-width: 800px) {
+        padding-top: 60px;
+    }
 `;
 
 const Title = styled.div`
@@ -40,11 +45,20 @@ const Loader = styled.div`
     animation: ${steppedRotation} 1s steps(8) infinite;
 `;
 
+const MobileImg = styled.img`
+    display: none;
+
+    @media screen and (max-width: 800px) {
+        display: block;
+        margin-top: 40px;
+    }
+`;
+
 export default class Step2_Wait extends PureComponent {
     componentDidMount() {
         setTimeout(() => {
             this.props.onStepChange('3');
-        }, 1000);
+        }, 2000);
     }
 
     render() {
@@ -53,6 +67,7 @@ export default class Step2_Wait extends PureComponent {
                 <Loader />
                 <Title>Дождитесь подтверждения вашего номера телефона.</Title>
                 <SubTitle>Процесс может занять несколько минут.</SubTitle>
+                <MobileImg src="images/step_2.svg" />
             </Root>
         );
     }

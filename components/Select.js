@@ -56,6 +56,7 @@ const InputValue = styled.div`
 const Chevron = styled.div`
     width: 10px;
     background: url('images/chevron.svg') no-repeat center;
+    transform: rotate(0.5turn);
 `;
 
 export default function Select(props) {

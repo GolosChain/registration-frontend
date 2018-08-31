@@ -86,6 +86,10 @@ const Header = styled.div`
     display: flex;
     justify-content: center;
     z-index: 1;
+
+    @media screen and (max-width: 800px) {
+        position: absolute;
+    }
 `;
 
 const Logo = styled.a`
@@ -96,12 +100,20 @@ const Logo = styled.a`
     background: url('images/logo.svg') center no-repeat;
     background-size: 114px 37px;
     z-index: 1;
+
+    @media screen and (max-width: 800px) {
+        margin-top: 20px;
+    }
 `;
 
 const Panels = styled.div`
     display: flex;
     justify-content: center;
     min-height: 100%;
+
+    @media screen and (max-width: 800px) {
+        padding-top: 70px;
+    }
 `;
 
 const Panel = styled.div`
@@ -111,11 +123,23 @@ const Panel = styled.div`
     justify-content: center;
     align-items: center;
     max-width: 640px;
+
+    @media screen and (max-width: 800px) {
+        align-items: flex-start;
+
+        &:nth-child(2) {
+            display: none;
+        }
+    }
 `;
 
 const Column = styled.div`
     width: 328px;
     padding: 16px 0;
+
+    @media screen and (max-width: 800px) {
+        padding-top: 0;
+    }
 
     ${is('fadeIn')`
         animation: ${fromRight} ${ANIMATION_DURATION}ms ease-out;
@@ -143,6 +167,10 @@ const RightPanel = styled.div`
     bottom: 0;
     width: 50%;
     background: #f9f9f9;
+
+    @media screen and (max-width: 800px) {
+        display: none;
+    }
 `;
 
 const ImageWrapper = styled.div`
