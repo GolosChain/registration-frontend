@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import is from 'styled-is';
 
 const Root = styled.div`
     position: relative;
@@ -11,6 +12,10 @@ const Root = styled.div`
     font-size: 14px;
     color: #333;
     background: #fff;
+    
+    ${is('error')`
+        border-color: red;
+    `}
 `;
 
 const Code = styled.div`
@@ -30,7 +35,7 @@ const Input = styled.input`
     flex-grow: 1;
     border: none;
     height: 100%;
-    outline: none;
+    outline: none !important;
     background: none;
     
     &:focus +${Highlight} {
@@ -53,11 +58,13 @@ const Input = styled.input`
 
 export default function PhoneInput(props) {
     return (
-        <Root>
+        <Root error={props.error}>
             <Code>{props.code}</Code>
             <Input
                 placeholder="(925)1234567"
                 value={props.value}
+                onBlur={props.onBlur}
+                onFocus={props.onFocus}
                 onChange={e => props.onChange(e.target.value.replace(/[^\d ()-]+/g, ''))}
             />
             <Highlight />

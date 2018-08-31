@@ -7,6 +7,7 @@ import Step1 from '../components/Step1';
 import Step2 from '../components/Step2';
 import Step2_Wait from '../components/Step2_Wait';
 import Step3 from '../components/Step3';
+import Application from '../app/Application';
 
 const ANIMATION_DURATION = 250;
 
@@ -121,7 +122,7 @@ const Column = styled.div`
     `};
 
     ${is('fadeOut')`
-        animation: ${toLeft} ${ANIMATION_DURATION}ms ease-in;
+        animation: ${toLeft} ${ANIMATION_DURATION}ms ease-in forwards;
     `};
 `;
 
@@ -158,6 +159,10 @@ export default class Index extends PureComponent {
         fadeOut: false,
     };
 
+    componentDidMount() {
+        new Application();
+    }
+
     render() {
         const { step, fadeIn, fadeOut } = this.state;
 
@@ -170,7 +175,7 @@ export default class Index extends PureComponent {
                 </Header>
                 <Panels>
                     <Panel>
-                        <Column fadeIn={fadeIn} fadeOut={fadeOut}>
+                        <Column key={step} fadeIn={fadeIn} fadeOut={fadeOut}>
                             <Comp onStepChange={this._onStepChange} />
                             {hideDots ? null : (
                                 <Dots>

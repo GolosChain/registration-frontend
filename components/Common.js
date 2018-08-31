@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import is from 'styled-is';
 
 export const Title = styled.h1`
-    margin: 18px 0;
+    margin: 18px 0 22px;
     font-size: 34px;
     font-weight: 700;
     letter-spacing: 0.52px;
@@ -21,14 +21,14 @@ export const SubTitle = styled.div`
 
 export const Footer = styled.div`
     display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
 `;
 
 export const Button = styled.button.attrs({ type: 'button' })`
     height: 34px;
     padding: 8px 28px;
-    margin-bottom: 10px;
     background: #3684ff;
     border-radius: 50px;
     font-size: 12px;
@@ -80,6 +80,14 @@ export const Input = styled.input`
     
     ${is('blue')`
         color: #2879ff;
+    `}
+    
+    ${is('error')`
+        border-color: red;
+        
+        &:focus {
+            border-color: #e1e1e1;
+        }
     `}
     
     &::placeholder {

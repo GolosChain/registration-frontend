@@ -11,6 +11,7 @@ const Img = styled.img`
     height: 18px;
     margin-right: 8px;
     flex-shrink: 0;
+    cursor: pointer;
 `;
 
 const Input = styled.input`

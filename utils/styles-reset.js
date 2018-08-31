@@ -9,6 +9,10 @@ injectGlobal`
 	font: inherit;
 	vertical-align: baseline;
 }
+a[disabled], button[disabled] {
+    cursor: default;
+    cursor: not-allowed;
+}
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
