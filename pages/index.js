@@ -1,11 +1,14 @@
 import React, { PureComponent } from 'react';
-import styled, { injectGlobal } from 'styled-components';
+import styled, { injectGlobal, keyframes } from 'styled-components';
+import is from 'styled-is';
 import '../utils/styles-reset';
 import { Dot, Dots } from '../components/Common';
 import Step1 from '../components/Step1';
 import Step2 from '../components/Step2';
 import Step2_Wait from '../components/Step2_Wait';
 import Step3 from '../components/Step3';
+
+const ANIMATION_DURATION = 250;
 
 const Steps = {
     '1': {
@@ -35,8 +38,42 @@ html, body, #__next {
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
 `;
 
+const fadeIn = keyframes`
+    from {
+        opacity: 0;  
+    }
+    to {
+        opacity: 1;
+    }
+`;
+
+const fromRight = keyframes`
+    from {
+        opacity: 0;
+        transform: translate(600px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+`;
+
+const toLeft = keyframes`
+    from {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-600px, 0);
+    }
+`;
+
 const Root = styled.div`
     height: 100%;
+    opacity: 0;
+    animation: ${fadeIn} 0.4s forwards;
+    animation-delay: 0.1s;
 `;
 
 const Header = styled.div`
@@ -78,12 +115,22 @@ const Panel = styled.div`
 const Column = styled.div`
     width: 328px;
     padding: 16px 0;
+
+    ${is('fadeIn')`
+        animation: ${fromRight} ${ANIMATION_DURATION}ms ease-out;
+    `};
+
+    ${is('fadeOut')`
+        animation: ${toLeft} ${ANIMATION_DURATION}ms ease-in;
+    `};
 `;
 
 const SideImage = styled.div`
     width: 431px;
     height: 426px;
     background: url('images/step_${props => props.step}.svg') no-repeat center;
+    opacity: ${props => props.opacity};
+    transition: opacity ${ANIMATION_DURATION}ms;
 `;
 
 const RightPanel = styled.div`
@@ -107,10 +154,12 @@ const ImageWrapper = styled.div`
 export default class Index extends PureComponent {
     state = {
         step: '1',
+        fadeIn: false,
+        fadeOut: false,
     };
 
     render() {
-        const { step } = this.state;
+        const { step, fadeIn, fadeOut } = this.state;
 
         const { Comp, img, hideDots } = Steps[step];
 
@@ -121,7 +170,7 @@ export default class Index extends PureComponent {
                 </Header>
                 <Panels>
                     <Panel>
-                        <Column>
+                        <Column fadeIn={fadeIn} fadeOut={fadeOut}>
                             <Comp onStepChange={this._onStepChange} />
                             {hideDots ? null : (
                                 <Dots>
@@ -135,7 +184,7 @@ export default class Index extends PureComponent {
                     <Panel />
                     <RightPanel>
                         <ImageWrapper>
-                            <SideImage step={img} />
+                            <SideImage step={img} opacity={fadeOut ? 0 : 1} />
                         </ImageWrapper>
                     </RightPanel>
                 </Panels>
@@ -145,7 +194,21 @@ export default class Index extends PureComponent {
 
     _onStepChange = step => {
         this.setState({
-            step,
+            fadeOut: true,
         });
+
+        setTimeout(() => {
+            this.setState({
+                step,
+                fadeOut: false,
+                fadeIn: true,
+            });
+
+            setTimeout(() => {
+                this.setState({
+                    fadeIn: false,
+                });
+            }, ANIMATION_DURATION);
+        }, ANIMATION_DURATION);
     };
 }
