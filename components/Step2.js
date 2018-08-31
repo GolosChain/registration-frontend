@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import { Title, SubTitle, Dots, Dot, Footer, Button } from './Common';
+import { Title, SubTitle, Footer, Button } from './Common';
 import QuestionBlock from './QuestionBlock';
 
 const B = styled.b`

@@ -58,7 +58,7 @@ export default class Step2_Wait extends PureComponent {
     componentDidMount() {
         setTimeout(() => {
             this.props.onStepChange('3');
-        }, 2000);
+        }, 1400);
     }
 
     render() {

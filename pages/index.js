@@ -206,7 +206,7 @@ export default class Index extends PureComponent {
                         <Column key={step} fadeIn={fadeIn} fadeOut={fadeOut}>
                             <Comp onStepChange={this._onStepChange} />
                             {hideDots ? null : (
-                                <Dots>
+                                <Dots title={`Шаг: ${img}/3`}>
                                     <Dot active={img === 1} />
                                     <Dot active={img === 2} />
                                     <Dot active={img === 3} />

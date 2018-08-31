@@ -43,7 +43,7 @@ export default class QuestionBlock extends PureComponent {
                     title={'Сколько это будет стоить?'}
                     initialCollapsed
                 >
-                    <Answer>Это будет стоить тебе ровно ничего.</Answer>
+                    <Answer>Твоей души будет достаточно.</Answer>
                 </CollapsingBlockStyled>
                 <CollapsingBlockStyled
                     title={'Я неверно ввел номер, что делать?'}
