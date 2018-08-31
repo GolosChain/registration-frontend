@@ -77,6 +77,7 @@ export const Input = styled.input`
     font-size: 14px;
     color: #333;
     background: #fff;
+    appearance: none;
     
     ${is('blue')`
         color: #2879ff;
