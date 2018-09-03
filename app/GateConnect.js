@@ -68,7 +68,9 @@ export default class GateConnect {
                 reject(new Error('Connection is broken'));
             }
 
-            window.location.reload();
+            setTimeout(() => {
+                this.connect();
+            }, 1000);
         }
     }
 }

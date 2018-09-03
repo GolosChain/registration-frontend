@@ -4,7 +4,10 @@ import { Title, SubTitle, Input, Footer, Button } from './Common';
 import { Field, FieldLabel, FieldInput, Link } from './Common';
 import PhoneInput from './PhoneInput';
 import Select from './Select';
+import golos from 'golos-js';
+import debounce from 'lodash/debounce';
 import phoneCodes from '../app/phoneCodes.json';
+import Loader from './Loader';
 
 const FieldError = styled.div`
     margin-top: 10px;
@@ -29,8 +32,24 @@ const Comment = styled.div`
     color: #999;
 `;
 
+const InputWrapper = styled.div`
+    position: relative;
+`;
+
+const InputStatus = styled.div`
+    position: absolute;
+    top: 8px;
+    right: 8px;
+`;
+
 const Red = styled.span`
     color: #f00;
+`;
+
+const Check = styled.div`
+    width: 16px;
+    height: 16px;
+    background: url('images/check.svg') no-repeat center;
 `;
 
 const Required = () => (
@@ -42,6 +61,8 @@ const Required = () => (
 export default class Step1 extends PureComponent {
     state = {
         accountName: '',
+        accountNameChecking: false,
+        accountNameVacant: null,
         accountNameError: null,
         accountNameText: null,
         email: '',
@@ -53,9 +74,15 @@ export default class Step1 extends PureComponent {
         code: 7,
     };
 
+    componentWillUnmount() {
+        this._checkNameExistenceLazy.cancel();
+    }
+
     render() {
         const {
             accountName,
+            accountNameChecking,
+            accountNameVacant,
             accountNameError,
             accountNameErrorText,
             email,
@@ -66,6 +93,16 @@ export default class Step1 extends PureComponent {
             phoneError,
             errorText,
         } = this.state;
+
+        let accountStatus = null;
+
+        if (accountNameChecking) {
+            accountStatus = <Loader thickness={1.5} />;
+        } else if (accountNameVacant && !accountNameError) {
+            accountStatus = <Check />;
+        }
+
+        const nameError = accountNameError || accountNameVacant === false;
 
         return (
             <>
@@ -79,18 +116,25 @@ export default class Step1 extends PureComponent {
                         Имя аккаунта <Required />
                     </FieldLabel>
                     <FieldInput>
-                        <Input
-                            autoFocus
-                            error={accountNameError}
-                            value={accountName}
-                            autoCorrect="off"
-                            autoapitalize="off"
-                            checkSpell="false"
-                            onChange={this._onAccountNameChange}
-                            onBlur={this._onAccountNameBlur}
-                        />
+                        <InputWrapper>
+                            <Input
+                                autoFocus
+                                error={nameError}
+                                value={accountName}
+                                autoCorrect="off"
+                                autoapitalize="off"
+                                checkSpell="false"
+                                onChange={this._onAccountNameChange}
+                                onBlur={this._onAccountNameBlur}
+                            />
+                            {accountStatus ? (
+                                <InputStatus>{accountStatus}</InputStatus>
+                            ) : null}
+                        </InputWrapper>
                         {accountNameErrorText ? (
                             <FieldError>{accountNameErrorText}</FieldError>
+                        ) : accountNameVacant === false ? (
+                            <FieldError>Имя занято</FieldError>
                         ) : null}
                     </FieldInput>
                 </Field>
@@ -155,11 +199,21 @@ export default class Step1 extends PureComponent {
     }
 
     _onAccountNameChange = e => {
+        const accountName = e.target.value.toLowerCase();
+
         this.setState(
             {
-                accountName: e.target.value.toLowerCase(),
+                accountName,
+                errorText: null,
             },
             () => {
+                if (this._isAccountNameValid(accountName)) {
+                    this.setState({
+                        accountNameChecking: true,
+                    });
+                    this._checkNameExistenceLazy();
+                }
+
                 if (this._accountNameBlur) {
                     this._validateAccountName();
                 }
@@ -167,9 +221,7 @@ export default class Step1 extends PureComponent {
         );
     };
 
-    _validateAccountName() {
-        const { accountName } = this.state;
-
+    __validateAccountName(accountName) {
         let error = null;
         let errorText = null;
 
@@ -183,10 +235,25 @@ export default class Step1 extends PureComponent {
         } else if (!/^[a-z0-9]+$/.test(name)) {
             error = true;
             errorText = 'Ник может содержать только английские буквы и цифры';
-        } else if (name.length < 6) {
+        } else if (name.length < 4) {
             error = true;
-            errorText = 'Слишком короткое имя (минимум 8 символов)';
+            errorText = 'Слишком короткое имя (минимум 4 символов)';
         }
+
+        return {
+            error,
+            errorText,
+        };
+    }
+
+    _isAccountNameValid(accountName) {
+        return this.__validateAccountName(accountName).error == null;
+    }
+
+    _validateAccountName() {
+        const { accountName } = this.state;
+
+        const { error, errorText } = this.__validateAccountName(accountName);
 
         this.setState({
             accountNameError: error,
@@ -203,6 +270,7 @@ export default class Step1 extends PureComponent {
         this.setState(
             {
                 email: e.target.value,
+                errorText: null,
             },
             () => {
                 if (this._emailBlur) {
@@ -245,6 +313,7 @@ export default class Step1 extends PureComponent {
             const {
                 accountName,
                 accountNameError,
+                accountNameVacant,
                 email,
                 emailError,
                 phone,
@@ -256,10 +325,17 @@ export default class Step1 extends PureComponent {
                 this._emailBlur = true;
                 this._phoneBlur = true;
 
-                // this.setState({
-                //     errorText: 'Заполните все поля',
-                // });
-                // return;
+                this.setState({
+                    errorText: 'Заполните все поля',
+                });
+                return;
+            }
+
+            if (!accountNameVacant) {
+                this.setState({
+                    errorText: 'Имя занято',
+                });
+                return;
             }
 
             this.props.onStepChange('2');
@@ -270,6 +346,7 @@ export default class Step1 extends PureComponent {
         this.setState(
             {
                 phone,
+                errorText: null,
             },
             () => {
                 if (this._phoneBlur) {
@@ -305,4 +382,15 @@ export default class Step1 extends PureComponent {
             phoneErrorText: errorText,
         });
     }
+
+    _checkNameExistenceLazy = debounce(async () => {
+        const { accountName } = this.state;
+
+        const [result] = await golos.api.lookupAccountNamesAsync([accountName]);
+
+        this.setState({
+            accountNameVacant: Boolean(!result),
+            accountNameChecking: accountName !== this.state.accountName,
+        });
+    }, 200);
 }

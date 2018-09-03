@@ -42,7 +42,7 @@ const Loader = styled.div`
     height: 64px;
     margin-bottom: 40px;
     background: url('images/spin.svg') no-repeat;
-    animation: ${steppedRotation} 1s steps(8) infinite;
+    animation: ${steppedRotation} 0.8s steps(8) infinite;
 `;
 
 const MobileImg = styled.img`
