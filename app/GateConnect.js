@@ -38,6 +38,20 @@ export default class GateConnect {
     _onMessage = e => {
         const data = JSON.parse(e.data);
 
+        if (data.method) {
+            const callbacks = this._eventHandlers.get(data.method);
+
+            if (callbacks) {
+                for (let callback of callbacks) {
+                    try {
+                        callback(data);
+                    } catch (err) {
+                        console.error(err);
+                    }
+                }
+            }
+        }
+
         const wait = this._waits.get(data.id);
 
         if (wait) {

@@ -422,7 +422,7 @@ class Step1 extends PureComponent {
                 grecaptcha.reset();
 
                 this.setState({ lock: false });
-                this._showError(`${intl.messages['error']}: ${err.message}`);
+                this._showError(`${intl.messages['wrong']}: ${err.message}`);
             }
         }, 10);
     };

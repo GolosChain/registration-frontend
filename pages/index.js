@@ -222,11 +222,16 @@ export default class Index extends PureComponent {
 
         const { Comp, img, hideDots } = Steps[step];
 
+        let messages;
+
+        if (locale === 'en') {
+            messages = locales.en;
+        } else {
+            messages = { ...locales.en, ...locales[locale] };
+        }
+
         return (
-            <IntlProvider
-                locale={locale}
-                messages={{ ...locales.en, ...locales[locale] }}
-            >
+            <IntlProvider locale={locale} messages={messages}>
                 <Root>
                     <Header>
                         <Logo href="/" />

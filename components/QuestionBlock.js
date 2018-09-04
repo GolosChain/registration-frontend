@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import CollapsingBlock from './CollapsingBlock';
 
 export const Root = styled.div`
@@ -17,7 +18,7 @@ export const Text = styled.div`
 `;
 
 const CollapsingBlockStyled = styled(CollapsingBlock)`
-    border-top: 1px solid #e1e1e1; 
+    border-top: 1px solid #e1e1e1;
 `;
 
 export const Answer = styled.div`
@@ -28,32 +29,35 @@ export const Answer = styled.div`
     color: #959595;
 `;
 
-export default class QuestionBlock extends PureComponent {
+class QuestionBlock extends PureComponent {
     render() {
+        const { intl } = this.props;
         const { className } = this.props;
 
         return (
             <Root className={className}>
                 <Text>
-                    Golos.io заинтересован в регистрации настоящих людей, а не
-                    роботов. Именно поэтому мы просим отправить нам SMS на
-                    указанный номер. Это система двойной проверки.
+                    <FormattedMessage id="step2.text" />
                 </Text>
                 <CollapsingBlockStyled
-                    title={'Сколько это будет стоить?'}
-                    initialCollapsed
-                >
-                    <Answer>Твоей души будет достаточно.</Answer>
-                </CollapsingBlockStyled>
-                <CollapsingBlockStyled
-                    title={'Я неверно ввел номер, что делать?'}
+                    title={intl.messages['step2.quest1.quest']}
                     initialCollapsed
                 >
                     <Answer>
-                        Ты ровно ничего не можешь с этим сделать, смирись.
+                        <FormattedMessage id="step2.quest1.answer" />
+                    </Answer>
+                </CollapsingBlockStyled>
+                <CollapsingBlockStyled
+                    title={intl.messages['step2.quest2.quest']}
+                    initialCollapsed
+                >
+                    <Answer>
+                        <FormattedMessage id="step2.quest2.answer" />
                     </Answer>
                 </CollapsingBlockStyled>
             </Root>
         );
     }
 }
+
+export default injectIntl(QuestionBlock);

@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { FormattedMessage } from 'react-intl';
 import styled, { keyframes } from 'styled-components';
 
 const Root = styled.div`
@@ -59,8 +60,12 @@ export default class Step2_Wait extends PureComponent {
         return (
             <Root>
                 <Loader />
-                <Title>Дождитесь подтверждения вашего номера телефона.</Title>
-                <SubTitle>Процесс может занять несколько минут.</SubTitle>
+                <Title>
+                    <FormattedMessage id="step2_wait.title" />
+                </Title>
+                <SubTitle>
+                    <FormattedMessage id="step2_wait.subTitle" />
+                </SubTitle>
                 <MobileImg src="images/step_2.svg" />
             </Root>
         );

@@ -40,14 +40,18 @@ export default class Application {
                     switch (data.result.currentState) {
                         case 'firstStep':
                             this._accountName = null;
+                            this._phone = null;
                             this._root.goTo('1');
                             break;
                         case 'verify':
                             this._accountName = savedData.accountName;
+                            this._phone = savedData.phone;
+                            this._startWaitVerification();
                             this._root.goTo('2');
                             break;
                         case 'toBlockChain':
                             this._accountName = savedData.accountName;
+                            this._phone = savedData.phone;
                             this._root.goTo('3');
                             break;
                     }
@@ -81,18 +85,10 @@ export default class Application {
             );
 
             this._accountName = data.accountName;
+            this._phone = data.phone;
             this._root.goTo('2');
 
-            this._conn.request('registration.subscribeOnSmsGet', {
-                user: data.accountName,
-                phone: data.phone,
-            });
-
-            this._conn.addEventHandler('registration.phoneVerified', data => {
-                console.log('registration.phoneVerified', data);
-                this._root.goTo('3');
-            });
-
+            this._startWaitVerification();
             return null;
         }
     }
@@ -119,5 +115,40 @@ export default class Application {
         if (response.result && response.result.status === 'OK') {
             localStorage.removeItem(REG_KEY);
         }
+    }
+
+    _startWaitVerification() {
+        this._conn.addEventHandler('registration.phoneVerified', () => {
+            this._root.goTo('3');
+        });
+
+        this._conn.request('registration.subscribeOnSmsGet', {
+            user: this._accountName,
+            phone: this._phone,
+        });
+
+        // this._verificationInterval = setInterval(async () => {
+        //     const data = await this._conn.request('registration.getState', {
+        //         user: this._accountName,
+        //         phone: this._phone,
+        //     });
+        //
+        //     if (data.error) {
+        //         console.error(data.error);
+        //         return;
+        //     }
+        //
+        //     switch (data.result.currentState) {
+        //         case 'firstStep':
+        //             this._root.goTo('1');
+        //             this._accountName = null;
+        //             this._phone = null;
+        //             break;
+        //         case 'toBlockChain':
+        //             clearInterval(this._verificationInterval);
+        //             this._root.goTo('3');
+        //             break;
+        //     }
+        // }, 2000);
     }
 }

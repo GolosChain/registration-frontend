@@ -17,6 +17,11 @@ export const SubTitle = styled.div`
     font-weight: 300;
     color: #959595;
     text-align: center;
+    
+    b {
+        font-weight: 700;
+        color: #333;
+    }
 `;
 
 export const Footer = styled.div`

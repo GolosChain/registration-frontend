@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import is from 'styled-is';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { Title, Input, Footer, Button } from './Common';
 import { Field, FieldLabel, FieldInput, Link } from './Common';
 import CollapsingBlock from './CollapsingBlock';
@@ -98,7 +99,7 @@ const ErrorBlock = styled.div`
     color: #f00;
 `;
 
-export default class Step3 extends PureComponent {
+class Step3 extends PureComponent {
     state = {
         password: '',
         password2: '',
@@ -108,77 +109,46 @@ export default class Step3 extends PureComponent {
     };
 
     render() {
+        const { intl } = this.props;
         const { password, password2, rules, errorText, lock } = this.state;
 
         const rulesList = this._getRulesList();
 
         return (
             <>
-                <Title>Создание пароля</Title>
+                <Title>
+                    <FormattedMessage id="step3.title" />
+                </Title>
                 <QABlock>
                     <CollapsingBlockStyled
-                        title={'Важно! Мы не храненим пароли'}
+                        title={intl.messages['step3.qa1.title']}
                         initialCollapsed
                     >
                         <Answer>
-                            Мы не храним пароли и не сможем восстановить ваш
-                            пароль, если он будет утерян. Поэтому обязательно
-                            сохраните сгенерированный для вас пароль в текстовом
-                            файле или сделайте копию в менеджере паролей. А еще
-                            лучше, распечатайте его.
+                            <FormattedMessage id="step3.qa1.answer" />
                         </Answer>
                     </CollapsingBlockStyled>
                     <CollapsingBlockStyled
-                        title={'Правила хранения пароля'}
+                        title={intl.messages['step3.qa2.title']}
                         initialCollapsed
                     >
                         <AnswerList>
-                            <ol>
-                                <Li>
-                                    <Number>1</Number>
-                                    Не теряйте свой пароль.
-                                </Li>
-                                <Li>
-                                    <Number>2</Number>
-                                    Не теряйте свой пароль.
-                                </Li>
-                                <Li>
-                                    <Number>3</Number>
-                                    Мы не можем восстановить Ваш пароль.
-                                </Li>
-                                <Li>
-                                    <Number>4</Number>
-                                    Если Вы можете запомнить свой пароль, значит
-                                    он не безопасен.
-                                </Li>
-                                <Li>
-                                    <Number>5</Number>
-                                    Используйте только сгенерированные случайным
-                                    образом пароли.
-                                </Li>
-                                <Li>
-                                    <Number>6</Number>
-                                    Никому не говорите свой пароль.
-                                </Li>
-                                <Li>
-                                    <Number>7</Number>
-                                    Всегда надежно храните свой пароль.
-                                </Li>
-                            </ol>
+                            <ol>{this._renderAnswers()}</ol>
                         </AnswerList>
                     </CollapsingBlockStyled>
                 </QABlock>
                 <ButtonPanel>
                     <Button disabled={lock} onClick={this._onGenerateClick}>
-                        Сгенерировать пароль
+                        {intl.messages['step3.generate']}
                     </Button>
                     <Description>
-                        Пароль будет сгенерирован у вас в браузере и не будет
-                        передан на сервер.
+                        <FormattedMessage id="step3.generateHint" />
                     </Description>
                 </ButtonPanel>
                 <Field>
-                    <FieldLabel readOnly>Сгенерированный пароль</FieldLabel>
+                    <FieldLabel readOnly>
+                        <FormattedMessage id="step3.passwordLabel" />
+                    </FieldLabel>
                     <FieldInput>
                         <Input
                             blue
@@ -190,7 +160,9 @@ export default class Step3 extends PureComponent {
                     </FieldInput>
                 </Field>
                 <Field>
-                    <FieldLabel>Повторите сгенерированный пароль</FieldLabel>
+                    <FieldLabel>
+                        <FormattedMessage id="step3.password2Label" />
+                    </FieldLabel>
                     <FieldInput>
                         <InputPassword2
                             type="password"
@@ -218,7 +190,7 @@ export default class Step3 extends PureComponent {
                 </Checkboxes>
                 <Footer>
                     <Button disabled={lock} onClick={this._onOkClick}>
-                        Создать аккаунт
+                        <FormattedMessage id="step3.create" />
                     </Button>
                     {errorText ? (
                         <ErrorBlock innerRef={el => (this._errorEl = el)}>
@@ -230,35 +202,44 @@ export default class Step3 extends PureComponent {
         );
     }
 
+    _renderAnswers() {
+        const { intl } = this.props;
+
+        const lines = [];
+
+        for (let i = 1; ; ++i) {
+            const message = intl.messages[`step3.qa2.answer${i}`];
+
+            if (!message) {
+                break;
+            }
+
+            lines.push(
+                <Li key={i}>
+                    <Number>{i}</Number>
+                    {message}
+                </Li>
+            );
+        }
+
+        return lines;
+    }
+
     _getRulesList() {
+        const { intl } = this.props;
+
         return [
             {
                 id: 'recovery',
-                content: (
-                    <>
-                        Я прочитал и согласен с{' '}
-                        <Link
-                            href="/ru--konfidenczialxnostx/@golos/politika-konfidencialnosti"
-                            tabIndex="-1"
-                            target="_blank"
-                        >
-                            Условиями пользования
-                        </Link>
-                    </>
-                ),
+                content: linkify(intl.messages['step3.term1']),
             },
             {
                 id: 'safe',
-                content: <>Я надежно сохранил сгенерированный пароль.</>,
+                content: intl.messages['step3.term2'],
             },
             {
                 id: 'terms',
-                content: (
-                    <>
-                        Я понимаю, что Golos.io не может восстановить потерянные
-                        пароли.
-                    </>
-                ),
+                content: intl.messages['step3.term3'],
             },
         ];
     }
@@ -305,16 +286,17 @@ export default class Step3 extends PureComponent {
     };
 
     _onOkClick = async () => {
+        const { intl } = this.props;
         const { password, password2, rules } = this.state;
 
         let errorText = null;
 
         if (!password) {
-            errorText = 'Создайте пароль';
+            errorText = intl.messages['step3.error.createPassword'];
         } else if (password !== password2) {
-            errorText = 'Пароли не совпадают';
+            errorText = intl.messages['step3.error.passwordsNotEqual'];
         } else if (rules.size < this._getRulesList().length) {
-            errorText = 'Вы должны подтвердить все пункты.';
+            errorText = intl.messages['step3.error.checkAll'];
         }
 
         if (errorText) {
@@ -337,7 +319,9 @@ export default class Step3 extends PureComponent {
                 this.setState({
                     lock: false,
                 });
-                this._showError(`Ошибка: ${error.code} ${error.message}`);
+                this._showError(
+                    `${intl.messages.error}: ${error.code} ${error.message}`
+                );
             } else {
                 location.href = 'https://golos.io/';
             }
@@ -345,7 +329,7 @@ export default class Step3 extends PureComponent {
             this.setState({
                 lock: false,
             });
-            this._showError(`Ошибка: ${err}`);
+            this._showError(`: ${err}`);
         }
     };
 
@@ -360,3 +344,26 @@ export default class Step3 extends PureComponent {
         );
     }
 }
+
+function linkify(message) {
+    const parts = [];
+
+    message.replace(/\[(.+)\]/, (all, match, index) => {
+        parts.push(message.substr(0, index));
+        parts.push(
+            <Link
+                key="link"
+                href="/ru--konfidenczialxnostx/@golos/politika-konfidencialnosti"
+                tabIndex="-1"
+                target="_blank"
+            >
+                {match}
+            </Link>
+        );
+        parts.push(message.substr(index + all.length, message.length));
+    });
+
+    return parts;
+}
+
+export default injectIntl(Step3);
