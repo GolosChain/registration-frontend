@@ -15,6 +15,10 @@ export const Text = styled.div`
     font-weight: 300;
     letter-spacing: 0.5px;
     color: #959595;
+
+    @media (max-width: 500px) {
+        font-size: 16px;
+    }
 `;
 
 const CollapsingBlockStyled = styled(CollapsingBlock)`
@@ -27,6 +31,10 @@ export const Answer = styled.div`
     font-size: 14px;
     font-weight: 300;
     color: #959595;
+
+    @media (max-width: 500px) {
+        font-size: 16px;
+    }
 `;
 
 class QuestionBlock extends PureComponent {

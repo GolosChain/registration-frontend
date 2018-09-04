@@ -37,7 +37,7 @@ export const Button = styled.button.attrs({ type: 'button' })`
     color: #fff;
     background: #3684ff;
     cursor: pointer;
-    
+
     &[disabled] {
         background: #89cbff;
     }
@@ -67,6 +67,10 @@ export const FieldLabel = styled.div`
     font-size: 14px;
     font-weight: 300;
     color: #959595;
+
+    @media (max-width: 500px) {
+        font-size: 16px;
+    }
 `;
 
 export const FieldInput = styled.div``;
@@ -78,23 +82,22 @@ export const Input = styled.input`
     padding: 0 14px;
     border-radius: 6px;
     border: 1px solid #e1e1e1;
-    font-size: 14px;
     color: #333;
     background: #fff;
     appearance: none;
-    
+
     ${is('blue')`
         color: #2879ff;
-    `}
-    
+    `};
+
     ${is('error')`
         border-color: red;
         
         &:focus {
             border-color: #e1e1e1;
         }
-    `}
-    
+    `};
+
     &::placeholder {
         font-weight: 300;
         color: #aaa;

@@ -6,25 +6,29 @@ const Root = styled.div`
     position: relative;
     display: flex;
     height: 32px;
-    padding: 0 14px;
+    padding-left: 14px;
     border-radius: 6px;
     border: 1px solid #e1e1e1;
-    font-size: 14px;
     color: #333;
     background: #fff;
-    
+
     ${is('error')`
         border-color: red;
-    `}
+    `};
 `;
 
 const Code = styled.div`
     display: flex;
     align-items: center;
+    font-size: 14px;
     flex-shrink: 0;
     height: 100%;
     padding-right: 3px;
     color: #444;
+
+    @media (max-width: 500px) {
+        font-size: 16px;
+    }
 `;
 
 const Highlight = styled.div`
@@ -33,12 +37,12 @@ const Highlight = styled.div`
 
 const Input = styled.input`
     flex-grow: 1;
-    border: none;
     height: 100%;
+    border: none;
     outline: none !important;
     background: none;
-    
-    &:focus +${Highlight} {
+
+    &:focus + ${Highlight} {
         display: block;
         position: absolute;
         top: 0;
@@ -49,8 +53,9 @@ const Input = styled.input`
         outline-offset: -2px;
         pointer-events: none;
     }
-    
+
     &::placeholder {
+        line-height: 18px;
         font-weight: 300;
         color: #aaa;
     }
@@ -65,7 +70,9 @@ export default function PhoneInput(props) {
                 value={props.value}
                 onBlur={props.onBlur}
                 onFocus={props.onFocus}
-                onChange={e => props.onChange(e.target.value.replace(/[^\d ()-]+/g, ''))}
+                onChange={e =>
+                    props.onChange(e.target.value.replace(/[^\d ()-]+/g, ''))
+                }
             />
             <Highlight />
         </Root>

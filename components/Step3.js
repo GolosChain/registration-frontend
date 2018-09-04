@@ -23,6 +23,11 @@ const CheckboxText = styled.div`
     font-size: 12px;
     font-weight: 300;
     color: #959595;
+
+    @media (max-width: 500px) {
+        line-height: 20px;
+        font-size: 15px;
+    }
 `;
 
 const CollapsingBlockStyled = styled(CollapsingBlock)`
@@ -77,16 +82,15 @@ const Description = styled.div`
     line-height: 1.4em;
     text-align: center;
     color: #959595;
-`;
 
-const Code = styled.code`
-    font-family: Monospaced, monospace;
-    color: #333;
+    @media (max-width: 500px) {
+        font-size: 16px;
+    }
 `;
 
 const InputPassword2 = styled(Input)`
     ${is('pass')`
-        border-color: #11b506;            
+        border-color: #11b506;
         background: #ecffd0;
     `};
 `;

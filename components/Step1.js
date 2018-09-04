@@ -71,7 +71,7 @@ class Step1 extends PureComponent {
         accountNameChecking: false,
         accountNameVacant: null,
         accountNameError: null,
-        accountNameText: null,
+        accountNameErrorText: null,
         email: '',
         emailError: null,
         emailErrorText: null,
@@ -147,7 +147,9 @@ class Step1 extends PureComponent {
                             ) : null}
                         </InputWrapper>
                         {accountNameErrorText ? (
-                            <FieldError>{accountNameErrorText}</FieldError>
+                            <FieldError>
+                                <FormattedMessage id={accountNameErrorText} />
+                            </FieldError>
                         ) : accountNameVacant === false ? (
                             <FieldError>
                                 <FormattedMessage id="step1.error.nameExists" />
@@ -174,7 +176,9 @@ class Step1 extends PureComponent {
                             onBlur={this._onEmailBlur}
                         />
                         {emailErrorText ? (
-                            <FieldError>{emailErrorText}</FieldError>
+                            <FieldError>
+                                <FormattedMessage id={emailErrorText} />
+                            </FieldError>
                         ) : null}
                     </FieldInput>
                 </Field>

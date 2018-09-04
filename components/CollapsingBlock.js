@@ -15,6 +15,10 @@ const Header = styled.div`
     color: #393636;
     cursor: pointer;
     user-select: none;
+    
+    @media (max-width: 500px) {
+        font-size: 16px;
+    }
 `;
 
 const HeaderTitle = styled.div`
@@ -64,7 +68,7 @@ export default class CollapsingBlock extends PureComponent {
 
         let collapsed;
 
-        if (collapsed == null && props.initialCollapsed) {
+        if (props.initialCollapsed != null) {
             collapsed = props.initialCollapsed;
         }
 

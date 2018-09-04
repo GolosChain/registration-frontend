@@ -24,8 +24,8 @@ const InnerSelect = styled.select`
     bottom: 0;
     opacity: 0;
     cursor: pointer;
-    
-    &:focus +${Highlight} {
+
+    &:focus + ${Highlight} {
         display: block;
         position: absolute;
         top: 0;
@@ -51,6 +51,10 @@ const InputValue = styled.div`
     text-overflow: ellipsis;
     font-size: 14px;
     color: #333;
+
+    @media (max-width: 500px) {
+        font-size: 16px;
+    }
 `;
 
 const Chevron = styled.div`
