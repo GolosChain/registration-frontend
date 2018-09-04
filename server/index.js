@@ -20,12 +20,17 @@ nextApp
 
         server.get('*', (req, res) => handle(req, res));
 
-        server.listen(3000, err => {
+        const address = {
+            host: process.env.GLS_GATE_HOST || '0.0.0.0',
+            port: process.env.GLS_GATE_PORT || '3000',
+        };
+
+        server.listen(address, err => {
             if (err) {
                 throw err;
             }
 
-            console.log('> Ready on http://localhost:3000');
+            console.log(`> Listen on ${address.host}:${address.port}`);
         });
     })
     .catch(err => {

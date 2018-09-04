@@ -9,7 +9,6 @@ export default class GateConnect {
 
     connect() {
         const ws = new WebSocket('ws://95.216.153.236:8080');
-        //const ws = new WebSocket('ws://192.168.1.159:8080');
 
         ws.addEventListener('open', () => {
             this._open = true;
