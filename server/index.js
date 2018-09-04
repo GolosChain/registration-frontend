@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const next = require('next');
+const cookieParser = require('cookie-parser');
 
 const nextApp = next({
     dev: process.env.NODE_ENV !== 'production',
@@ -14,6 +15,8 @@ nextApp
         const server = express();
 
         server.use(express.static(path.join(__dirname, '../public')));
+
+        server.use(cookieParser());
 
         server.get('*', (req, res) => handle(req, res));
 

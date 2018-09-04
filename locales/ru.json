@@ -1,0 +1,21 @@
+{
+  "error": "Что то пошло не так",
+  "required": "Необходимое поле",
+  "step1.accountNameLabel": "Имя аккаунта",
+  "step1.alreadyHaveAccount": "У вас уже есть аккаунт?",
+  "step1.continue": "Продолжить",
+  "step1.emailLabel": "Электронная почта",
+  "step1.error.captcha": "Ошибка в Captcha",
+  "step1.error.fillAllFields": "Заполните все поля",
+  "step1.error.nameExists": "Имя занято",
+  "step1.login": "Войти в систему",
+  "step1.phoneCodeLabel": "Выберите код страны из списка",
+  "step1.phoneInRegistration": "Телефон уже участвует в регистрации.",
+  "step1.phoneLabel": "Введите номер вашего телефона",
+  "step1.rules.charsAndNumbers": "Ник может содержать только английские буквы и цифры",
+  "step1.rules.invalidEmail": "Введите корректный адрес электронной почты",
+  "step1.rules.startsWithChar": "Ник должен начинаться с буквы",
+  "step1.rules.tooShort": "Слишком короткое имя (минимум 4 символов)",
+  "step1.subTitle": "Пишите, фотографируете, комментируйте и получайте награду за любое действие.",
+  "step1.title": "Регистрация"
+}

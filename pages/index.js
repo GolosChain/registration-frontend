@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import styled, { injectGlobal, keyframes } from 'styled-components';
 import is from 'styled-is';
+import { IntlProvider, addLocaleData } from 'react-intl';
 import '../utils/styles-reset';
 import { Dot, Dots } from '../components/Common';
 import Step1 from '../components/Step1';
@@ -38,6 +39,13 @@ html, body, #__next {
 
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
 `;
+
+const locales = {
+    en: require('../locales/en.json'),
+    ru: require('../locales/ru.json'),
+};
+
+addLocaleData(require('react-intl/locale-data/ru'));
 
 const fadeIn = keyframes`
     from {
@@ -200,34 +208,58 @@ export default class Index extends PureComponent {
     render() {
         const { step, fadeIn, fadeOut } = this.state;
 
+        let locale;
+
+        if (process.browser) {
+            locale = document.querySelector('html').getAttribute('lang');
+        } else {
+            locale = this.props.locale;
+        }
+
+        if (!locale) {
+            locale = 'en';
+        }
+
         const { Comp, img, hideDots } = Steps[step];
 
         return (
-            <Root>
-                <Header>
-                    <Logo href="/" />
-                </Header>
-                <Panels>
-                    <Panel>
-                        <Column key={step} fadeIn={fadeIn} fadeOut={fadeOut}>
-                            <Comp onStepChange={this._onStepChange} />
-                            {hideDots ? null : (
-                                <Dots title={`Шаг: ${img}/3`}>
-                                    <Dot active={img === 1} />
-                                    <Dot active={img === 2} />
-                                    <Dot active={img === 3} />
-                                </Dots>
-                            )}
-                        </Column>
-                    </Panel>
-                    <Panel />
-                    <RightPanel>
-                        <ImageWrapper>
-                            <SideImage step={img} opacity={fadeOut ? 0 : 1} />
-                        </ImageWrapper>
-                    </RightPanel>
-                </Panels>
-            </Root>
+            <IntlProvider
+                locale={locale}
+                messages={{ ...locales.en, ...locales[locale] }}
+            >
+                <Root>
+                    <Header>
+                        <Logo href="/" />
+                    </Header>
+                    <Panels>
+                        <Panel>
+                            <Column
+                                key={step}
+                                fadeIn={fadeIn}
+                                fadeOut={fadeOut}
+                            >
+                                <Comp onStepChange={this._onStepChange} />
+                                {hideDots ? null : (
+                                    <Dots title={`Шаг: ${img}/3`}>
+                                        <Dot active={img === 1} />
+                                        <Dot active={img === 2} />
+                                        <Dot active={img === 3} />
+                                    </Dots>
+                                )}
+                            </Column>
+                        </Panel>
+                        <Panel />
+                        <RightPanel>
+                            <ImageWrapper>
+                                <SideImage
+                                    step={img}
+                                    opacity={fadeOut ? 0 : 1}
+                                />
+                            </ImageWrapper>
+                        </RightPanel>
+                    </Panels>
+                </Root>
+            </IntlProvider>
         );
     }
 

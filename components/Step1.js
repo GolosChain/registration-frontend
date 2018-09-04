@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import golos from 'golos-js';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Title, SubTitle, Input, Footer, Button } from './Common';
 import { Field, FieldLabel, FieldInput, Link } from './Common';
 import PhoneInput from './PhoneInput';
@@ -58,13 +59,13 @@ const CaptchaBlock = styled(Field)`
     justify-content: center;
 `;
 
-const Required = () => (
-    <span title="Необходимое поле">
+const Required = props => (
+    <span title={props.title}>
         (<Red>*</Red>)
     </span>
 );
 
-export default class Step1 extends PureComponent {
+class Step1 extends PureComponent {
     state = {
         accountName: '',
         accountNameChecking: false,
@@ -86,6 +87,8 @@ export default class Step1 extends PureComponent {
     }
 
     render() {
+        const { intl } = this.props;
+
         const {
             accountName,
             accountNameChecking,
@@ -115,14 +118,16 @@ export default class Step1 extends PureComponent {
 
         return (
             <>
-                <Title>Регистрация</Title>
+                <Title>
+                    <FormattedMessage id="step1.title" />
+                </Title>
                 <SubTitle>
-                    Пишите, фотографируете, комментируйте и получайте награду за
-                    любое действие.
+                    <FormattedMessage id="step1.subTitle" />
                 </SubTitle>
                 <Field>
                     <FieldLabel>
-                        Имя аккаунта <Required />
+                        <FormattedMessage id="step1.accountNameLabel" />{' '}
+                        <Required title={intl.messages.required} />
                     </FieldLabel>
                     <FieldInput>
                         <InputWrapper>
@@ -144,13 +149,16 @@ export default class Step1 extends PureComponent {
                         {accountNameErrorText ? (
                             <FieldError>{accountNameErrorText}</FieldError>
                         ) : accountNameVacant === false ? (
-                            <FieldError>Имя занято</FieldError>
+                            <FieldError>
+                                <FormattedMessage id="step1.error.nameExists" />
+                            </FieldError>
                         ) : null}
                     </FieldInput>
                 </Field>
                 <Field>
                     <FieldLabel>
-                        Электронная почта <Required />
+                        <FormattedMessage id="step1.emailLabel" />{' '}
+                        <Required title={intl.messages.required} />
                     </FieldLabel>
                     <FieldInput>
                         <Input
@@ -171,7 +179,9 @@ export default class Step1 extends PureComponent {
                     </FieldInput>
                 </Field>
                 <Field>
-                    <FieldLabel>Выберите код страны из списка</FieldLabel>
+                    <FieldLabel>
+                        <FormattedMessage id="step1.phoneCodeLabel" />
+                    </FieldLabel>
                     <FieldInput>
                         <Select
                             disabled={lock}
@@ -183,7 +193,8 @@ export default class Step1 extends PureComponent {
                 </Field>
                 <Field>
                     <FieldLabel>
-                        Введите номер вашего телефона <Required />
+                        <FormattedMessage id="step1.phoneLabel" />{' '}
+                        <Required title={intl.messages.required} />
                     </FieldLabel>
                     <FieldInput>
                         <PhoneInput
@@ -198,7 +209,9 @@ export default class Step1 extends PureComponent {
                             onBlur={this._onPhoneBlur}
                         />
                         {phoneErrorText ? (
-                            <FieldError>{phoneErrorText}</FieldError>
+                            <FieldError>
+                                <FormattedMessage id={phoneErrorText} />
+                            </FieldError>
                         ) : null}
                     </FieldInput>
                 </Field>
@@ -207,17 +220,19 @@ export default class Step1 extends PureComponent {
                 </CaptchaBlock>
                 <Footer>
                     <Button disabled={lock} onClick={this._onOkClick}>
-                        Продолжить
+                        <FormattedMessage id="step1.continue" />
                     </Button>
                 </Footer>
                 {errorText ? (
                     <TotalError innerRef={el => (this._errorEl = el)}>
-                        {errorText}
+                        <FormattedMessage id={errorText} />
                     </TotalError>
                 ) : null}
                 <Comment>
-                    У вас уже есть аккаунт?{' '}
-                    <Link href="https://golos.io/">Войти в систему</Link>
+                    <FormattedMessage id="step1.alreadyHaveAccount" />{' '}
+                    <Link href="https://golos.io/">
+                        <FormattedMessage id="step1.login" />
+                    </Link>
                 </Comment>
             </>
         );
@@ -261,13 +276,13 @@ export default class Step1 extends PureComponent {
             error = true;
         } else if (/^[^a-z]/.test(name)) {
             error = true;
-            errorText = 'Ник должен начинаться с буквы';
+            errorText = 'step1.rules.startsWithChar';
         } else if (!/^[a-z0-9]+$/.test(name)) {
             error = true;
-            errorText = 'Ник может содержать только английские буквы и цифры';
+            errorText = 'step1.rules.charsAndNumbers';
         } else if (name.length < 4) {
             error = true;
-            errorText = 'Слишком короткое имя (минимум 4 символов)';
+            errorText = 'step1.rules.tooShort';
         }
 
         return {
@@ -325,7 +340,7 @@ export default class Step1 extends PureComponent {
             error = true;
         } else if (!/^[^@/:]+@[^@/:]+\.[^@/:]+$/.test(email)) {
             error = true;
-            errorText = 'Введите корректный адрес электронной почты';
+            errorText = 'step1.rules.invalidEmail';
         }
 
         this.setState({
@@ -335,6 +350,8 @@ export default class Step1 extends PureComponent {
     };
 
     _onOkClick = () => {
+        const { intl } = this.props;
+
         this._validateAccountName();
         this._validateEmail();
         this._validatePhone();
@@ -361,13 +378,13 @@ export default class Step1 extends PureComponent {
                 this._phoneBlur = true;
 
                 this.setState({ lock: false });
-                this._showError('Заполните все поля');
+                this._showError('step1.error.fillAllFields');
                 return;
             }
 
             if (!accountNameVacant) {
                 this.setState({ lock: false });
-                this._showError('Имя занято');
+                this._showError('step1.error.nameExists');
                 return;
             }
 
@@ -375,7 +392,7 @@ export default class Step1 extends PureComponent {
 
             if (!captchaCode) {
                 this.setState({ lock: false });
-                this._showError('Ошибка в Captcha');
+                this._showError('step1.error.captcha');
                 return;
             }
 
@@ -394,8 +411,7 @@ export default class Step1 extends PureComponent {
                         this.setState({
                             lock: false,
                             phoneError: true,
-                            phoneErrorText:
-                                'Телефон уже участвует в регистрации.',
+                            phoneErrorText: 'step1.phoneInRegistration',
                         });
 
                         grecaptcha.reset();
@@ -406,7 +422,7 @@ export default class Step1 extends PureComponent {
                 grecaptcha.reset();
 
                 this.setState({ lock: false });
-                this._showError(`Что-то пошло не так: ${err.message}`);
+                this._showError(`${intl.messages['error']}: ${err.message}`);
             }
         }, 10);
     };
@@ -474,3 +490,5 @@ export default class Step1 extends PureComponent {
         );
     }
 }
+
+export default injectIntl(Step1);
