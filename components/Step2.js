@@ -1,11 +1,16 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Title, SubTitle, Footer, Button } from './Common';
 import QuestionBlock from './QuestionBlock';
 
 const QuestionBlockStyled = styled(QuestionBlock)`
     margin-bottom: 24px;
+`;
+
+const B = styled.b`
+    font-weight: 700;
+    color: #333;
 `;
 
 export default class Step2 extends PureComponent {
@@ -18,9 +23,12 @@ export default class Step2 extends PureComponent {
                     <FormattedMessage id="step2.title" />
                 </Title>
                 <SubTitle>
-                    <FormattedHTMLMessage
+                    <FormattedMessage
                         id="step2.subTitle"
-                        values={{ code: this._code, phone: '+46769438807' }}
+                        values={{
+                            code: <B>{this._code}</B>,
+                            phone: <B>+46769438807</B>,
+                        }}
                     />
                 </SubTitle>
                 <QuestionBlockStyled />

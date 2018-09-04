@@ -16,4 +16,4 @@ for (let key of Object.keys(locale).sort()) {
     sorted[key] = locale[key];
 }
 
-fs.writeFileSync(fileName, JSON.stringify(sorted, null, 2));
+fs.writeFileSync(fileName, JSON.stringify(sorted, null, 2) + '\n');

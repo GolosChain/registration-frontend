@@ -23,7 +23,7 @@
   "step2.quest1.quest": "How much does it cost?",
   "step2.quest2.answer": "Ты ровно ничего не можешь с этим сделать, смирись.",
   "step2.quest2.quest": "I've enter wrong phone number, what can I do?",
-  "step2.subTitle": "Для подтверждения вашего номера телефона, пожалуйста, отправьте SMS с текстом: <b>{code}</b> на номер <b>{phone}</b>",
+  "step2.subTitle": "Для подтверждения вашего номера телефона, пожалуйста, отправьте SMS с текстом: {code} на номер {phone}",
   "step2.text": "Golos.io заинтересован в регистрации настоящих людей, а не роботов. Именно поэтому мы просим отправить нам SMS на указанный номер. Это система двойной проверки.",
   "step2.title": "Verification",
   "step2_wait.subTitle": "Process can take several minutes.",
