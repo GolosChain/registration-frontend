@@ -9,6 +9,7 @@ import Step2 from '../components/Step2';
 import Step2_Wait from '../components/Step2_Wait';
 import Step3 from '../components/Step3';
 import Application from '../app/Application';
+import LangSwitch from '../components/LangSwitch';
 
 const ANIMATION_DURATION = 250;
 
@@ -43,9 +44,11 @@ html, body, #__next {
 const locales = {
     en: require('../locales/en.json'),
     ru: require('../locales/ru.json'),
+    ua: require('../locales/ua.json'),
 };
 
 addLocaleData(require('react-intl/locale-data/ru'));
+addLocaleData(require('react-intl/locale-data/uk'));
 
 const fadeIn = keyframes`
     from {
@@ -192,6 +195,7 @@ export default class Index extends PureComponent {
     _nextStep = null;
 
     state = {
+        locale: getLocale(this.props),
         step: '1',
         fadeIn: false,
         fadeOut: false,
@@ -206,19 +210,7 @@ export default class Index extends PureComponent {
     }
 
     render() {
-        const { step, fadeIn, fadeOut } = this.state;
-
-        let locale;
-
-        if (process.browser) {
-            locale = document.querySelector('html').getAttribute('lang');
-        } else {
-            locale = this.props.locale;
-        }
-
-        if (!locale) {
-            locale = 'en';
-        }
+        const { step, fadeIn, fadeOut, locale } = this.state;
 
         const { Comp, img, hideDots } = Steps[step];
 
@@ -231,11 +223,16 @@ export default class Index extends PureComponent {
         }
 
         return (
-            <IntlProvider locale={locale} messages={messages}>
+            <IntlProvider
+                key={locale}
+                locale={locale === 'ua' ? 'uk' : locale}
+                messages={messages}
+            >
                 <Root>
                     <Header>
                         <Logo href="/" />
                     </Header>
+                    <LangSwitch lang={locale} onChange={this._onLangChange} />
                     <Panels>
                         <Panel>
                             <Column
@@ -308,4 +305,28 @@ export default class Index extends PureComponent {
 
         this._onStepChange(step);
     }
+
+    _onLangChange = lang => {
+        document.cookie = `gls.lang=${lang}; expires=Tue, 01 Jan 2030 00:00:00 GMT`;
+
+        this.setState({
+            locale: lang,
+        });
+    };
+}
+
+function getLocale(props) {
+    let locale;
+
+    if (process.browser) {
+        locale = document.querySelector('html').getAttribute('lang');
+    } else {
+        locale = props.locale;
+    }
+
+    if (!locale) {
+        locale = 'en';
+    }
+
+    return locale;
 }

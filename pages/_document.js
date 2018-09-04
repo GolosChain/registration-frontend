@@ -1,11 +1,12 @@
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
-const LOCALES = ['en', 'ru'];
+const LOCALES = ['en', 'ru', 'ua', 'uk'];
 
 const TITLE_TRANSLATIONS = {
     en: 'Golos.io Registration',
     ru: 'Golos.io Регистрация',
+    ua: 'Golos.io Реєстрація',
 };
 
 function getLanguage(headers) {
@@ -18,7 +19,11 @@ function getLanguage(headers) {
             const match = langString.match(/^\w+/);
 
             if (match && LOCALES.includes(match[0])) {
-                return match[0];
+                if (match[0] === 'uk') {
+                    return 'ua';
+                } else {
+                    return match[0];
+                }
             }
         }
     } catch (err) {}

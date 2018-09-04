@@ -9,7 +9,7 @@ export const Root = styled.div`
 `;
 
 export const Text = styled.div`
-    padding: 20px;
+    padding: 16px 20px;
     line-height: 20px;
     font-size: 14px;
     font-weight: 300;
