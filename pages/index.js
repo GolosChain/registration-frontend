@@ -135,10 +135,10 @@ const Panel = styled.div`
 
 const Column = styled.div`
     width: 328px;
-    padding: 16px 0;
+    padding: 30px 0;
 
     @media screen and (max-width: 800px) {
-        padding-top: 0;
+        padding: 6px 0 10px;
     }
 
     ${is('fadeIn')`
@@ -181,6 +181,8 @@ const ImageWrapper = styled.div`
 `;
 
 export default class Index extends PureComponent {
+    _nextStep = null;
+
     state = {
         step: '1',
         fadeIn: false,
@@ -188,7 +190,11 @@ export default class Index extends PureComponent {
     };
 
     componentDidMount() {
-        new Application();
+        const app = new Application(this);
+
+        app.init().catch(err => {
+            console.error(err);
+        });
     }
 
     render() {
@@ -226,22 +232,43 @@ export default class Index extends PureComponent {
     }
 
     _onStepChange = step => {
+        this._nextStep = step;
+
+        clearTimeout(this._stepTimeout1);
+        clearTimeout(this._stepTimeout2);
+
         this.setState({
             fadeOut: true,
         });
 
-        setTimeout(() => {
+        this._stepTimeout1 = setTimeout(() => {
             this.setState({
                 step,
                 fadeOut: false,
                 fadeIn: true,
             });
 
-            setTimeout(() => {
+            (document.scrollingElement || document.body).scrollTop = 0;
+
+            this._nextStep = null;
+
+            this._stepTimeout2 = setTimeout(() => {
                 this.setState({
                     fadeIn: false,
                 });
             }, ANIMATION_DURATION);
         }, ANIMATION_DURATION);
     };
+
+    goTo(step) {
+        if (this._nextStep) {
+            if (this._nextStep === step) {
+                return;
+            }
+        } else if (this.state.step === step) {
+            return;
+        }
+
+        this._onStepChange(step);
+    }
 }

@@ -1,13 +1,14 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
+import golos from 'golos-js';
 import { Title, SubTitle, Input, Footer, Button } from './Common';
 import { Field, FieldLabel, FieldInput, Link } from './Common';
 import PhoneInput from './PhoneInput';
 import Select from './Select';
-import golos from 'golos-js';
 import debounce from 'lodash/debounce';
 import phoneCodes from '../app/phoneCodes.json';
 import Loader from './Loader';
+import Captcha from './Captcha';
 
 const FieldError = styled.div`
     margin-top: 10px;
@@ -52,6 +53,11 @@ const Check = styled.div`
     background: url('images/check.svg') no-repeat center;
 `;
 
+const CaptchaBlock = styled(Field)`
+    display: flex;
+    justify-content: center;
+`;
+
 const Required = () => (
     <span title="Необходимое поле">
         (<Red>*</Red>)
@@ -72,6 +78,7 @@ export default class Step1 extends PureComponent {
         phoneError: null,
         phoneErrorText: null,
         code: 7,
+        lock: false,
     };
 
     componentWillUnmount() {
@@ -91,7 +98,9 @@ export default class Step1 extends PureComponent {
             code,
             phone,
             phoneError,
+            phoneErrorText,
             errorText,
+            lock,
         } = this.state;
 
         let accountStatus = null;
@@ -118,6 +127,7 @@ export default class Step1 extends PureComponent {
                     <FieldInput>
                         <InputWrapper>
                             <Input
+                                disabled={lock}
                                 autoFocus
                                 error={nameError}
                                 value={accountName}
@@ -144,6 +154,7 @@ export default class Step1 extends PureComponent {
                     </FieldLabel>
                     <FieldInput>
                         <Input
+                            disabled={lock}
                             placeholder="golos@gmail.com"
                             type="email"
                             value={email}
@@ -160,9 +171,10 @@ export default class Step1 extends PureComponent {
                     </FieldInput>
                 </Field>
                 <Field>
-                    <FieldLabel>Выберите из списка код страны</FieldLabel>
+                    <FieldLabel>Выберите код страны из списка</FieldLabel>
                     <FieldInput>
                         <Select
+                            disabled={lock}
                             value={code}
                             items={phoneCodes}
                             onChange={this._onCodeChange}
@@ -175,6 +187,7 @@ export default class Step1 extends PureComponent {
                     </FieldLabel>
                     <FieldInput>
                         <PhoneInput
+                            disabled={lock}
                             code={`+${code}`}
                             error={phoneError}
                             value={phone}
@@ -184,12 +197,24 @@ export default class Step1 extends PureComponent {
                             onChange={this._onPhoneChange}
                             onBlur={this._onPhoneBlur}
                         />
+                        {phoneErrorText ? (
+                            <FieldError>{phoneErrorText}</FieldError>
+                        ) : null}
                     </FieldInput>
                 </Field>
+                <CaptchaBlock>
+                    <Captcha ref="captcha" />
+                </CaptchaBlock>
                 <Footer>
-                    <Button onClick={this._onOkClick}>Продолжить</Button>
+                    <Button disabled={lock} onClick={this._onOkClick}>
+                        Продолжить
+                    </Button>
                 </Footer>
-                {errorText ? <TotalError>{errorText}</TotalError> : null}
+                {errorText ? (
+                    <TotalError innerRef={el => (this._errorEl = el)}>
+                        {errorText}
+                    </TotalError>
+                ) : null}
                 <Comment>
                     У вас уже есть аккаунт?{' '}
                     <Link href="https://golos.io/">Войти в систему</Link>
@@ -212,6 +237,11 @@ export default class Step1 extends PureComponent {
                         accountNameChecking: true,
                     });
                     this._checkNameExistenceLazy();
+                } else {
+                    this.setState({
+                        accountNameChecking: false,
+                    });
+                    this._checkNameExistenceLazy.cancel();
                 }
 
                 if (this._accountNameBlur) {
@@ -309,13 +339,18 @@ export default class Step1 extends PureComponent {
         this._validateEmail();
         this._validatePhone();
 
-        setTimeout(() => {
+        this.setState({
+            lock: true,
+        });
+
+        setTimeout(async () => {
             const {
                 accountName,
                 accountNameError,
                 accountNameVacant,
                 email,
                 emailError,
+                code,
                 phone,
                 phoneError,
             } = this.state;
@@ -325,20 +360,54 @@ export default class Step1 extends PureComponent {
                 this._emailBlur = true;
                 this._phoneBlur = true;
 
-                this.setState({
-                    errorText: 'Заполните все поля',
-                });
+                this.setState({ lock: false });
+                this._showError('Заполните все поля');
                 return;
             }
 
             if (!accountNameVacant) {
-                this.setState({
-                    errorText: 'Имя занято',
-                });
+                this.setState({ lock: false });
+                this._showError('Имя занято');
                 return;
             }
 
-            this.props.onStepChange('2');
+            const captchaCode = this.refs.captcha.getCode();
+
+            if (!captchaCode) {
+                this.setState({ lock: false });
+                this._showError('Ошибка в Captcha');
+                return;
+            }
+
+            const fullPhone = `${code}${phone}`;
+
+            try {
+                const result = await window.app.firstStep({
+                    accountName,
+                    email,
+                    phone: fullPhone,
+                    captchaCode,
+                });
+
+                if (result && result.error) {
+                    if (result.error.message === 'Phone already registered.') {
+                        this.setState({
+                            lock: false,
+                            phoneError: true,
+                            phoneErrorText:
+                                'Телефон уже участвует в регистрации.',
+                        });
+
+                        grecaptcha.reset();
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+                grecaptcha.reset();
+
+                this.setState({ lock: false });
+                this._showError(`Что-то пошло не так: ${err.message}`);
+            }
         }, 10);
     };
 
@@ -393,4 +462,15 @@ export default class Step1 extends PureComponent {
             accountNameChecking: accountName !== this.state.accountName,
         });
     }, 200);
+
+    _showError(errorText) {
+        this.setState(
+            {
+                errorText,
+            },
+            () => {
+                this._errorEl.scrollIntoViewIfNeeded();
+            }
+        );
+    }
 }

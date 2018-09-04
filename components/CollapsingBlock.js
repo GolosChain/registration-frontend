@@ -9,7 +9,7 @@ const Header = styled.div`
     display: flex;
     align-items: center;
     height: 50px;
-    padding: 0 20px;
+    padding: 0 17px 0 20px;
     font-size: 14px;
     font-weight: 500;
     color: #393636;

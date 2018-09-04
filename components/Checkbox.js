@@ -34,6 +34,7 @@ export default function Checkbox(props) {
     return (
         <Root>
             <Input
+                disabled={props.disabled}
                 type="checkbox"
                 onChange={() => props.onChange(!props.value)}
             />

@@ -66,7 +66,7 @@ const ButtonPanel = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px 0;
+    margin: 24px 0;
 `;
 
 const Description = styled.div`
@@ -104,16 +104,17 @@ export default class Step3 extends PureComponent {
         password2: '',
         rules: new Set(),
         errorText: null,
+        lock: false,
     };
 
     render() {
-        const { password, password2, rules, errorText } = this.state;
+        const { password, password2, rules, errorText, lock } = this.state;
 
         const rulesList = this._getRulesList();
 
         return (
             <>
-                <Title>Сохранить пароль</Title>
+                <Title>Создание пароля</Title>
                 <QABlock>
                     <CollapsingBlockStyled
                         title={'Важно! Мы не храненим пароли'}
@@ -168,12 +169,12 @@ export default class Step3 extends PureComponent {
                     </CollapsingBlockStyled>
                 </QABlock>
                 <ButtonPanel>
-                    <Button onClick={this._onGenerateClick}>
+                    <Button disabled={lock} onClick={this._onGenerateClick}>
                         Сгенерировать пароль
                     </Button>
                     <Description>
-                        Пароль будет сгенерирован с помощью браузерного API{' '}
-                        <Code>crypto.getRandomValues()</Code>.
+                        Пароль будет сгенерирован у вас в браузере и не будет
+                        передан на сервер.
                     </Description>
                 </ButtonPanel>
                 <Field>
@@ -189,10 +190,11 @@ export default class Step3 extends PureComponent {
                     </FieldInput>
                 </Field>
                 <Field>
-                    <FieldLabel>Введите сгенерированный пароль</FieldLabel>
+                    <FieldLabel>Повторите сгенерированный пароль</FieldLabel>
                     <FieldInput>
                         <InputPassword2
                             type="password"
+                            disabled={lock}
                             pass={password && password === password2}
                             value={password2}
                             onChange={this._onPassword2Change}
@@ -203,6 +205,7 @@ export default class Step3 extends PureComponent {
                     {rulesList.map(rule => (
                         <CheckboxField key={rule.id}>
                             <Checkbox
+                                disabled={lock}
                                 value={rules.has(rule.id)}
                                 onChange={value =>
                                     this._onCheckChange(rule.id, value)
@@ -214,8 +217,14 @@ export default class Step3 extends PureComponent {
                     ))}
                 </Checkboxes>
                 <Footer>
-                    <Button onClick={this._onOkClick}>Создать аккаунт</Button>
-                    {errorText ? <ErrorBlock>{errorText}</ErrorBlock> : null}
+                    <Button disabled={lock} onClick={this._onOkClick}>
+                        Создать аккаунт
+                    </Button>
+                    {errorText ? (
+                        <ErrorBlock innerRef={el => (this._errorEl = el)}>
+                            {errorText}
+                        </ErrorBlock>
+                    ) : null}
                 </Footer>
             </>
         );
@@ -230,6 +239,7 @@ export default class Step3 extends PureComponent {
                         Я прочитал и согласен с{' '}
                         <Link
                             href="/ru--konfidenczialxnostx/@golos/politika-konfidencialnosti"
+                            tabIndex="-1"
                             target="_blank"
                         >
                             Условиями пользования
@@ -256,7 +266,7 @@ export default class Step3 extends PureComponent {
     _onGenerateClick = () => {
         this.setState(
             {
-                password: generateRandomString(PASSWORD_LENGTH),
+                password: 'P' + generateRandomString(PASSWORD_LENGTH - 1),
             },
             () => {
                 this._passwordInput.focus();
@@ -294,12 +304,12 @@ export default class Step3 extends PureComponent {
         } catch (err) {}
     };
 
-    _onOkClick = () => {
+    _onOkClick = async () => {
         const { password, password2, rules } = this.state;
 
         let errorText = null;
 
-        if (!password || password.length !== PASSWORD_LENGTH) {
+        if (!password) {
             errorText = 'Создайте пароль';
         } else if (password !== password2) {
             errorText = 'Пароли не совпадают';
@@ -308,9 +318,7 @@ export default class Step3 extends PureComponent {
         }
 
         if (errorText) {
-            this.setState({
-                errorText,
-            });
+            this._showError(errorText);
             return;
         }
 
@@ -318,6 +326,37 @@ export default class Step3 extends PureComponent {
             errorText: null,
         });
 
-        alert('START REGISTRATION');
+        this.setState({
+            lock: true,
+        });
+
+        try {
+            const error = await window.app.finishRegistration(password);
+
+            if (error) {
+                this.setState({
+                    lock: false,
+                });
+                this._showError(`Ошибка: ${error.code} ${error.message}`);
+            } else {
+                location.href = 'https://golos.io/';
+            }
+        } catch (err) {
+            this.setState({
+                lock: false,
+            });
+            this._showError(`Ошибка: ${err}`);
+        }
     };
+
+    _showError(errorText) {
+        this.setState(
+            {
+                errorText,
+            },
+            () => {
+                this._errorEl.scrollIntoViewIfNeeded();
+            }
+        );
+    }
 }

@@ -29,14 +29,18 @@ export const Footer = styled.div`
 export const Button = styled.button.attrs({ type: 'button' })`
     height: 34px;
     padding: 8px 28px;
-    background: #3684ff;
     border-radius: 50px;
     font-size: 12px;
     font-weight: 500;
-    color: #fff;
     letter-spacing: 1.5px;
     text-transform: uppercase;
+    color: #fff;
+    background: #3684ff;
     cursor: pointer;
+    
+    &[disabled] {
+        background: #89cbff;
+    }
 `;
 
 export const Dots = styled.div`

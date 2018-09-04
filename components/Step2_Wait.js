@@ -55,12 +55,6 @@ const MobileImg = styled.img`
 `;
 
 export default class Step2_Wait extends PureComponent {
-    componentDidMount() {
-        setTimeout(() => {
-            this.props.onStepChange('3');
-        }, 1400);
-    }
-
     render() {
         return (
             <Root>

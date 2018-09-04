@@ -21,6 +21,7 @@ export default class MyDocument extends Document {
                     />
                     <title>Golos.io registration</title>
                     {this.props.styleTags}
+                    <script async defer src="https://www.google.com/recaptcha/api.js?render=explicit" />
                 </Head>
                 <body>
                     <Main />

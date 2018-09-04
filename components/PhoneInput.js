@@ -23,7 +23,7 @@ const Code = styled.div`
     align-items: center;
     flex-shrink: 0;
     height: 100%;
-    padding-right: 4px;
+    padding-right: 3px;
     color: #444;
 `;
 
