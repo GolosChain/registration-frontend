@@ -292,7 +292,6 @@ export default class Index extends PureComponent {
     };
 
     goTo(step) {
-        return;
         if (this._nextStep) {
             if (this._nextStep === step) {
                 return;
