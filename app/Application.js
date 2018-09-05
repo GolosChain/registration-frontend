@@ -106,14 +106,18 @@ export default class Application {
             ...keys,
         });
 
-        console.log('registration.toBlockChain response:', response);
-
         if (response.error) {
             return response.error;
         }
 
         if (response.result && response.result.status === 'OK') {
             localStorage.removeItem(REG_KEY);
+            this._root.goTo('final');
+        } else {
+            return {
+                code: -1,
+                message: 'Error',
+            };
         }
     }
 

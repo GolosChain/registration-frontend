@@ -8,6 +8,7 @@ import Step1 from '../components/Step1';
 import Step2 from '../components/Step2';
 import Step2_Wait from '../components/Step2_Wait';
 import Step3 from '../components/Step3';
+import StepFinal from '../components/StepFinal';
 import Application from '../app/Application';
 import LangSwitch from '../components/LangSwitch';
 
@@ -31,6 +32,10 @@ const Steps = {
         Comp: Step3,
         img: 3,
     },
+    'final': {
+        Comp: StepFinal,
+        img: 3,
+    }
 };
 
 injectGlobal`
@@ -196,7 +201,7 @@ export default class Index extends PureComponent {
 
     state = {
         locale: getLocale(this.props),
-        step: '3',
+        step: '1',
         fadeIn: false,
         fadeOut: false,
     };

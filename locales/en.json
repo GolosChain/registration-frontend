@@ -50,5 +50,8 @@
   "step3.term2": "I've reliably save my password.",
   "step3.term3": "I understand what Golos.io can't restore my lost passwords in future",
   "step3.title": "Password creating",
+  "stepFinal.go": "Go to Golos.io",
+  "stepFinal.subTitle": "Do fun!",
+  "stepFinal.title": "Congratulations on registration",
   "wrong": "Something went wrong"
 }

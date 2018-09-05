@@ -320,20 +320,14 @@ class Step3 extends PureComponent {
             const error = await window.app.finishRegistration(password);
 
             if (error) {
-                this.setState({
-                    lock: false,
-                });
+                this.setState({ lock: false });
                 this._showError(
                     `${intl.messages.error}: ${error.code} ${error.message}`
                 );
-            } else {
-                location.href = 'https://golos.io/';
             }
         } catch (err) {
-            this.setState({
-                lock: false,
-            });
-            this._showError(`: ${err}`);
+            this.setState({ lock: false });
+            this._showError(`${intl.messages.error}: ${err}`);
         }
     };
 
