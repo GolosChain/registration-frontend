@@ -202,8 +202,7 @@ export default class Index extends PureComponent {
 
     state = {
         locale: getLocale(this.props),
-        step: 'final',
-        //step: '2_wait',
+        step: '1',
         fadeIn: false,
         fadeOut: false,
     };

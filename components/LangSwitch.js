@@ -13,7 +13,7 @@ const Root = styled.div`
 
     @media (max-width: 800px) {
         position: absolute;
-        top: 20px;
+        top: 22px;
         right: 12px;
     }
 `;
