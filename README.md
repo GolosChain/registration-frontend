@@ -9,5 +9,5 @@ GLS_GATE_PORT=3000
 ```
 Specific env:
 ```
-GLS_GATE_CONNECT=wss://ws.sandbox.golos.io/
+GLS_GATE_CONNECT=wss://gate.golos.io/
 ```
