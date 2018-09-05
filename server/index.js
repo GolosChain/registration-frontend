@@ -14,6 +14,8 @@ nextApp
     .then(() => {
         const server = express();
 
+        server.disable('x-powered-by');
+
         server.use(express.static(path.join(__dirname, '../public')));
 
         server.use(cookieParser());
