@@ -30,7 +30,9 @@ function getLanguage(headers) {
 }
 
 export default class MyDocument extends Document {
-    static getInitialProps({ renderPage, req }) {
+    static getInitialProps({ renderPage, req, res }) {
+        res.header('X-Frame-Options', 'SAMEORIGIN');
+
         const cookieLang = req.cookies['gls.lang'];
 
         let locale;
