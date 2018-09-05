@@ -80,8 +80,8 @@ export const Input = styled.input`
     width: 100%;
     height: 32px;
     padding: 0 14px;
-    border-radius: 6px;
     border: 1px solid #e1e1e1;
+    border-radius: 6px;
     color: #333;
     background: #fff;
 
@@ -98,6 +98,7 @@ export const Input = styled.input`
     `};
 
     &::placeholder {
+        line-height: 20px;
         font-weight: 300;
         color: #aaa;
     }

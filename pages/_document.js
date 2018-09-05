@@ -1,6 +1,6 @@
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
-import resetStyles from '../utils/styles-reset';
+import styles from '../utils/styles';
 
 const LOCALES = ['en', 'ru', 'ua', 'uk'];
 
@@ -74,7 +74,7 @@ export default class MyDocument extends Document {
                     <title>{TITLE_TRANSLATIONS[locale]}</title>
                     <style
                         dangerouslySetInnerHTML={{
-                            __html: resetStyles,
+                            __html: styles,
                         }}
                     />
                     {this.props.styleTags}

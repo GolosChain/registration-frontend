@@ -55,7 +55,7 @@ const Input = styled.input`
     }
 
     &::placeholder {
-        line-height: 18px;
+        line-height: 20px;
         font-weight: 300;
         color: #aaa;
     }
