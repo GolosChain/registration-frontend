@@ -8,7 +8,15 @@ export default class GateConnect {
     }
 
     connect() {
-        const ws = new WebSocket('ws://95.216.153.236:8080');
+        const address = window.GLS_GATE_CONNECT;
+
+        if (!address) {
+            console.error('GLS_GATE_CONNECT not specified');
+            alert('ERROR');
+            return;
+        }
+
+        const ws = new WebSocket(address);
 
         ws.addEventListener('open', () => {
             this._open = true;

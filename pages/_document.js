@@ -86,6 +86,13 @@ export default class MyDocument extends Document {
                 </Head>
                 <body>
                     <Main locale={locale} />
+                    <script
+                        dangerouslySetInnerHTML={{
+                            __html: `window.GLS_GATE_CONNECT='${
+                                process.env.GLS_GATE_CONNECT
+                            }'`,
+                        }}
+                    />
                     <NextScript />
                 </body>
             </html>
