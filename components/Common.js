@@ -84,7 +84,6 @@ export const Input = styled.input`
     border: 1px solid #e1e1e1;
     color: #333;
     background: #fff;
-    appearance: none;
 
     ${is('blue')`
         color: #2879ff;

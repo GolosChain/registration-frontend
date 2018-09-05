@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
-import styled, { injectGlobal, keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import is from 'styled-is';
 import { IntlProvider, addLocaleData } from 'react-intl';
-import '../utils/styles-reset';
 import { Dot, Dots } from '../components/Common';
 import Step1 from '../components/Step1';
 import Step2 from '../components/Step2';
@@ -38,14 +37,6 @@ const Steps = {
         hideDots: true,
     }
 };
-
-injectGlobal`
-html, body, #__next {
-  height: 100%;
-}
-
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
-`;
 
 const locales = {
     en: require('../locales/en.json'),
