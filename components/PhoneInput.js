@@ -71,7 +71,11 @@ export default function PhoneInput(props) {
                 onBlur={props.onBlur}
                 onFocus={props.onFocus}
                 onChange={e =>
-                    props.onChange(e.target.value.replace(/[^\d ()-]+/g, ''))
+                    props.onChange(
+                        e.target.value
+                            .replace(/[^\d ()-]+/g, '')
+                            .replace(/^0+/, '')
+                    )
                 }
             />
             <Highlight />
