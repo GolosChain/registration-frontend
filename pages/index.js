@@ -34,7 +34,8 @@ const Steps = {
     },
     'final': {
         Comp: StepFinal,
-        img: 3,
+        img: 4,
+        hideDots: true,
     }
 };
 
@@ -201,7 +202,8 @@ export default class Index extends PureComponent {
 
     state = {
         locale: getLocale(this.props),
-        step: '1',
+        step: 'final',
+        //step: '2_wait',
         fadeIn: false,
         fadeOut: false,
     };

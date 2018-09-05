@@ -66,7 +66,7 @@ export default class Step2_Wait extends PureComponent {
                 <SubTitle>
                     <FormattedMessage id="step2_wait.subTitle" />
                 </SubTitle>
-                <MobileImg src="images/step_2.svg" />
+                <MobileImg src="/images/step_2.svg" />
             </Root>
         );
     }
