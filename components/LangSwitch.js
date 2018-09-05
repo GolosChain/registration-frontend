@@ -5,12 +5,14 @@ import is from 'styled-is';
 const LANGS = ['en', 'ru', 'ua'];
 
 const Root = styled.div`
-    position: absolute;
+    position: fixed;
     top: 50px;
     right: 50px;
     cursor: pointer;
+    z-index: 1;
 
     @media (max-width: 800px) {
+        position: absolute;
         top: 20px;
         right: 12px;
     }
