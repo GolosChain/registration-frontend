@@ -49,6 +49,11 @@ const Dialog = styled.div`
     padding: 28px;
     border-radius: 8px;
     background: #fff;
+
+    @media (max-width: 500px) {
+        width: 100%;
+        border-radius: 0;
+    }
 `;
 
 const Header = styled.div`
