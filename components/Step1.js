@@ -137,8 +137,8 @@ class Step1 extends PureComponent {
                                 error={nameError}
                                 value={accountName}
                                 autoCorrect="off"
-                                autoapitalize="off"
-                                checkSpell="false"
+                                autoCapitalize="off"
+                                spellCheck="false"
                                 onChange={this._onAccountNameChange}
                                 onBlur={this._onAccountNameBlur}
                             />
