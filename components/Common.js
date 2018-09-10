@@ -71,7 +71,7 @@ export const FieldLabel = styled.div`
     margin-bottom: 14px;
     font-size: 14px;
     font-weight: 300;
-    color: #959595;
+    color: #393636;
 
     @media (max-width: 500px) {
         font-size: 16px;

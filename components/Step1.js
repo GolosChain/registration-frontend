@@ -31,7 +31,7 @@ const Comment = styled.div`
     font-size: 14px;
     font-weight: 300;
     letter-spacing: 0.3px;
-    color: #999;
+    color: #393636;
 `;
 
 const InputWrapper = styled.div`

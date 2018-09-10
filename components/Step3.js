@@ -22,7 +22,7 @@ const CheckboxText = styled.div`
     line-height: 14px;
     font-size: 12px;
     font-weight: 300;
-    color: #959595;
+    color: #393636;
 
     @media (max-width: 500px) {
         line-height: 20px;
@@ -46,7 +46,7 @@ const Li = styled.li`
     display: flex;
     font-weight: 300;
     font-size: 14px;
-    color: #757575;
+    color: #393636;
     margin-bottom: 14px;
 
     &:last-child {
@@ -81,7 +81,7 @@ const Description = styled.div`
     font-weight: 300;
     line-height: 1.4em;
     text-align: center;
-    color: #959595;
+    color: #393636;
 
     @media (max-width: 500px) {
         font-size: 16px;

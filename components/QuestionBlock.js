@@ -15,7 +15,7 @@ export const Text = styled.div`
     font-size: 14px;
     font-weight: 300;
     letter-spacing: 0.5px;
-    color: #959595;
+    color: #393636;
 
     @media (max-width: 500px) {
         font-size: 16px;
@@ -31,7 +31,7 @@ export const Answer = styled.div`
     line-height: 1.4em;
     font-size: 14px;
     font-weight: 300;
-    color: #959595;
+    color: #393636;
 
     @media (max-width: 500px) {
         font-size: 16px;

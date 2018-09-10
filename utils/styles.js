@@ -9,7 +9,9 @@ body {
 *, ::after, ::before {
   box-sizing: border-box;
 }
-
+ol {
+  padding: 0;
+}
 :focus {
   outline: #3b99fc auto 5px;
   outline-offset: -2px;
