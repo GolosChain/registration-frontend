@@ -10,6 +10,7 @@ import Step3 from '../components/Step3';
 import StepFinal from '../components/StepFinal';
 import Application from '../app/Application';
 import LangSwitch from '../components/LangSwitch';
+import ChangePhoneDialog from '../components/ChangePhoneDialog';
 
 const ANIMATION_DURATION = 250;
 
@@ -31,11 +32,11 @@ const Steps = {
         Comp: Step3,
         img: 3,
     },
-    'final': {
+    final: {
         Comp: StepFinal,
         img: 4,
         hideDots: true,
-    }
+    },
 };
 
 const locales = {
@@ -196,6 +197,7 @@ export default class Index extends PureComponent {
         step: '1',
         fadeIn: false,
         fadeOut: false,
+        showChangePhoneDialog: false,
     };
 
     componentDidMount() {
@@ -207,7 +209,13 @@ export default class Index extends PureComponent {
     }
 
     render() {
-        const { step, fadeIn, fadeOut, locale } = this.state;
+        const {
+            step,
+            fadeIn,
+            fadeOut,
+            locale,
+            showChangePhoneDialog,
+        } = this.state;
 
         const { Comp, img, hideDots } = Steps[step];
 
@@ -257,10 +265,29 @@ export default class Index extends PureComponent {
                             </ImageWrapper>
                         </RightPanel>
                     </Panels>
+                    {showChangePhoneDialog ? (
+                        <ChangePhoneDialog onClose={this._onDialogClose} />
+                    ) : null}
                 </Root>
             </IntlProvider>
         );
     }
+
+    showChangePhoneDialog() {
+        this.setState({
+            showChangePhoneDialog: true,
+        });
+    }
+
+    closeChangePhoneDialog() {
+        this._onDialogClose();
+    }
+
+    _onDialogClose = () => {
+        this.setState({
+            showChangePhoneDialog: false,
+        });
+    };
 
     _onStepChange = step => {
         this._nextStep = step;
@@ -270,6 +297,7 @@ export default class Index extends PureComponent {
 
         this.setState({
             fadeOut: true,
+            showChangePhoneDialog: false,
         });
 
         this._stepTimeout1 = setTimeout(() => {

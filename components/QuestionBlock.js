@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
+import { B, PseudoLink } from './Common';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import CollapsingBlock from './CollapsingBlock';
 
@@ -39,7 +40,7 @@ export const Answer = styled.div`
 
 class QuestionBlock extends PureComponent {
     render() {
-        const { intl } = this.props;
+        const { intl, phone } = this.props;
         const { className } = this.props;
 
         return (
@@ -60,7 +61,19 @@ class QuestionBlock extends PureComponent {
                     initialCollapsed
                 >
                     <Answer>
-                        <FormattedMessage id="step2.quest2.answer" />
+                        <FormattedMessage
+                            id="step2.quest2.answer"
+                            values={{
+                                phone: <B>+{phone}</B>,
+                                change: (
+                                    <PseudoLink
+                                        onClick={this.props.onChangeClick}
+                                    >
+                                        {intl.messages['step2.quest2.change']}
+                                    </PseudoLink>
+                                ),
+                            }}
+                        />
                     </Answer>
                 </CollapsingBlockStyled>
             </Root>

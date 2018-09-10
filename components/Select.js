@@ -78,7 +78,7 @@ export default function Select(props) {
                 <InputValue>{text}</InputValue>
                 <Chevron />
             </InputLike>
-            <InnerSelect value={props.value} onChange={props.onChange}>
+            <InnerSelect value={props.value} onChange={e => props.onChange(e.target.value)}>
                 {props.items.map(item => (
                     <option key={item.value} value={item.value}>
                         {item.label}

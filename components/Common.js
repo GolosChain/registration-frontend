@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import is from 'styled-is';
 
+export const B = styled.b`
+    font-weight: 700;
+    color: #333;
+`;
+
 export const Title = styled.h1`
     margin: 18px 0 22px;
     font-size: 34px;
@@ -106,4 +111,10 @@ export const Input = styled.input`
 
 export const Link = styled.a`
     color: #2879ff;
+`;
+
+export const PseudoLink = styled.a`
+    border-bottom: 1px dotted #3684ff;
+    color: #3684ff;
+    cursor: pointer;
 `;

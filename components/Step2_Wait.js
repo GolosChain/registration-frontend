@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
+import { B, PseudoLink } from './Common';
 import styled, { keyframes } from 'styled-components';
 
 const Root = styled.div`
@@ -20,13 +21,6 @@ const Title = styled.div`
     font-weight: 300;
     font-size: 17px;
     color: #333;
-`;
-
-const SubTitle = styled.div`
-    text-align: center;
-    font-size: 13px;
-    font-weight: 300;
-    color: #959595;
 `;
 
 const steppedRotation = keyframes`
@@ -55,19 +49,45 @@ const MobileImg = styled.img`
     }
 `;
 
-export default class Step2_Wait extends PureComponent {
+const Footer = styled.div`
+    text-align: center;
+    margin-top: 6px;
+    line-height: 1.4em;
+    font-size: 13px;
+    color: #959595;
+`;
+
+class Step2_Wait extends PureComponent {
     render() {
+        const { intl } = this.props;
+
         return (
             <Root>
                 <Loader />
                 <Title>
                     <FormattedMessage id="step2_wait.title" />
                 </Title>
-                <SubTitle>
-                    <FormattedMessage id="step2_wait.subTitle" />
-                </SubTitle>
+                <Footer>
+                    <FormattedMessage
+                        id="step2.quest2.answer"
+                        values={{
+                            phone: <B>+{window.app.getPhone()}</B>,
+                            change: (
+                                <PseudoLink onClick={this._onChangePhoneClick}>
+                                    {intl.messages['step2.quest2.change']}
+                                </PseudoLink>
+                            ),
+                        }}
+                    />
+                </Footer>
                 <MobileImg src="/images/step_2.svg" />
             </Root>
         );
     }
+
+    _onChangePhoneClick = () => {
+        window.app.openChangePhoneDialog();
+    };
 }
+
+export default injectIntl(Step2_Wait);

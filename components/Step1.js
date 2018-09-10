@@ -400,13 +400,12 @@ class Step1 extends PureComponent {
                 return;
             }
 
-            const fullPhone = `${code}${phone}`;
-
             try {
                 const result = await window.app.firstStep({
                     accountName,
                     email,
-                    phone: fullPhone,
+                    code: code,
+                    phone: phone,
                     captchaCode,
                 });
 
@@ -445,9 +444,9 @@ class Step1 extends PureComponent {
         );
     };
 
-    _onCodeChange = e => {
+    _onCodeChange = code => {
         this.setState({
-            code: Number(e.target.value),
+            code: Number(code),
         });
     };
 

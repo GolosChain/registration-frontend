@@ -1,20 +1,23 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
-import { Title, SubTitle, Footer, Button } from './Common';
+import { B, Title, SubTitle, Footer, Button } from './Common';
 import QuestionBlock from './QuestionBlock';
 
 const QuestionBlockStyled = styled(QuestionBlock)`
     margin-bottom: 24px;
 `;
 
-const B = styled.b`
-    font-weight: 700;
-    color: #333;
-`;
-
 export default class Step2 extends PureComponent {
     _code = generateRandomCode();
+
+    componentDidMount() {
+        window.app.on('phoneChange', this._onPhoneChange);
+    }
+
+    componentWillUnmount() {
+        window.app.off('phoneChange', this._onPhoneChange);
+    }
 
     render() {
         return (
@@ -31,7 +34,10 @@ export default class Step2 extends PureComponent {
                         }}
                     />
                 </SubTitle>
-                <QuestionBlockStyled />
+                <QuestionBlockStyled
+                    phone={window.app.getPhone()}
+                    onChangeClick={this._onChangePhoneClick}
+                />
                 <Footer>
                     <Button onClick={this._onOkClick}>
                         <FormattedMessage id="step2.ok" />
@@ -41,8 +47,16 @@ export default class Step2 extends PureComponent {
         );
     }
 
+    _onPhoneChange = () => {
+        this.forceUpdate();
+    };
+
     _onOkClick = () => {
         this.props.onStepChange('2_wait');
+    };
+
+    _onChangePhoneClick = () => {
+        window.app.openChangePhoneDialog();
     };
 }
 
