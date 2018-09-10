@@ -1,6 +1,6 @@
 {
-  "name": "with-styled-components",
-  "version": "1.0.0",
+  "name": "golos-registration-frontend",
+  "version": "0.1.0",
   "license": "ISC",
   "scripts": {
     "dev": "node server/index.js",
@@ -13,20 +13,30 @@
     "express": "^4.16.3",
     "golos-js": "^0.7.3",
     "lodash": "^4.17.10",
-    "next": "^6.1.1",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
+    "next": "^6.1.2",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
     "react-intl": "^2.4.0",
     "styled-components": "^2.1.0",
     "styled-is": "^1.1.5"
   },
   "devDependencies": {
-    "babel-plugin-styled-components": "^1.1.5"
+    "babel-plugin-styled-components": "^1.6.2"
   },
   "prettier": {
     "semi": true,
     "tabWidth": 4,
     "singleQuote": true,
-    "trailingComma": "es5"
+    "trailingComma": "es5",
+    "overrides": [
+      {
+        "files": [
+          "*.json"
+        ],
+        "options": {
+          "tabWidth": 2
+        }
+      }
+    ]
   }
 }
