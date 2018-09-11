@@ -1,15 +1,21 @@
 import golos from 'golos-js';
 import GateConnect from './GateConnect';
+import EventEmitter from '../utils/EventEmitter';
 
 const REG_KEY = 'golos.registration';
 
-export default class Application {
+export default class Application extends EventEmitter {
     constructor(root) {
+        super();
+
         this._root = root;
         this._conn = new GateConnect();
-        this._eventHandlers = new Map();
 
         this._conn.connect();
+
+        this._conn.addEventHandler('registration.phoneVerified', () => {
+            this._root.goTo('3');
+        });
 
         window.app = this;
     }
@@ -44,6 +50,8 @@ export default class Application {
         this._phone = phone;
 
         this._saveRegData();
+
+        this._startWaitVerification();
 
         this.emit('phoneChanged');
 
@@ -170,10 +178,6 @@ export default class Application {
     }
 
     _startWaitVerification() {
-        this._conn.addEventHandler('registration.phoneVerified', () => {
-            this._root.goTo('3');
-        });
-
         this._conn.request('registration.subscribeOnSmsGet', {
             user: this._accountName,
             phone: `${this._code}${this._phone}`,
@@ -203,39 +207,5 @@ export default class Application {
         //             break;
         //     }
         // }, 2000);
-    }
-
-    emit(eventName, data) {
-        const callbacks = this._eventHandlers.get(eventName);
-
-        if (callbacks) {
-            for (let callback of callbacks) {
-                callback(data, eventName);
-            }
-        }
-    }
-
-    on(eventName, callback) {
-        let callbacks = this._eventHandlers.get(eventName);
-
-        if (!callbacks) {
-            callbacks = [];
-            this._eventHandlers.set(eventName, callbacks);
-        }
-
-        if (!callbacks.includes(callback)) {
-            callbacks.push(callback);
-        }
-    }
-
-    off(eventName, callback) {
-        const callbacks = this._eventHandlers.get(eventName);
-
-        if (callbacks) {
-            this._eventHandlers.set(
-                eventName,
-                callbacks.filter(c => c !== callback)
-            );
-        }
     }
 }

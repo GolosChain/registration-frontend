@@ -12,11 +12,11 @@ export default class Step2 extends PureComponent {
     _code = generateRandomCode();
 
     componentDidMount() {
-        window.app.on('phoneChange', this._onPhoneChange);
+        window.app.on('phoneChanged', this._onPhoneChange);
     }
 
     componentWillUnmount() {
-        window.app.off('phoneChange', this._onPhoneChange);
+        window.app.off('phoneChanged', this._onPhoneChange);
     }
 
     render() {
