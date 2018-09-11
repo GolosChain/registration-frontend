@@ -72,6 +72,7 @@ export default class MyDocument extends Document {
                         content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"
                     />
                     <title>{TITLE_TRANSLATIONS[locale]}</title>
+                    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
                     <style
                         dangerouslySetInnerHTML={{
                             __html: styles,

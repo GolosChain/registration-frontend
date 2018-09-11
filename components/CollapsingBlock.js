@@ -33,7 +33,7 @@ const CollapseIcon = styled.div`
     height: 32px;
     padding: 9px;
     margin-right: -8px;
-    background: url('images/chevron.svg') no-repeat center;
+    background: url('/images/chevron.svg') no-repeat center;
     background-size: 14px;
     transform: rotate(0);
     transition: transform 0.4s;

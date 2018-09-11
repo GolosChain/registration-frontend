@@ -36,7 +36,7 @@ const Loader = styled.div`
     width: 64px;
     height: 64px;
     margin-bottom: 40px;
-    background: url('images/spin.svg') no-repeat;
+    background: url('/images/spin.svg') no-repeat;
     animation: ${steppedRotation} 0.8s steps(8) infinite;
 `;
 

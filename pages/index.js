@@ -106,7 +106,7 @@ const Logo = styled.a`
     width: 134px;
     height: 57px;
     margin-top: 40px;
-    background: url('images/logo.svg') center no-repeat;
+    background: url('/images/logo.svg') center no-repeat;
     background-size: 114px 37px;
     z-index: 1;
 
@@ -162,7 +162,7 @@ const Column = styled.div`
 const SideImage = styled.div`
     width: 431px;
     height: 426px;
-    background: url('images/step_${props => props.step}.svg') no-repeat center;
+    background: url('/images/step_${props => props.step}.svg') no-repeat center;
     opacity: ${props => props.opacity};
     transition: opacity ${ANIMATION_DURATION}ms;
 `;

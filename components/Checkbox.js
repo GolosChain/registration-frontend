@@ -39,13 +39,13 @@ export default function Checkbox(props) {
                 onChange={() => props.onChange(!props.value)}
             />
             {props.value ? (
-                <Img src="images/checkbox_on.svg" />
+                <Img src="/images/checkbox_on.svg" />
             ) : (
-                <Img src="images/checkbox_off.svg" />
+                <Img src="/images/checkbox_off.svg" />
             )}
             <Text>{props.children}</Text>
-            <Preload src="images/checkbox_on.svg" />
-            <Preload src="images/checkbox_off.svg" />
+            <Preload src="/images/checkbox_on.svg" />
+            <Preload src="/images/checkbox_off.svg" />
         </Root>
     );
 }

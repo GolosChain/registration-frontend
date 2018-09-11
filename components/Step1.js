@@ -51,7 +51,7 @@ const Red = styled.span`
 const Check = styled.div`
     width: 16px;
     height: 16px;
-    background: url('images/check.svg') no-repeat center;
+    background: url('/images/check.svg') no-repeat center;
 `;
 
 const CaptchaBlock = styled(Field)`
