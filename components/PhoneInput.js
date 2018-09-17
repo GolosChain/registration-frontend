@@ -25,6 +25,7 @@ const Code = styled.div`
     height: 100%;
     padding-right: 3px;
     color: #444;
+    user-select: none;
 
     @media (max-width: 500px) {
         font-size: 16px;

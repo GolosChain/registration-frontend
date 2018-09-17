@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
+import capitalize from 'lodash/capitalize';
 import styled from 'styled-components';
 import { Title, SubTitle, Footer, Button } from './Common';
 
@@ -30,7 +31,14 @@ class StepFinal extends PureComponent {
         return (
             <Root>
                 <Title>
-                    <FormattedMessage id="stepFinal.title" />
+                    <FormattedMessage
+                        id="stepFinal.title"
+                        values={{
+                            username: process.browser
+                                ? capitalize(window.app.getAccountName())
+                                : null,
+                        }}
+                    />
                 </Title>
                 <SubTitle>
                     <FormattedMessage id="stepFinal.subTitle" />

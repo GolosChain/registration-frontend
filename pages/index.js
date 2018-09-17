@@ -200,12 +200,14 @@ export default class Index extends PureComponent {
         showChangePhoneDialog: false,
     };
 
-    componentDidMount() {
-        const app = new Application(this);
+    componentWillMount() {
+        if (process.browser) {
+            const app = new Application(this);
 
-        app.init().catch(err => {
-            console.error(err);
-        });
+            app.init().catch(err => {
+                console.error(err);
+            });
+        }
     }
 
     render() {

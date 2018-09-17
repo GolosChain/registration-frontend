@@ -13,6 +13,7 @@ import Captcha from './Captcha';
 
 const FieldError = styled.div`
     margin-top: 10px;
+    line-height: 1.4em;
     font-size: 12px;
     font-weight: 300;
     color: red;
@@ -139,6 +140,7 @@ class Step1 extends PureComponent {
                                 autoCorrect="off"
                                 autoCapitalize="off"
                                 spellCheck="false"
+                                placeholder={intl.messages['step1.accountNamePlaceholder']}
                                 onChange={this._onAccountNameChange}
                                 onBlur={this._onAccountNameBlur}
                             />
@@ -165,7 +167,7 @@ class Step1 extends PureComponent {
                     <FieldInput>
                         <Input
                             disabled={lock}
-                            placeholder="golos@gmail.com"
+                            placeholder={intl.messages['step1.emailPlaceholder']}
                             type="email"
                             value={email}
                             error={emailError}
@@ -278,12 +280,12 @@ class Step1 extends PureComponent {
 
         if (!name) {
             error = true;
+        } else if (/[^a-z0-9.-]/.test(name)) {
+            error = true;
+            errorText = 'step1.rules.containsOnly';
         } else if (/^[^a-z]/.test(name)) {
             error = true;
             errorText = 'step1.rules.startsWithChar';
-        } else if (!/^[a-z0-9]+$/.test(name)) {
-            error = true;
-            errorText = 'step1.rules.charsAndNumbers';
         } else if (name.length < 4) {
             error = true;
             errorText = 'step1.rules.tooShort';
