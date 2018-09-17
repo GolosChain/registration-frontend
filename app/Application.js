@@ -24,6 +24,10 @@ export default class Application extends EventEmitter {
         return this._conn;
     }
 
+    getAccountName() {
+        return this._accountName;
+    }
+
     getPhone() {
         return `${this._code}${this._phone}`;
     }

@@ -69,6 +69,7 @@ export const Field = styled.label`
 
 export const FieldLabel = styled.div`
     margin-bottom: 14px;
+    line-height: 1.4em;
     font-size: 14px;
     font-weight: 300;
     color: #393636;
