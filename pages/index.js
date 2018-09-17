@@ -292,6 +292,11 @@ export default class Index extends PureComponent {
     };
 
     _onStepChange = step => {
+        mixpanel.track('Go to step', {
+            toStep: step,
+            fromStep: this.state.step,
+        });
+
         this._nextStep = step;
 
         clearTimeout(this._stepTimeout1);
