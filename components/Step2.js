@@ -9,8 +9,6 @@ const QuestionBlockStyled = styled(QuestionBlock)`
 `;
 
 export default class Step2 extends PureComponent {
-    _code = generateRandomCode();
-
     componentDidMount() {
         window.app.on('phoneChanged', this._onPhoneChange);
     }
@@ -29,8 +27,8 @@ export default class Step2 extends PureComponent {
                     <FormattedMessage
                         id="step2.subTitle"
                         values={{
-                            code: <B>{this._code}</B>,
-                            phone: <B>+46769438807</B>,
+                            code: <B>{window.app.getSecretCode()}</B>,
+                            phone: <B>{window.app.getVerificationPhoneNumber()}</B>,
                         }}
                     />
                 </SubTitle>
@@ -58,14 +56,4 @@ export default class Step2 extends PureComponent {
     _onChangePhoneClick = () => {
         window.app.openChangePhoneDialog();
     };
-}
-
-function generateRandomCode() {
-    let code = null;
-
-    do {
-        code = Math.floor(10000 * Math.random()).toString();
-    } while (code.length !== 4);
-
-    return code;
 }

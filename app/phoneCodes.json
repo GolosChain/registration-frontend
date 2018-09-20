@@ -1,14 +1,27 @@
 [
-    {
-        "value": "1",
-        "label": "USA (+1)"
-    },
-    {
-        "value": "7",
-        "label": "Russia (+7)"
-    },
-    {
-        "value": "385",
-        "label": "Belarus (+385)"
-    }
+  {
+    "code": 370,
+    "label": "Lithuania (+370)",
+    "verificationPhone": "+12563587178"
+  },
+  {
+    "code": 375,
+    "label": "Belarus (+375)",
+    "verificationPhone": "+375292308770"
+  },
+  {
+    "code": 380,
+    "label": "Ukraine (+380)",
+    "verificationPhone": "+380931777772"
+  },
+  {
+    "code": 777,
+    "label": "Kazakhstan (+777)",
+    "verificationPhone": "+77770076977"
+  },
+  {
+    "code": 7,
+    "label": "Russia (+7)",
+    "verificationPhone": "+79169306359"
+  }
 ]

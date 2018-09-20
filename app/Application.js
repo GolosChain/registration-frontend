@@ -1,6 +1,7 @@
 import golos from 'golos-js';
 import GateConnect from './GateConnect';
 import EventEmitter from '../utils/EventEmitter';
+import phoneCodes from './phoneCodes.json';
 
 const REG_KEY = 'golos.registration';
 
@@ -88,12 +89,14 @@ export default class Application extends EventEmitter {
                             this._accountName = null;
                             this._code = null;
                             this._phone = null;
+                            this._secret = null;
                             this._root.goTo('1');
                             break;
                         case 'verify':
                             this._accountName = savedData.accountName;
                             this._code = savedData.code;
                             this._phone = savedData.phone;
+                            this._secret = savedData.secret;
                             this._startWaitVerification();
                             this._root.goTo('2');
                             break;
@@ -101,6 +104,7 @@ export default class Application extends EventEmitter {
                             this._accountName = savedData.accountName;
                             this._code = savedData.code;
                             this._phone = savedData.phone;
+                            this._secret = null;
                             this._root.goTo('3');
                             break;
                     }
@@ -128,6 +132,7 @@ export default class Application extends EventEmitter {
             this._accountName = data.accountName;
             this._code = data.code;
             this._phone = data.phone;
+            this._secret = generateRandomCode();
 
             this._saveRegData();
 
@@ -145,6 +150,7 @@ export default class Application extends EventEmitter {
                 accountName: this._accountName,
                 code: this._code,
                 phone: this._phone,
+                secret: this._secret,
             })
         );
     }
@@ -181,6 +187,22 @@ export default class Application extends EventEmitter {
         this._root.showChangePhoneDialog();
     }
 
+    getVerificationPhoneNumber() {
+        for (let country of phoneCodes) {
+            if (country.code === this._code) {
+                return country.verificationPhone;
+            }
+        }
+    }
+
+    getSecretCode() {
+        if (!this._secret) {
+            this._secret = generateRandomCode();
+        }
+
+        return this._secret;
+    }
+
     _startWaitVerification() {
         this._conn.request('registration.subscribeOnSmsGet', {
             user: this._accountName,
@@ -212,4 +234,14 @@ export default class Application extends EventEmitter {
         //     }
         // }, 2000);
     }
+}
+
+function generateRandomCode() {
+    let code = null;
+
+    do {
+        code = Math.floor(10000 * Math.random()).toString();
+    } while (code.length !== 4);
+
+    return code;
 }

@@ -237,7 +237,7 @@ export default class Index extends PureComponent {
             >
                 <Root>
                     <Header>
-                        <Logo href="/" />
+                        <Logo href="https://golos.io/" />
                     </Header>
                     <LangSwitch lang={locale} onChange={this._onLangChange} />
                     <Panels>
