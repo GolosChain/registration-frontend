@@ -5,6 +5,7 @@ import { Field, FieldLabel, FieldInput, Button } from './Common';
 import Select from './Select';
 import phoneCodes from '../app/phoneCodes';
 import PhoneInput from './PhoneInput';
+import { phoneCodesToSelectItems } from '../utils/phoneCodes';
 
 const fadeIn = keyframes`
     from {
@@ -109,7 +110,7 @@ class ChangePhoneDialog extends PureComponent {
                         <FieldInput>
                             <Select
                                 value={code}
-                                items={phoneCodes}
+                                items={phoneCodesToSelectItems(phoneCodes)}
                                 onChange={this._onCodeChange}
                             />
                         </FieldInput>

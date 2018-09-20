@@ -10,6 +10,7 @@ import debounce from 'lodash/debounce';
 import phoneCodes from '../app/phoneCodes.json';
 import Loader from './Loader';
 import Captcha from './Captcha';
+import { phoneCodesToSelectItems } from '../utils/phoneCodes';
 
 const FieldError = styled.div`
     margin-top: 10px;
@@ -192,7 +193,7 @@ class Step1 extends PureComponent {
                         <Select
                             disabled={lock}
                             value={code}
-                            items={phoneCodes}
+                            items={phoneCodesToSelectItems(phoneCodes)}
                             onChange={this._onCodeChange}
                         />
                     </FieldInput>
@@ -406,8 +407,8 @@ class Step1 extends PureComponent {
                 const result = await window.app.firstStep({
                     accountName,
                     email,
-                    code: code,
-                    phone: phone,
+                    code,
+                    phone,
                     captchaCode,
                 });
 
