@@ -38,7 +38,7 @@ const Highlight = styled.div`
 
 const Input = styled.input`
     flex-grow: 1;
-    height: 100%;
+    height: 32px;
     border: none;
     outline: none !important;
     background: none;
@@ -56,7 +56,6 @@ const Input = styled.input`
     }
 
     &::placeholder {
-        line-height: 20px;
         font-weight: 300;
         color: #aaa;
     }
