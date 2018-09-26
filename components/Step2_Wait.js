@@ -33,6 +33,7 @@ const steppedRotation = keyframes`
 `;
 
 const Loader = styled.div`
+    display: inline-block;
     width: 64px;
     height: 64px;
     margin-bottom: 40px;
