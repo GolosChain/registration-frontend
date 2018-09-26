@@ -408,7 +408,7 @@ class Step1 extends PureComponent {
                     accountName,
                     email,
                     code,
-                    phone,
+                    phone: phone.replace(/[^0-9]+/g, ''),
                     captchaCode,
                 });
 
