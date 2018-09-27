@@ -36,6 +36,7 @@ export default function Checkbox(props) {
             <Input
                 disabled={props.disabled}
                 type="checkbox"
+                innerRef={props.innerRef}
                 onChange={() => props.onChange(!props.value)}
             />
             {props.value ? (

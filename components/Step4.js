@@ -4,7 +4,6 @@ import is from 'styled-is';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Title, Input, Footer, Button } from './Common';
 import { Field, FieldLabel, FieldInput, Link } from './Common';
-import CollapsingBlock from './CollapsingBlock';
 import Checkbox from './Checkbox';
 import { generateRandomString } from '../utils/random';
 
@@ -245,18 +244,22 @@ export default class Step3 extends PureComponent {
         const { intl } = this.props;
         const { password, password2, rules } = this.state;
 
+        let isError = false;
         let errorText = null;
 
         if (!password) {
-            errorText = intl.messages['step3.error.createPassword'];
+            isError = true;
+            errorText = intl.messages['step4.error.createPassword'];
         } else if (password !== password2) {
-            errorText = intl.messages['step3.error.passwordsNotEqual'];
+            isError = true;
+            errorText = intl.messages['step4.error.passwordsNotEqual'];
         } else if (rules.size < this._getRulesList().length) {
-            errorText = intl.messages['step3.error.checkAll'];
+            isError = true;
+            errorText = intl.messages['step4.error.checkAll'];
         }
 
-        if (errorText) {
-            this._showError(errorText);
+        if (isError) {
+            this._showError(errorText || 'Error');
             return;
         }
 

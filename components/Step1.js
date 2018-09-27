@@ -118,6 +118,7 @@ export default class Step1 extends PureComponent {
         }
 
         const nameError = accountNameError || accountNameVacant === false;
+        const code = phoneCodes[codeIndex].code;
 
         return (
             <>
@@ -180,7 +181,7 @@ export default class Step1 extends PureComponent {
                             value={email}
                             error={emailError}
                             autoCorrect="off"
-                            autoapitalize="off"
+                            autoCapitalize="off"
                             checkSpell="false"
                             onChange={this._onEmailChange}
                             onBlur={this._onEmailBlur}
@@ -213,11 +214,11 @@ export default class Step1 extends PureComponent {
                     <FieldInput>
                         <PhoneInput
                             disabled={lock}
-                            code={`+${phoneCodes[codeIndex].code}`}
+                            code={`+${code}`}
                             error={phoneError}
                             value={phone}
                             autoCorrect="off"
-                            autoapitalize="off"
+                            autoCapitalize="off"
                             checkSpell="false"
                             onChange={this._onPhoneChange}
                             onBlur={this._onPhoneBlur}
@@ -244,7 +245,7 @@ export default class Step1 extends PureComponent {
                 ) : null}
                 <Comment>
                     <FormattedMessage id="step1.alreadyHaveAccount" />{' '}
-                    <Link href="https://golos.io/">
+                    <Link href="https://golos.io/login">
                         <FormattedMessage id="step1.login" />
                     </Link>
                 </Comment>

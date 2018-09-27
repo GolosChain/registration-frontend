@@ -109,7 +109,9 @@ export default class PhoneInput extends Component {
             focus: true,
         });
 
-        this.props.onFocus();
+        if (this.props.onFocus) {
+            this.props.onFocus();
+        }
     };
 
     _onBlur = () => {
@@ -117,7 +119,9 @@ export default class PhoneInput extends Component {
             focus: false,
         });
 
-        this.props.onBlur();
+        if (this.props.onBlur) {
+            this.props.onBlur();
+        }
     };
 
     _onChange = e => {
