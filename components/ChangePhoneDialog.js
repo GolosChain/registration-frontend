@@ -103,7 +103,9 @@ class ChangePhoneDialog extends PureComponent {
                 <Bg onClick={this._onCloseClick} />
                 <DialogWrapper>
                     <Dialog>
-                        <Header>Сменить номер</Header>
+                        <Header>
+                            <FormattedMessage id="change_phone" />
+                        </Header>
                         <FieldLabel>
                             <FormattedMessage id="step1.phoneCodeLabel" />
                         </FieldLabel>
@@ -160,14 +162,21 @@ class ChangePhoneDialog extends PureComponent {
     };
 
     _onOkClick = async () => {
+        const { intl } = this.props;
         const { code, phone } = this.state;
 
         try {
             await window.app.updatePhone({ code, phone });
         } catch (err) {
-            this.setState({
-                errorText: err.message,
-            });
+            if (err && err.message === 'Phone already registered.') {
+                this.setState({
+                    errorText: intl.messages['step2_change.phoneExists'],
+                });
+            } else {
+                this.setState({
+                    errorText: (err && err.message) || 'Error',
+                });
+            }
         }
     };
 }
