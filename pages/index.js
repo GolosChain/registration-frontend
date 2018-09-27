@@ -105,7 +105,7 @@ const Header = styled.div`
     justify-content: center;
     z-index: 1;
 
-    @media screen and (max-width: 800px) {
+    @media (max-width: 800px) {
         position: absolute;
     }
 `;
@@ -119,7 +119,7 @@ const Logo = styled.a`
     background-size: 114px 37px;
     z-index: 1;
 
-    @media screen and (max-width: 800px) {
+    @media (max-width: 800px) {
         margin-top: 20px;
     }
 `;
@@ -129,7 +129,7 @@ const Panels = styled.div`
     justify-content: center;
     min-height: 100%;
 
-    @media screen and (max-width: 800px) {
+    @media (max-width: 800px) {
         padding-top: 70px;
     }
 `;
@@ -142,7 +142,7 @@ const Panel = styled.div`
     align-items: center;
     max-width: 640px;
 
-    @media screen and (max-width: 800px) {
+    @media (max-width: 800px) {
         align-items: flex-start;
 
         &:nth-child(2) {
@@ -155,7 +155,7 @@ const Column = styled.div`
     width: 328px;
     padding: 30px 0;
 
-    @media screen and (max-width: 800px) {
+    @media (max-width: 800px) {
         padding: 6px 0 10px;
     }
 
@@ -186,7 +186,7 @@ const RightPanel = styled.div`
     width: 50%;
     background: #f9f9f9;
 
-    @media screen and (max-width: 800px) {
+    @media (max-width: 800px) {
         display: none;
     }
 `;
