@@ -99,6 +99,8 @@ export default class ChangePhoneDialog extends PureComponent {
     render() {
         const { codeIndex, phone, errorText } = this.state;
 
+        const code = phoneCodes[codeIndex].code;
+
         return (
             <Root>
                 <Bg onClick={this._onCloseClick} />
@@ -126,7 +128,7 @@ export default class ChangePhoneDialog extends PureComponent {
                                     code={`+${code}`}
                                     value={phone}
                                     autoCorrect="off"
-                                    autoapitalize="off"
+                                    autoCapitalize="off"
                                     checkSpell="false"
                                     onChange={this._onPhoneChange}
                                 />

@@ -45,7 +45,7 @@ export default class StepFinal extends PureComponent {
                     <FormattedMessage id="stepFinal.subTitle" />
                 </SubTitle>
                 <Footer>
-                    <a href="https://golos.io/">
+                    <a href="https://golos.io/welcome">
                         <Button>{intl.messages['stepFinal.go']}</Button>
                     </a>
                 </Footer>

@@ -70,6 +70,7 @@ export default class Step3 extends PureComponent {
                 <CheckboxField>
                     <Checkbox
                         value={isAgree}
+                        innerRef={this._onCheckboxRef}
                         onChange={value => this._onCheckChange(value)}
                     >
                         <CheckboxText>
@@ -86,6 +87,10 @@ export default class Step3 extends PureComponent {
         );
     }
 
+    _onCheckboxRef = el => {
+        this._checkbox = el;
+    };
+
     _onCheckChange = checked => {
         this.setState({
             isAgree: checked,
@@ -93,6 +98,13 @@ export default class Step3 extends PureComponent {
     };
 
     _onOkClick = async () => {
+        const { isAgree } = this.state;
+
+        if (!isAgree) {
+            this._checkbox.focus();
+            return;
+        }
+
         window.app.passwordRulesAgreed();
     };
 }
