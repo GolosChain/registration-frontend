@@ -74,7 +74,8 @@ const ErrorBlock = styled.div`
     color: #f00;
 `;
 
-class ChangePhoneDialog extends PureComponent {
+@injectIntl
+export default class ChangePhoneDialog extends PureComponent {
     constructor() {
         super();
 
@@ -182,5 +183,3 @@ class ChangePhoneDialog extends PureComponent {
         }
     };
 }
-
-export default injectIntl(ChangePhoneDialog);

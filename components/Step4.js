@@ -95,7 +95,8 @@ const ErrorBlock = styled.div`
     color: #f00;
 `;
 
-class Step3 extends PureComponent {
+@injectIntl
+export default class Step3 extends PureComponent {
     state = {
         password: 'P' + generateRandomString(PASSWORD_LENGTH - 1),
         password2: '',
@@ -312,4 +313,3 @@ function linkify(message) {
     return parts;
 }
 
-export default injectIntl(Step3);

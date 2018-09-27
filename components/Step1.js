@@ -67,7 +67,8 @@ const Required = props => (
     </span>
 );
 
-class Step1 extends PureComponent {
+@injectIntl
+export default class Step1 extends PureComponent {
     state = {
         accountName: '',
         accountNameChecking: false,
@@ -502,5 +503,3 @@ class Step1 extends PureComponent {
         );
     }
 }
-
-export default injectIntl(Step1);

@@ -45,7 +45,8 @@ const CheckboxText = styled.div`
     }
 `;
 
-class Step3 extends PureComponent {
+@injectIntl
+export default class Step3 extends PureComponent {
     state = {
         errorText: null,
         isAgree: false,
@@ -95,5 +96,3 @@ class Step3 extends PureComponent {
         window.app.passwordRulesAgreed();
     };
 }
-
-export default injectIntl(Step3);
