@@ -10,7 +10,7 @@ const Root = styled.div`
     align-items: center;
     justify-content: center;
 
-    @media screen and (max-width: 800px) {
+    @media (max-width: 800px) {
         padding-top: 40px;
     }
 `;
@@ -18,7 +18,7 @@ const Root = styled.div`
 const MobileImg = styled.img`
     display: none;
 
-    @media screen and (max-width: 800px) {
+    @media (max-width: 800px) {
         display: block;
         margin-top: 20px;
     }

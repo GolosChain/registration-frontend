@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import is from 'styled-is';
 
@@ -33,52 +33,96 @@ const Code = styled.div`
 `;
 
 const Highlight = styled.div`
-    display: none;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    outline: #3b99fc auto 5px;
+    outline-offset: -2px;
+    pointer-events: none;
+`;
+
+const InputWrapper = styled.div`
+    position: relative;
+    flex-grow: 1;
+    height: 100%;
 `;
 
 const Input = styled.input`
-    flex-grow: 1;
-    height: 32px;
+    display: block;
+    width: 100%;
+    height: 100%;
     border: none;
     outline: none !important;
     background: none;
+`;
 
-    &:focus + ${Highlight} {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        outline: #3b99fc auto 5px;
-        outline-offset: -2px;
-        pointer-events: none;
-    }
+const Placeholder = styled.div`
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 14px;
+    font-weight: 300;
+    color: #aaa;
+    user-select: none;
+    pointer-events: none;
 
-    &::placeholder {
-        font-weight: 300;
-        color: #aaa;
+    @media (max-width: 500px) {
+        font-size: 16px;
     }
 `;
 
-export default function PhoneInput(props) {
-    return (
-        <Root error={props.error}>
-            <Code>{props.code}</Code>
-            <Input
-                placeholder="(925)1234567"
-                value={props.value}
-                onBlur={props.onBlur}
-                onFocus={props.onFocus}
-                onChange={e =>
-                    props.onChange(
-                        e.target.value
-                            .replace(/[^\d ()-]+/g, '')
-                            .replace(/^0+/, '')
-                    )
-                }
-            />
-            <Highlight />
-        </Root>
-    );
+export default class PhoneInput extends Component {
+    state = {
+        focus: false,
+    };
+
+    render() {
+        const { value, error, code } = this.props;
+        const { focus } = this.state;
+
+        return (
+            <Root error={error && !focus}>
+                <Code>{code}</Code>
+                <InputWrapper>
+                    <Input
+                        value={value}
+                        onBlur={this._onBlur}
+                        onFocus={this._onFocus}
+                        onChange={this._onChange}
+                    />
+                    {value ? null : <Placeholder>(123) 123 45-67</Placeholder>}
+                </InputWrapper>
+                {focus ? <Highlight /> : null}
+            </Root>
+        );
+    }
+
+    _onFocus = () => {
+        this.setState({
+            focus: true,
+        });
+
+        this.props.onFocus();
+    };
+
+    _onBlur = () => {
+        this.setState({
+            focus: false,
+        });
+
+        this.props.onBlur();
+    };
+
+    _onChange = e => {
+        this.props.onChange(
+            e.target.value.replace(/[^\d ()-]+/g, '').replace(/^0+/, '')
+        );
+    };
 }
