@@ -4,6 +4,10 @@ import { FormattedMessage } from 'react-intl';
 import { B, Title, SubTitle, Footer, Button } from './Common';
 import QuestionBlock from './QuestionBlock';
 
+const OneWord = styled(B)`
+    white-space: nowrap;
+`;
+
 const QuestionBlockStyled = styled(QuestionBlock)`
     margin-bottom: 24px;
 `;
@@ -27,8 +31,14 @@ export default class Step2 extends PureComponent {
                     <FormattedMessage
                         id="step2.subTitle"
                         values={{
-                            code: <B>{window.app.getSecretCode()}</B>,
-                            phone: <B>{window.app.getVerificationPhoneNumber()}</B>,
+                            code: (
+                                <OneWord>{window.app.getSecretCode()}</OneWord>
+                            ),
+                            phone: (
+                                <OneWord>
+                                    {window.app.getVerificationPhoneNumber()}
+                                </OneWord>
+                            ),
                         }}
                     />
                 </SubTitle>
