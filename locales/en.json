@@ -1,4 +1,5 @@
 {
+  "change_phone": "Change number",
   "error": "Error",
   "required": "Required field",
   "step1.accountNameLabel": "Username",
@@ -30,6 +31,7 @@
   "step2.text": "In order to protect system of spam user registration Golos.io use a two step authentication. We ask you to send a text message to the specified phone number.",
   "step2.title": "Phone verification",
   "step2_change.ok": "Save",
+  "step2_change.phoneExists": "Phone number is already registered",
   "step2_wait.title": "Please wait for your phone number to be verified (it may take a few minutes or more).",
   "step3.generate": "Generate new password",
   "step3.term": "I understand that Golos.io can't recover lost passwords",
