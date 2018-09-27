@@ -81,7 +81,7 @@ class ChangePhoneDialog extends PureComponent {
         const { code, phone } = window.app.getPhoneData();
 
         this.state = {
-            code,
+            codeIndex: phoneCodes.findIndex(c => c.code === code),
             phone,
             errorText: null,
         };
@@ -96,7 +96,7 @@ class ChangePhoneDialog extends PureComponent {
     }
 
     render() {
-        const { code, phone, errorText } = this.state;
+        const { codeIndex, phone, errorText } = this.state;
 
         return (
             <Root>
@@ -111,7 +111,7 @@ class ChangePhoneDialog extends PureComponent {
                         </FieldLabel>
                         <FieldInput>
                             <Select
-                                value={code}
+                                value={codeIndex}
                                 items={phoneCodesToSelectItems(phoneCodes)}
                                 onChange={this._onCodeChange}
                             />
@@ -149,9 +149,9 @@ class ChangePhoneDialog extends PureComponent {
         this.props.onClose();
     };
 
-    _onCodeChange = code => {
+    _onCodeChange = value => {
         this.setState({
-            code,
+            codeIndex: value,
         });
     };
 
@@ -163,7 +163,9 @@ class ChangePhoneDialog extends PureComponent {
 
     _onOkClick = async () => {
         const { intl } = this.props;
-        const { code, phone } = this.state;
+        const { codeIndex, phone } = this.state;
+
+        const code = phoneCodes[codeIndex].code;
 
         try {
             await window.app.updatePhone({ code, phone });

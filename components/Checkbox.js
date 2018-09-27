@@ -9,7 +9,7 @@ const Root = styled.div`
 const Img = styled.img`
     width: 18px;
     height: 18px;
-    margin-right: 8px;
+    margin-right: 12px;
     flex-shrink: 0;
     cursor: pointer;
 `;

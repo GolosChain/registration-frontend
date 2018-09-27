@@ -1,27 +1,28 @@
 [
   {
+    "code": 7,
+    "label": "Russia (+7)",
+    "verificationPhone": "+7 (916) 930-63-59",
+    "default": true
+  },
+  {
+    "code": 7,
+    "label": "Kazakhstan (+7)",
+    "verificationPhone": "+7 (777) 007-69-77"
+  },
+  {
     "code": 370,
     "label": "Lithuania (+370)",
-    "verificationPhone": "+12563587178"
+    "verificationPhone": "+1 (256) 358-7178"
   },
   {
     "code": 375,
     "label": "Belarus (+375)",
-    "verificationPhone": "+375292308770"
+    "verificationPhone": "+375 (29) 230-87-70"
   },
   {
     "code": 380,
     "label": "Ukraine (+380)",
-    "verificationPhone": "+380931777772"
-  },
-  {
-    "code": 777,
-    "label": "Kazakhstan (+777)",
-    "verificationPhone": "+77770076977"
-  },
-  {
-    "code": 7,
-    "label": "Russia (+7)",
-    "verificationPhone": "+79169306359"
+    "verificationPhone": "+380 (93) 177-77-72"
   }
 ]

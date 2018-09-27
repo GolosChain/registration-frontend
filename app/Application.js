@@ -40,6 +40,12 @@ export default class Application extends EventEmitter {
         };
     }
 
+    passwordRulesAgreed() {
+        this._passwordRulesAccepted = true;
+        this._saveRegData();
+        this._root.goTo('4');
+    }
+
     async updatePhone({ code, phone }) {
         const data = await this._conn.request('registration.changePhone', {
             user: this._accountName,
@@ -90,6 +96,7 @@ export default class Application extends EventEmitter {
                             this._code = null;
                             this._phone = null;
                             this._secret = null;
+                            this._passwordRulesAccepted = null;
                             this._root.goTo('1');
                             break;
                         case 'verify':
@@ -97,6 +104,7 @@ export default class Application extends EventEmitter {
                             this._code = savedData.code;
                             this._phone = savedData.phone;
                             this._secret = savedData.secret;
+                            this._passwordRulesAccepted = null;
                             this._startWaitVerification();
                             this._root.goTo('2');
                             break;
@@ -105,7 +113,15 @@ export default class Application extends EventEmitter {
                             this._code = savedData.code;
                             this._phone = savedData.phone;
                             this._secret = null;
-                            this._root.goTo('3');
+                            this._passwordRulesAccepted =
+                                savedData.passwordRulesAccepted;
+
+                            if (savedData.passwordRulesAccepted) {
+                                this._root.goTo('4');
+                            } else {
+                                this._root.goTo('3');
+                            }
+
                             break;
                     }
                 }
@@ -151,6 +167,7 @@ export default class Application extends EventEmitter {
                 code: this._code,
                 phone: this._phone,
                 secret: this._secret,
+                passwordRulesAccepted: this._passwordRulesAccepted,
             })
         );
     }

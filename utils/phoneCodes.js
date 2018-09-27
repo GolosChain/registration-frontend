@@ -1,3 +1,6 @@
 export function phoneCodesToSelectItems(phoneCodes) {
-    return phoneCodes.map(({ code, label }) => ({ value: code, label }));
+    return phoneCodes.map(({ label }, i) => ({
+        value: i,
+        label,
+    }));
 }

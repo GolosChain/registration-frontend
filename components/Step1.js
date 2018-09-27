@@ -80,7 +80,7 @@ class Step1 extends PureComponent {
         phone: '',
         phoneError: null,
         phoneErrorText: null,
-        code: 7,
+        codeIndex: phoneCodes.findIndex(p => p.default),
         lock: false,
     };
 
@@ -100,7 +100,7 @@ class Step1 extends PureComponent {
             email,
             emailError,
             emailErrorText,
-            code,
+            codeIndex,
             phone,
             phoneError,
             phoneErrorText,
@@ -141,7 +141,11 @@ class Step1 extends PureComponent {
                                 autoCorrect="off"
                                 autoCapitalize="off"
                                 spellCheck="false"
-                                placeholder={intl.messages['step1.accountNamePlaceholder']}
+                                placeholder={
+                                    intl.messages[
+                                        'step1.accountNamePlaceholder'
+                                    ]
+                                }
                                 onChange={this._onAccountNameChange}
                                 onBlur={this._onAccountNameBlur}
                             />
@@ -168,7 +172,9 @@ class Step1 extends PureComponent {
                     <FieldInput>
                         <Input
                             disabled={lock}
-                            placeholder={intl.messages['step1.emailPlaceholder']}
+                            placeholder={
+                                intl.messages['step1.emailPlaceholder']
+                            }
                             type="email"
                             value={email}
                             error={emailError}
@@ -192,7 +198,7 @@ class Step1 extends PureComponent {
                     <FieldInput>
                         <Select
                             disabled={lock}
-                            value={code}
+                            value={codeIndex}
                             items={phoneCodesToSelectItems(phoneCodes)}
                             onChange={this._onCodeChange}
                         />
@@ -206,7 +212,7 @@ class Step1 extends PureComponent {
                     <FieldInput>
                         <PhoneInput
                             disabled={lock}
-                            code={`+${code}`}
+                            code={`+${phoneCodes[codeIndex].code}`}
                             error={phoneError}
                             value={phone}
                             autoCorrect="off"
@@ -374,7 +380,7 @@ class Step1 extends PureComponent {
                 accountNameVacant,
                 email,
                 emailError,
-                code,
+                codeIndex,
                 phone,
                 phoneError,
             } = this.state;
@@ -407,8 +413,8 @@ class Step1 extends PureComponent {
                 const result = await window.app.firstStep({
                     accountName,
                     email,
-                    code,
-                    phone,
+                    code: phoneCodes[codeIndex].code,
+                    phone: phone.replace(/[^0-9]+/g, ''),
                     captchaCode,
                 });
 
@@ -447,9 +453,9 @@ class Step1 extends PureComponent {
         );
     };
 
-    _onCodeChange = code => {
+    _onCodeChange = value => {
         this.setState({
-            code: Number(code),
+            codeIndex: Number(value),
         });
     };
 

@@ -7,6 +7,7 @@ import Step1 from '../components/Step1';
 import Step2 from '../components/Step2';
 import Step2_Wait from '../components/Step2_Wait';
 import Step3 from '../components/Step3';
+import Step4 from '../components/Step4';
 import StepFinal from '../components/StepFinal';
 import Application from '../app/Application';
 import LangSwitch from '../components/LangSwitch';
@@ -18,10 +19,12 @@ const Steps = {
     '1': {
         Comp: Step1,
         img: 1,
+        dot: 1,
     },
     '2': {
         Comp: Step2,
         img: 2,
+        dot: 2,
     },
     '2_wait': {
         Comp: Step2_Wait,
@@ -31,6 +34,12 @@ const Steps = {
     '3': {
         Comp: Step3,
         img: 3,
+        dot: 3,
+    },
+    '4': {
+        Comp: Step4,
+        img: 3,
+        dot: 4,
     },
     final: {
         Comp: StepFinal,
@@ -219,7 +228,7 @@ export default class Index extends PureComponent {
             showChangePhoneDialog,
         } = this.state;
 
-        const { Comp, img, hideDots } = Steps[step];
+        const { Comp, img, dot, hideDots } = Steps[step];
 
         let messages;
 
@@ -249,10 +258,11 @@ export default class Index extends PureComponent {
                             >
                                 <Comp onStepChange={this._onStepChange} />
                                 {hideDots ? null : (
-                                    <Dots title={`Шаг: ${img}/3`}>
-                                        <Dot active={img === 1} />
-                                        <Dot active={img === 2} />
-                                        <Dot active={img === 3} />
+                                    <Dots title={`${dot}/4`}>
+                                        <Dot active={dot === 1} />
+                                        <Dot active={dot === 2} />
+                                        <Dot active={dot === 3} />
+                                        <Dot active={dot === 4} />
                                     </Dots>
                                 )}
                             </Column>
