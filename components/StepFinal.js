@@ -24,7 +24,8 @@ const MobileImg = styled.img`
     }
 `;
 
-class StepFinal extends PureComponent {
+@injectIntl
+export default class StepFinal extends PureComponent {
     render() {
         const { intl } = this.props;
 
@@ -53,5 +54,3 @@ class StepFinal extends PureComponent {
         );
     }
 }
-
-export default injectIntl(StepFinal);

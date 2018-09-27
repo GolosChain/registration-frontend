@@ -58,7 +58,8 @@ const Footer = styled.div`
     color: #959595;
 `;
 
-class Step2_Wait extends PureComponent {
+@injectIntl
+export default class Step2_Wait extends PureComponent {
     render() {
         const { intl } = this.props;
 
@@ -90,5 +91,3 @@ class Step2_Wait extends PureComponent {
         window.app.openChangePhoneDialog();
     };
 }
-
-export default injectIntl(Step2_Wait);

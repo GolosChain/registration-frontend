@@ -37,8 +37,8 @@ export const Answer = styled.div`
         font-size: 16px;
     }
 `;
-
-class QuestionBlock extends PureComponent {
+@injectIntl
+export default class QuestionBlock extends PureComponent {
     render() {
         const { intl, phone } = this.props;
         const { className } = this.props;
@@ -80,5 +80,3 @@ class QuestionBlock extends PureComponent {
         );
     }
 }
-
-export default injectIntl(QuestionBlock);
