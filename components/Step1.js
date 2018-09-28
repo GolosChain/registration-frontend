@@ -421,22 +421,30 @@ export default class Step1 extends PureComponent {
                 });
 
                 if (result && result.error) {
+                    this.setState({
+                        lock: false,
+                    });
+
                     if (result.error.message === 'Phone already registered.') {
                         this.setState({
-                            lock: false,
                             phoneError: true,
                             phoneErrorText: 'step1.phoneInRegistration',
                         });
-
-                        grecaptcha.reset();
+                    } else {
+                        this._showError(
+                            `${intl.messages['wrong']}: ${result.error.message}`
+                        );
                     }
+
+                    grecaptcha.reset();
                 }
             } catch (err) {
                 console.error(err);
-                grecaptcha.reset();
 
                 this.setState({ lock: false });
                 this._showError(`${intl.messages['wrong']}: ${err.message}`);
+
+                grecaptcha.reset();
             }
         }, 10);
     };
