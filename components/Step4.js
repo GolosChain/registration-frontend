@@ -303,7 +303,7 @@ function linkify(message) {
         parts.push(
             <Link
                 key="link"
-                href="/ru--konfidenczialxnostx/@golos/politika-konfidencialnosti"
+                href="https://golos.io/ru--konfidenczialxnostx/@golos/politika-konfidencialnosti"
                 tabIndex="-1"
                 target="_blank"
             >
