@@ -298,6 +298,9 @@ export default class Step1 extends PureComponent {
         } else if (name.length < 4) {
             error = true;
             errorText = 'step1.rules.tooShort';
+        } else if (name.length > 16) {
+            error = true;
+            errorText = 'step1.rules.tooLong';
         }
 
         return {

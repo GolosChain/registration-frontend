@@ -18,6 +18,7 @@
   "step1.rules.containsOnly": "Please use only letters, digits, dot, dash.",
   "step1.rules.invalidEmail": "Enter the correct email address",
   "step1.rules.startsWithChar": "User name must start with character",
+  "step1.rules.tooLong": "Too long account name (max 16 symbols)",
   "step1.rules.tooShort": "Too short account name (min 4 symbols)",
   "step1.subTitle": "Sign up to publish posts, vote on content, comment and get rewards.",
   "step1.title": "Registration",
