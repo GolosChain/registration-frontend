@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { B, PseudoLink } from './Common';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import CollapsingBlock from './CollapsingBlock';
+import { formatPhone } from '../utils/phone';
 
 export const Root = styled.div`
     border: 1px solid #e1e1e1;
@@ -64,7 +65,7 @@ export default class QuestionBlock extends PureComponent {
                         <FormattedMessage
                             id="step2.quest2.answer"
                             values={{
-                                phone: <B>+{phone}</B>,
+                                phone: <B>+{formatPhone(phone)}</B>,
                                 change: (
                                     <PseudoLink
                                         onClick={this.props.onChangeClick}
