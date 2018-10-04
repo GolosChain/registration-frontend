@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import capitalize from 'lodash/capitalize';
 import styled from 'styled-components';
 import { Title, SubTitle, Footer, Button } from './Common';
 
@@ -36,7 +35,7 @@ export default class StepFinal extends PureComponent {
                         id="stepFinal.title"
                         values={{
                             username: process.browser
-                                ? capitalize(window.app.getAccountName())
+                                ? window.app.getAccountName()
                                 : null,
                         }}
                     />
