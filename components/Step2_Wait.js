@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { B, PseudoLink } from './Common';
 import styled, { keyframes } from 'styled-components';
+import { B, PseudoLink } from './Common';
+import { formatPhone } from '../utils/phone';
 
 const Root = styled.div`
     display: flex;
@@ -73,7 +74,7 @@ export default class Step2_Wait extends PureComponent {
                     <FormattedMessage
                         id="step2.quest2.answer"
                         values={{
-                            phone: <B>+{window.app.getPhone()}</B>,
+                            phone: <B>+{formatPhone(window.app.getPhone())}</B>,
                             change: (
                                 <PseudoLink onClick={this._onChangePhoneClick}>
                                     {intl.messages['step2.quest2.change']}
