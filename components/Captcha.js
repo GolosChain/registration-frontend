@@ -37,7 +37,7 @@ export default class Captcha extends PureComponent {
     };
 
     getCode() {
-        const input = this.refs.captcha.querySelector('.g-recaptcha-response');
+        const input = this.refs.captcha.querySelector('[name="g-recaptcha-response"]');
 
         if (input && input.value) {
             return input.value;
