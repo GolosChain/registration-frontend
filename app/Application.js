@@ -33,6 +33,14 @@ export default class Application extends EventEmitter {
         return `${this._code}${this._phone}`;
     }
 
+    getRegInfo() {
+        return {
+            codeIndex: this._codeIndex,
+            secret: this._secret,
+            phone: this.getPhone(),
+        };
+    }
+
     getPhoneData() {
         return {
             code: this._code,
@@ -94,6 +102,7 @@ export default class Application extends EventEmitter {
                         case 'firstStep':
                             this._accountName = null;
                             this._code = null;
+                            this._codeIndex = null;
                             this._phone = null;
                             this._secret = null;
                             this._passwordRulesAccepted = null;
@@ -102,6 +111,7 @@ export default class Application extends EventEmitter {
                         case 'verify':
                             this._accountName = savedData.accountName;
                             this._code = savedData.code;
+                            this._codeIndex = savedData.codeIndex;
                             this._phone = savedData.phone;
                             this._secret = savedData.secret;
                             this._passwordRulesAccepted = null;
@@ -111,6 +121,7 @@ export default class Application extends EventEmitter {
                         case 'toBlockChain':
                             this._accountName = savedData.accountName;
                             this._code = savedData.code;
+                            this._codeIndex = savedData.codeIndex;
                             this._phone = savedData.phone;
                             this._secret = null;
                             this._passwordRulesAccepted =
@@ -147,6 +158,7 @@ export default class Application extends EventEmitter {
         if (response.result) {
             this._accountName = data.accountName;
             this._code = data.code;
+            this._codeIndex = data.codeIndex;
             this._phone = data.phone;
             this._secret = generateRandomCode();
 
@@ -165,6 +177,7 @@ export default class Application extends EventEmitter {
             JSON.stringify({
                 accountName: this._accountName,
                 code: this._code,
+                codeIndex: this._codeIndex,
                 phone: this._phone,
                 secret: this._secret,
                 passwordRulesAccepted: this._passwordRulesAccepted,
@@ -225,31 +238,6 @@ export default class Application extends EventEmitter {
             user: this._accountName,
             phone: `${this._code}${this._phone}`,
         });
-
-        // this._verificationInterval = setInterval(async () => {
-        //     const data = await this._conn.request('registration.getState', {
-        //         user: this._accountName,
-        //         phone: `${this._code}${this._phone}`,
-        //     });
-        //
-        //     if (data.error) {
-        //         console.error(data.error);
-        //         return;
-        //     }
-        //
-        //     switch (data.result.currentState) {
-        //         case 'firstStep':
-        //             this._root.goTo('1');
-        //             this._accountName = null;
-        //             this.code = null;
-        //             this._phone = null;
-        //             break;
-        //         case 'toBlockChain':
-        //             clearInterval(this._verificationInterval);
-        //             this._root.goTo('3');
-        //             break;
-        //     }
-        // }, 2000);
     }
 }
 

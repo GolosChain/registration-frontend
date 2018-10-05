@@ -418,6 +418,7 @@ export default class Step1 extends PureComponent {
                 const result = await window.app.firstStep({
                     accountName,
                     email,
+                    codeIndex,
                     code: phoneCodes[codeIndex].code,
                     phone: phone.replace(/[^0-9]+/g, ''),
                     captchaCode,
