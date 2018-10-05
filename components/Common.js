@@ -44,6 +44,8 @@ export const Button = styled.button.attrs({ type: 'button' })`
     cursor: pointer;
 
     &[disabled] {
+        cursor: default;
+        cursor: not-allowed;
         background: #89cbff;
     }
 `;
