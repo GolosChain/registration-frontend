@@ -79,7 +79,7 @@ export default class Step3 extends PureComponent {
                     </Checkbox>
                 </CheckboxField>
                 <Footer>
-                    <Button onClick={this._onOkClick}>
+                    <Button disabled={!isAgree} onClick={this._onOkClick}>
                         {intl.messages['step3.generate']}
                     </Button>
                 </Footer>
