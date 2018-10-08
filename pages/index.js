@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import is from 'styled-is';
 import { IntlProvider, addLocaleData } from 'react-intl';
+
+import { fadeIn, fromRight, toLeft } from '../utils/keyFrames';
 import { Dot, Dots } from '../components/Common';
 import Step1 from '../components/Step1';
 import Step2 from '../components/Step2';
@@ -56,37 +58,6 @@ const locales = {
 
 addLocaleData(require('react-intl/locale-data/ru'));
 addLocaleData(require('react-intl/locale-data/uk'));
-
-const fadeIn = keyframes`
-    from {
-        opacity: 0;  
-    }
-    to {
-        opacity: 1;
-    }
-`;
-
-const fromRight = keyframes`
-    from {
-        opacity: 0;
-        transform: translate(600px, 0);
-    }
-    to {
-        opacity: 1;
-        transform: translate(0, 0);
-    }
-`;
-
-const toLeft = keyframes`
-    from {
-        opacity: 1;
-        transform: translate(0, 0);
-    }
-    to {
-        opacity: 0;
-        transform: translate(-600px, 0);
-    }
-`;
 
 const Root = styled.div`
     height: 100%;
