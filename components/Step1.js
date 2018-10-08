@@ -75,6 +75,7 @@ export default class Step1 extends PureComponent {
         accountNameVacant: null,
         accountNameError: null,
         accountNameErrorText: null,
+        accountNameTempErrorText: null,
         email: '',
         emailError: null,
         emailErrorText: null,
@@ -87,6 +88,7 @@ export default class Step1 extends PureComponent {
 
     componentWillUnmount() {
         this._checkNameExistenceLazy.cancel();
+        clearTimeout(this._tempNameErrorTimeout);
     }
 
     render() {
@@ -98,6 +100,7 @@ export default class Step1 extends PureComponent {
             accountNameVacant,
             accountNameError,
             accountNameErrorText,
+            accountNameTempErrorText,
             email,
             emailError,
             emailErrorText,
@@ -162,6 +165,12 @@ export default class Step1 extends PureComponent {
                         ) : accountNameVacant === false ? (
                             <FieldError>
                                 <FormattedMessage id="step1.error.nameExists" />
+                            </FieldError>
+                        ) : accountNameTempErrorText ? (
+                            <FieldError>
+                                <FormattedMessage
+                                    id={accountNameTempErrorText}
+                                />
                             </FieldError>
                         ) : null}
                     </FieldInput>
@@ -254,12 +263,26 @@ export default class Step1 extends PureComponent {
     }
 
     _onAccountNameChange = e => {
-        const accountName = e.target.value.toLowerCase();
+        const value = e.target.value;
+
+        const accountName = value.toLowerCase().replace(/[^a-z0-9.-]+/g, '');
+
+        if (value !== accountName) {
+            this.setState({
+                accountNameTempErrorText: 'step1.rules.containsOnly',
+            });
+
+            clearTimeout(this._tempNameErrorTimeout);
+            this._tempNameErrorTimeout = setTimeout(() => {
+                this.setState({
+                    accountNameTempErrorText: null,
+                });
+            }, 5000);
+        }
 
         this.setState(
             {
                 accountName,
-                errorText: null,
             },
             () => {
                 if (this._isAccountNameValid(accountName)) {
@@ -318,10 +341,16 @@ export default class Step1 extends PureComponent {
 
         const { error, errorText } = this.__validateAccountName(accountName);
 
-        this.setState({
+        const newState = {
             accountNameError: error,
             accountNameErrorText: errorText,
-        });
+        };
+
+        if (error) {
+            newState.accountNameTempErrorText = null;
+        }
+
+        this.setState(newState);
     }
 
     _onAccountNameBlur = () => {
