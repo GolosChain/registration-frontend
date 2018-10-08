@@ -17,14 +17,14 @@ const FieldError = styled.div`
     line-height: 1.4em;
     font-size: 12px;
     font-weight: 300;
-    color: red;
+    color: #f00;
 `;
 
 const TotalError = styled.div`
     margin-top: 10px;
     font-size: 14px;
     font-weight: 300;
-    color: red;
+    color: #f00;
 `;
 
 const Comment = styled.div`

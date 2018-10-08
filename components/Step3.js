@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
+import is from 'styled-is';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Title, Footer, Button } from './Common';
 import Checkbox from './Checkbox';
@@ -45,16 +46,31 @@ const CheckboxText = styled.div`
     }
 `;
 
+const Error = styled.div`
+    margin-bottom: 28px;
+    font-size: 14px;
+    font-weight: 300;
+    color: #f00;
+`;
+
+const ButtonStyled = styled(Button)`
+    ${is('blocked')`
+        cursor: default;
+        cursor: not-allowed;
+        background: #89cbff;
+    `};
+`;
+
 @injectIntl
 export default class Step3 extends PureComponent {
     state = {
-        errorText: null,
+        error: false,
         isAgree: false,
     };
 
     render() {
         const { intl } = this.props;
-        const { isAgree } = this.state;
+        const { isAgree, error } = this.state;
 
         return (
             <>
@@ -78,10 +94,15 @@ export default class Step3 extends PureComponent {
                         </CheckboxText>
                     </Checkbox>
                 </CheckboxField>
+                {error ? (
+                    <Error>
+                        <FormattedMessage id="step2_wait.error" />
+                    </Error>
+                ) : null}
                 <Footer>
-                    <Button disabled={!isAgree} onClick={this._onOkClick}>
+                    <ButtonStyled blocked={!isAgree} onClick={this._onOkClick}>
                         {intl.messages['step3.generate']}
-                    </Button>
+                    </ButtonStyled>
                 </Footer>
             </>
         );
@@ -102,6 +123,9 @@ export default class Step3 extends PureComponent {
 
         if (!isAgree) {
             this._checkbox.focus();
+            this.setState({
+                error: true,
+            });
             return;
         }
 

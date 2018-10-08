@@ -13,7 +13,7 @@ const Root = styled.div`
     background: #fff;
 
     ${is('error')`
-        border-color: red;
+        border-color: #f00;
     `};
 `;
 
