@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import styled, { keyframes } from 'styled-components';
-import { B, PseudoLink } from './Common';
+import { B, Link, PseudoLink } from './Common';
 import { formatPhone } from '../utils/phone';
+import phoneCodes from '../app/phoneCodes';
 
 const Root = styled.div`
     display: flex;
@@ -51,12 +52,16 @@ const MobileImg = styled.img`
     }
 `;
 
-const Footer = styled.div`
+const Part = styled.div`
     text-align: center;
-    margin-top: 6px;
-    line-height: 1.4em;
-    font-size: 13px;
-    color: #959595;
+    margin: 6px 0 13px;
+    line-height: 1.5em;
+    font-size: 14px;
+    color: #999;
+`;
+
+const LinkStyled = styled(Link)`
+    white-space: nowrap;
 `;
 
 @injectIntl
@@ -64,17 +69,21 @@ export default class Step2_Wait extends PureComponent {
     render() {
         const { intl } = this.props;
 
+        const { phone, codeIndex, secret } = window.app.getRegInfo();
+
+        const verificationPhone = phoneCodes[codeIndex].verificationPhone;
+
         return (
             <Root>
                 <Loader />
                 <Title>
                     <FormattedMessage id="step2_wait.title" />
                 </Title>
-                <Footer>
+                <Part>
                     <FormattedMessage
                         id="step2.quest2.answer"
                         values={{
-                            phone: <B>+{formatPhone(window.app.getPhone())}</B>,
+                            phone: <B>+{formatPhone(phone)}</B>,
                             change: (
                                 <PseudoLink onClick={this._onChangePhoneClick}>
                                     {intl.messages['step2.quest2.change']}
@@ -82,7 +91,32 @@ export default class Step2_Wait extends PureComponent {
                             ),
                         }}
                     />
-                </Footer>
+                </Part>
+                <Part>
+                    <FormattedMessage
+                        id="step2.quest3.answer"
+                        values={{
+                            code: <B>{secret}</B>,
+                            phone: <B>{verificationPhone}</B>,
+                            mail: (
+                                <LinkStyled href="mailto:support@golos.io">
+                                    {intl.messages['step2.quest3.mail']}
+                                </LinkStyled>
+                            ),
+                            support: (
+                                <LinkStyled
+                                    target="_blank"
+                                    href={
+                                        intl.messages['step2.quest3.supportUrl']
+                                    }
+                                >
+                                    {intl.messages['step2.quest3.support']}
+                                </LinkStyled>
+                            ),
+                            newline: <br />,
+                        }}
+                    />
+                </Part>
                 <MobileImg src="/images/step_2.svg" />
             </Root>
         );

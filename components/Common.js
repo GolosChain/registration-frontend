@@ -3,6 +3,7 @@ import is from 'styled-is';
 
 export const B = styled.b`
     font-weight: 700;
+    white-space: nowrap;
     color: #333;
 `;
 
