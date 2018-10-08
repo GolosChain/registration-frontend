@@ -5,7 +5,7 @@ import is from 'styled-is';
 import { fadeIn } from '../utils/keyFrames';
 import { B, Link, PseudoLink } from './Common';
 import { formatPhone } from '../utils/phone';
-import phoneCodes from '../app/phoneCodes';
+import phoneCodes from '../app/phoneCodes.json';
 
 const SHOW_SECOND_INTERVAL = 60 * 1000;
 
@@ -95,7 +95,10 @@ export default class Step2_Wait extends PureComponent {
         const { showSecondWarning } = this.state;
 
         const { phone, codeIndex, secret } = window.app.getRegInfo();
-        const verificationPhone = phoneCodes[codeIndex].verificationPhone;
+
+        const verificationPhone =
+            phoneCodes.list[codeIndex].verificationPhone ||
+            phoneCodes.defaultVerificationPhone;
 
         return (
             <Root>

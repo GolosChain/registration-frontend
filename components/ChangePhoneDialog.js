@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Field, FieldLabel, FieldInput, Button } from './Common';
 import Select from './Select';
-import phoneCodes from '../app/phoneCodes';
+import phoneCodes from '../app/phoneCodes.json';
 import PhoneInput from './PhoneInput';
 import { phoneCodesToSelectItems } from '../utils/phoneCodes';
 
@@ -82,7 +82,7 @@ export default class ChangePhoneDialog extends PureComponent {
         const { code, phone } = window.app.getPhoneData();
 
         this.state = {
-            codeIndex: phoneCodes.findIndex(c => c.code === code),
+            codeIndex: phoneCodes.list.findIndex(c => c.code === code),
             phone,
             errorText: null,
         };
@@ -99,7 +99,7 @@ export default class ChangePhoneDialog extends PureComponent {
     render() {
         const { codeIndex, phone, errorText } = this.state;
 
-        const code = phoneCodes[codeIndex].code;
+        const code = phoneCodes.list[codeIndex].code;
 
         return (
             <Root>
@@ -115,7 +115,7 @@ export default class ChangePhoneDialog extends PureComponent {
                         <FieldInput>
                             <Select
                                 value={codeIndex}
-                                items={phoneCodesToSelectItems(phoneCodes)}
+                                items={phoneCodesToSelectItems()}
                                 onChange={this._onCodeChange}
                             />
                         </FieldInput>
@@ -153,6 +153,10 @@ export default class ChangePhoneDialog extends PureComponent {
     };
 
     _onCodeChange = value => {
+        if (value === '') {
+            return;
+        }
+
         this.setState({
             codeIndex: value,
         });
@@ -168,7 +172,7 @@ export default class ChangePhoneDialog extends PureComponent {
         const { intl } = this.props;
         const { codeIndex, phone } = this.state;
 
-        const code = phoneCodes[codeIndex].code;
+        const code = phoneCodes.list[codeIndex].code;
 
         try {
             await window.app.updatePhone({ code, phone });
