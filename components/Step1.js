@@ -82,7 +82,7 @@ export default class Step1 extends PureComponent {
         phone: '',
         phoneError: null,
         phoneErrorText: null,
-        codeIndex: phoneCodes.findIndex(p => p.default),
+        codeIndex: phoneCodes.list.findIndex(p => p.default),
         lock: false,
     };
 
@@ -121,7 +121,7 @@ export default class Step1 extends PureComponent {
         }
 
         const nameError = accountNameError || accountNameVacant === false;
-        const code = phoneCodes[codeIndex].code;
+        const code = phoneCodes.list[codeIndex].code;
 
         return (
             <>
@@ -210,7 +210,7 @@ export default class Step1 extends PureComponent {
                         <Select
                             disabled={lock}
                             value={codeIndex}
-                            items={phoneCodesToSelectItems(phoneCodes)}
+                            items={phoneCodesToSelectItems()}
                             onChange={this._onCodeChange}
                         />
                     </FieldInput>
@@ -448,7 +448,7 @@ export default class Step1 extends PureComponent {
                     accountName,
                     email,
                     codeIndex,
-                    code: phoneCodes[codeIndex].code,
+                    code: phoneCodes.list[codeIndex].code,
                     phone: phone.replace(/[^0-9]+/g, ''),
                     captchaCode,
                 });
@@ -497,6 +497,10 @@ export default class Step1 extends PureComponent {
     };
 
     _onCodeChange = value => {
+        if (value === '') {
+            return;
+        }
+
         this.setState({
             codeIndex: Number(value),
         });

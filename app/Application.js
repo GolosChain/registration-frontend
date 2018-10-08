@@ -218,11 +218,16 @@ export default class Application extends EventEmitter {
     }
 
     getVerificationPhoneNumber() {
-        for (let country of phoneCodes) {
+        for (let country of phoneCodes.list) {
             if (country.code === this._code) {
-                return country.verificationPhone;
+                if (country.verificationPhone) {
+                    return country.verificationPhone;
+                }
+                break;
             }
         }
+
+        return phoneCodes.defaultVerificationPhone;
     }
 
     getSecretCode() {
