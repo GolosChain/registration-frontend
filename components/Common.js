@@ -99,7 +99,7 @@ export const Input = styled.input`
     `};
 
     ${is('error')`
-        border-color: red;
+        border-color: #f00;
         
         &:focus {
             border-color: #e1e1e1;
