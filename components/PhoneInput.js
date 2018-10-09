@@ -18,12 +18,10 @@ const Root = styled.div`
 `;
 
 const Code = styled.div`
-    display: flex;
-    align-items: center;
-    font-size: 15px;
-    flex-shrink: 0;
-    height: 100%;
+    height: 30px;
+    line-height: 30px;
     padding-right: 3px;
+    font-size: 15px;
     color: #444;
     user-select: none;
 `;
@@ -58,12 +56,11 @@ const Input = styled.input`
 
 const Placeholder = styled.div`
     position: absolute;
-    display: flex;
-    align-items: center;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    line-height: 30px;
     font-size: 15px;
     font-weight: 300;
     color: #aaa;
