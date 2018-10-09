@@ -57,7 +57,7 @@ textarea {
 @media (max-width: 500px) {
   input,
   textarea {
-    font-size: 16px;
+    font-size: 15px;
   }
 }
 `;

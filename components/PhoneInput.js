@@ -28,7 +28,7 @@ const Code = styled.div`
     user-select: none;
 
     @media (max-width: 500px) {
-        font-size: 16px;
+        font-size: 15px;
     }
 `;
 
@@ -74,7 +74,7 @@ const Placeholder = styled.div`
     pointer-events: none;
 
     @media (max-width: 500px) {
-        font-size: 16px;
+        font-size: 15px;
     }
 `;
 
