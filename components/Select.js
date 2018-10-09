@@ -53,7 +53,7 @@ const InputValue = styled.div`
     color: #333;
 
     @media (max-width: 500px) {
-        font-size: 16px;
+        font-size: 15px;
     }
 `;
 
