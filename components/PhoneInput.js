@@ -20,16 +20,12 @@ const Root = styled.div`
 const Code = styled.div`
     display: flex;
     align-items: center;
-    font-size: 14px;
+    font-size: 15px;
     flex-shrink: 0;
     height: 100%;
     padding-right: 3px;
     color: #444;
     user-select: none;
-
-    @media (max-width: 500px) {
-        font-size: 15px;
-    }
 `;
 
 const Highlight = styled.div`
@@ -54,6 +50,7 @@ const Input = styled.input`
     display: block;
     width: 100%;
     height: 100%;
+    font-size: 15px !important;
     border: none;
     outline: none !important;
     background: none;
@@ -67,15 +64,11 @@ const Placeholder = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 300;
     color: #aaa;
     user-select: none;
     pointer-events: none;
-
-    @media (max-width: 500px) {
-        font-size: 15px;
-    }
 `;
 
 export default class PhoneInput extends Component {
