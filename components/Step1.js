@@ -544,7 +544,11 @@ export default class Step1 extends PureComponent {
                 errorText,
             },
             () => {
-                this._errorEl.scrollIntoViewIfNeeded();
+                if (this._errorEl.scrollIntoViewIfNeeded) {
+                    this._errorEl.scrollIntoViewIfNeeded();
+                } else if (this._errorEl.scrollIntoView) {
+                    this._errorEl.scrollIntoView();
+                }
             }
         );
     }

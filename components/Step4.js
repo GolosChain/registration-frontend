@@ -289,7 +289,11 @@ export default class Step3 extends PureComponent {
                 errorText,
             },
             () => {
-                this._errorEl.scrollIntoViewIfNeeded();
+                if (this._errorEl.scrollIntoViewIfNeeded) {
+                    this._errorEl.scrollIntoViewIfNeeded();
+                } else if (this._errorEl.scrollIntoView) {
+                    this._errorEl.scrollIntoView();
+                }
             }
         );
     }
@@ -315,4 +319,3 @@ function linkify(message) {
 
     return parts;
 }
-
