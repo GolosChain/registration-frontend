@@ -11,9 +11,13 @@ import Step2_Wait from '../components/Step2_Wait';
 import Step3 from '../components/Step3';
 import Step4 from '../components/Step4';
 import StepFinal from '../components/StepFinal';
+import StepTimeout from '../components/StepTimeout';
 import Application from '../app/Application';
 import LangSwitch from '../components/LangSwitch';
 import ChangePhoneDialog from '../components/ChangePhoneDialog';
+
+// For development
+const FORCE_STEP = null;
 
 const ANIMATION_DURATION = 250;
 
@@ -46,6 +50,12 @@ const Steps = {
     final: {
         Comp: StepFinal,
         img: 4,
+        hideDots: true,
+    },
+    timeout: {
+        Comp: StepTimeout,
+        img: 'error',
+        imgSize: 230,
         hideDots: true,
     },
 };
@@ -143,6 +153,7 @@ const SideImage = styled.div`
     width: 431px;
     height: 426px;
     background: url('/images/step_${props => props.step}.svg') no-repeat center;
+    ${props => props.size ? `background-size: ${props.size}px` : ''};
     opacity: ${props => props.opacity};
     transition: opacity ${ANIMATION_DURATION}ms;
 `;
@@ -174,7 +185,7 @@ export default class Index extends PureComponent {
 
     state = {
         locale: getLocale(this.props),
-        step: '1',
+        step: FORCE_STEP || '1',
         fadeIn: false,
         fadeOut: false,
         showChangePhoneDialog: false,
@@ -199,7 +210,7 @@ export default class Index extends PureComponent {
             showChangePhoneDialog,
         } = this.state;
 
-        const { Comp, img, dot, hideDots } = Steps[step];
+        const { Comp, img, imgSize, dot, hideDots } = Steps[step];
 
         let messages;
 
@@ -243,6 +254,7 @@ export default class Index extends PureComponent {
                             <ImageWrapper>
                                 <SideImage
                                     step={img}
+                                    size={imgSize}
                                     opacity={fadeOut ? 0 : 1}
                                 />
                             </ImageWrapper>
@@ -308,6 +320,10 @@ export default class Index extends PureComponent {
     };
 
     goTo(step) {
+        if (FORCE_STEP) {
+            step = FORCE_STEP;
+        }
+
         if (this._nextStep) {
             if (this._nextStep === step) {
                 return;
