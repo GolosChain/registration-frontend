@@ -85,7 +85,6 @@ textarea {
   border: 0;
   font-family: inherit;
   font-size: 100%;
-  line-height: 1;
   margin: 0;
 }
 button,

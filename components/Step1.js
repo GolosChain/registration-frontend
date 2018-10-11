@@ -346,7 +346,7 @@ export default class Step1 extends PureComponent {
             accountNameErrorText: errorText,
         };
 
-        if (error) {
+        if (errorText) {
             newState.accountNameTempErrorText = null;
         }
 

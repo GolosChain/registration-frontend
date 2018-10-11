@@ -97,7 +97,7 @@ export default class MyDocument extends Document {
                     <script
                         dangerouslySetInnerHTML={{
                             __html: `window.GLS_GATE_CONNECT='${
-                                process.env.GLS_GATE_CONNECT
+                                process.env.GLS_GATE_CONNECT || 'wss://gate.golos.io/'
                             }'`,
                         }}
                     />
