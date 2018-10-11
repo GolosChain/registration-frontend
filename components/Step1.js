@@ -267,7 +267,7 @@ export default class Step1 extends PureComponent {
 
         const accountName = value.toLowerCase().replace(/[^a-z0-9.-]+/g, '');
 
-        if (value !== accountName) {
+        if (value.toLowerCase() !== accountName) {
             this.setState({
                 accountNameTempErrorText: 'step1.rules.containsOnly',
             });
@@ -346,7 +346,7 @@ export default class Step1 extends PureComponent {
             accountNameErrorText: errorText,
         };
 
-        if (error) {
+        if (errorText) {
             newState.accountNameTempErrorText = null;
         }
 
