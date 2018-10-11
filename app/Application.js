@@ -21,6 +21,17 @@ export default class Application extends EventEmitter {
         window.app = this;
     }
 
+    _clear() {
+        this._accountName = null;
+        this._code = null;
+        this._codeIndex = null;
+        this._phone = null;
+        this._secret = null;
+        this._passwordRulesAccepted = null;
+
+        localStorage.removeItem(REG_KEY);
+    }
+
     getGateConnect() {
         return this._conn;
     }
@@ -100,12 +111,7 @@ export default class Application extends EventEmitter {
 
                     switch (data.result.currentState) {
                         case 'firstStep':
-                            this._accountName = null;
-                            this._code = null;
-                            this._codeIndex = null;
-                            this._phone = null;
-                            this._secret = null;
-                            this._passwordRulesAccepted = null;
+                            this._clear();
                             this._root.goTo('1');
                             break;
                         case 'verify':
@@ -199,6 +205,13 @@ export default class Application extends EventEmitter {
         });
 
         if (response.error) {
+            console.error(response.error);
+
+            if (response.error.code === 404) {
+                this._root.goTo('timeout');
+                return;
+            }
+
             return response.error;
         }
 
@@ -236,6 +249,11 @@ export default class Application extends EventEmitter {
         }
 
         return this._secret;
+    }
+
+    resetRegistration() {
+        this._clear();
+        this._root.goTo('1');
     }
 
     _startWaitVerification() {

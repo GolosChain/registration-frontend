@@ -66,5 +66,8 @@
   "stepFinal.go": "Welcome to Golos",
   "stepFinal.subTitle": "Do fun!",
   "stepFinal.title": "{username}, thank you for signing up!",
+  "stepTimeout.go": "Start over",
+  "stepTimeout.subTitle": "The time allowed for registration has been exceeded. Registration have to start over.",
+  "stepTimeout.title": "Timed out",
   "wrong": "Something went wrong"
 }
