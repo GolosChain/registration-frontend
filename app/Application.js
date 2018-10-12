@@ -73,6 +73,13 @@ export default class Application extends EventEmitter {
 
         if (data.error) {
             console.error(data.error);
+
+            if (data.error.code === 404) {
+                this._clear();
+                this._root.goTo('timeout');
+                return;
+            }
+
             throw data.error;
         }
 
@@ -208,6 +215,7 @@ export default class Application extends EventEmitter {
             console.error(response.error);
 
             if (response.error.code === 404) {
+                this._clear();
                 this._root.goTo('timeout');
                 return;
             }
