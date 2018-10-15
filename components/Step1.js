@@ -114,10 +114,12 @@ export default class Step1 extends PureComponent {
 
         let accountStatus = null;
 
-        if (accountNameChecking) {
-            accountStatus = <Loader thickness={1.5} />;
-        } else if (accountNameVacant && !accountNameError) {
-            accountStatus = <Check />;
+        if (!accountNameError) {
+            if (accountNameChecking) {
+                accountStatus = <Loader thickness={1.5} />;
+            } else if (accountNameVacant && !accountNameError) {
+                accountStatus = <Check />;
+            }
         }
 
         const nameError = accountNameError || accountNameVacant === false;
@@ -286,13 +288,11 @@ export default class Step1 extends PureComponent {
             },
             () => {
                 if (this._isAccountNameValid(accountName)) {
-                    this.setState({
-                        accountNameChecking: true,
-                    });
                     this._checkNameExistenceLazy();
                 } else {
                     this.setState({
                         accountNameChecking: false,
+                        accountNameVacant: null,
                     });
                     this._checkNameExistenceLazy.cancel();
                 }
@@ -325,8 +325,33 @@ export default class Step1 extends PureComponent {
             error = true;
             errorText = 'step1.rules.tooLong';
         } else {
-            errorText = golos.utils.validateAccountName(accountName);
-            error = errorText ? true : null;
+            const validationError = golos.utils.validateAccountName(
+                accountName
+            );
+
+            if (validationError) {
+                error = true;
+
+                switch (validationError) {
+                    case 'Each account segment should start with a letter.':
+                        errorText = 'step1.rules.segment-letter';
+                        break;
+                    case 'Each account segment should have only letters, digits, or dashes.':
+                        errorText = 'step1.rules.segment-contains';
+                        break;
+                    case 'Each account segment should have only one dash in a row.':
+                        errorText = 'step1.rules.segment-dash';
+                        break;
+                    case 'Each account segment should end with a letter or digit.':
+                        errorText = 'step1.rules.segment-end';
+                        break;
+                    case 'Each account segment should be longer':
+                        errorText = 'step1.rules.segment-longer';
+                        break;
+                    default:
+                        errorText = validationError;
+                }
+            }
         }
 
         return {
@@ -532,6 +557,10 @@ export default class Step1 extends PureComponent {
 
     _checkNameExistenceLazy = debounce(async () => {
         const { accountName } = this.state;
+
+        this.setState({
+            accountNameChecking: true,
+        });
 
         const [result] = await golos.api.lookupAccountNamesAsync([accountName]);
 
