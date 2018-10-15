@@ -20,7 +20,7 @@ const Root = styled.div`
 const Code = styled.div`
     height: 30px;
     line-height: 30px;
-    padding-right: 3px;
+    padding-right: 2px;
     font-size: 15px;
     color: #444;
     user-select: none;

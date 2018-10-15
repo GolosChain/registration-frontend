@@ -72,8 +72,6 @@ export default class GateConnect {
     };
 
     request(apiName, params) {
-        //return this._mockServerRequest(apiName, params);
-
         return new Promise((resolve, reject) => {
             if (!this._open) {
                 this._queue.push({

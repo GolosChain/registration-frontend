@@ -318,12 +318,15 @@ export default class Step1 extends PureComponent {
         } else if (/^[^a-z]/.test(name)) {
             error = true;
             errorText = 'step1.rules.startsWithChar';
-        } else if (name.length < 4) {
+        } else if (name.length < 3) {
             error = true;
             errorText = 'step1.rules.tooShort';
         } else if (name.length > 16) {
             error = true;
             errorText = 'step1.rules.tooLong';
+        } else {
+            errorText = golos.utils.validateAccountName(accountName);
+            error = errorText ? true : null;
         }
 
         return {
