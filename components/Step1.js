@@ -333,20 +333,35 @@ export default class Step1 extends PureComponent {
                 error = true;
 
                 switch (validationError) {
+                    case 'Account name should start with a letter.':
+                        errorText = 'step1.rules.nameLetter';
+                        break;
+                    case 'Account name should have only letters, digits, or dashes.':
+                        errorText = 'step1.rules.containsOnly';
+                        break;
+                    case 'Account name should have only one dash in a row.':
+                        errorText = 'step1.rules.nameDash';
+                        break;
+                    case 'Account name should end with a letter or digit.':
+                        errorText = 'step1.rules.nameEnd';
+                        break;
+                    case 'Account name should be longer':
+                        errorText = 'step1.rules.tooShort';
+                        break;
                     case 'Each account segment should start with a letter.':
-                        errorText = 'step1.rules.segment-letter';
+                        errorText = 'step1.rules.segmentLetter';
                         break;
                     case 'Each account segment should have only letters, digits, or dashes.':
-                        errorText = 'step1.rules.segment-contains';
+                        errorText = 'step1.rules.segmentContains';
                         break;
                     case 'Each account segment should have only one dash in a row.':
-                        errorText = 'step1.rules.segment-dash';
+                        errorText = 'step1.rules.segmentDash';
                         break;
                     case 'Each account segment should end with a letter or digit.':
-                        errorText = 'step1.rules.segment-end';
+                        errorText = 'step1.rules.segmentEnd';
                         break;
                     case 'Each account segment should be longer':
-                        errorText = 'step1.rules.segment-longer';
+                        errorText = 'step1.rules.segmentLonger';
                         break;
                     default:
                         errorText = validationError;
