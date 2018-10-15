@@ -87,7 +87,7 @@ export default class PhoneInput extends Component {
                         onFocus={this._onFocus}
                         onChange={this._onChange}
                     />
-                    {value ? null : <Placeholder>(123) 123 45-67</Placeholder>}
+                    {value ? null : <Placeholder>123 456 7890</Placeholder>}
                 </InputWrapper>
                 {focus ? <Highlight /> : null}
             </Root>
