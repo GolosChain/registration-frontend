@@ -129,7 +129,7 @@ export default class ChangePhoneDialog extends PureComponent {
                                     value={phone}
                                     autoCorrect="off"
                                     autoCapitalize="off"
-                                    checkSpell="false"
+                                    spellCheck="false"
                                     onChange={this._onPhoneChange}
                                 />
                             </FieldInput>

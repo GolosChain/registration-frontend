@@ -193,7 +193,7 @@ export default class Step1 extends PureComponent {
                             error={emailError}
                             autoCorrect="off"
                             autoCapitalize="off"
-                            checkSpell="false"
+                            spellCheck="false"
                             onChange={this._onEmailChange}
                             onBlur={this._onEmailBlur}
                         />
@@ -230,7 +230,7 @@ export default class Step1 extends PureComponent {
                             value={phone}
                             autoCorrect="off"
                             autoCapitalize="off"
-                            checkSpell="false"
+                            spellCheck="false"
                             onChange={this._onPhoneChange}
                             onBlur={this._onPhoneBlur}
                         />
