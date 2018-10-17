@@ -27,7 +27,7 @@
   "step1.rules.segmentLonger": "Too few account segment length",
   "step1.rules.startsWithChar": "User name must start with character",
   "step1.rules.tooLong": "Too long account name (max 16 symbols)",
-  "step1.rules.tooShort": "Too short account name (min 4 symbols)",
+  "step1.rules.tooShort": "Too short account name (min 3 symbols)",
   "step1.subTitle": "Sign up to publish posts, vote on content, comment and get rewards.",
   "step1.title": "Registration",
   "step2.ok": "I've sent the SMS",
