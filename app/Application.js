@@ -173,13 +173,17 @@ export default class Application extends EventEmitter {
             this._code = data.code;
             this._codeIndex = data.codeIndex;
             this._phone = data.phone;
-            this._secret = generateRandomCode();
 
-            this._saveRegData();
+            if (response.result.currentState === 'toBlockChain') {
+                this._saveRegData();
+                this._root.goTo('3');
+            } else {
+                this._secret = generateRandomCode();
+                this._saveRegData();
+                this._root.goTo('2');
+                this._startWaitVerification();
+            }
 
-            this._root.goTo('2');
-
-            this._startWaitVerification();
             return null;
         }
     }
