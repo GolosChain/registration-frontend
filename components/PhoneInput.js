@@ -115,8 +115,6 @@ export default class PhoneInput extends Component {
     };
 
     _onChange = e => {
-        this.props.onChange(
-            e.target.value.replace(/[^\d ()-]+/g, '').replace(/^0+/, '')
-        );
+        this.props.onChange(e.target.value.replace(/[^\d ()-]+/g, ''));
     };
 }

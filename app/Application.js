@@ -245,6 +245,18 @@ export default class Application extends EventEmitter {
     getVerificationPhoneNumber() {
         for (let country of phoneCodes.list) {
             if (country.code === this._code) {
+                if (country.verificationOverrides) {
+                    for (let override of country.verificationOverrides) {
+                        if (
+                            Array.from(override.startsWith).some(startWith =>
+                                this._phone.startsWith(startWith)
+                            )
+                        ) {
+                            return override.verificationPhone;
+                        }
+                    }
+                }
+
                 if (country.verificationPhone) {
                     return country.verificationPhone;
                 }

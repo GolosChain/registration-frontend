@@ -28,7 +28,13 @@
     {
       "code": 380,
       "label": "Ukraine (+380)",
-      "verificationPhone": "+380 (93) 177-77-72"
+      "verificationPhone": "+380 (93) 177-77-72",
+      "verificationOverrides": [
+        {
+          "startsWith": ["62", "64", "71", "72"],
+          "verificationPhone": "+7 (916) 930-63-59"
+        }
+      ]
     },
     {
       "code": 93,
