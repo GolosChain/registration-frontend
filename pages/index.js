@@ -133,11 +133,11 @@ const Panel = styled.div`
 `;
 
 const Column = styled.div`
-    width: 328px;
+    max-width: 348px;
     padding: 30px 0;
 
     @media (max-width: 800px) {
-        padding: 6px 0 10px;
+        padding: 6px 10px 10px;
     }
 
     ${is('fadeIn')`
