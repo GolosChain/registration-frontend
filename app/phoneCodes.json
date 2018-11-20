@@ -3,970 +3,975 @@
   "list": [
     {
       "code": 1,
-      "label": "United States (+1)"
+      "label": "United States"
     },
     {
       "code": 7,
-      "label": "Russia (+7)",
+      "label": "Russia",
       "default": true,
       "verificationPhone": "+7 (916) 930-63-59"
     },
     {
       "code": 7,
-      "label": "Kazakhstan (+7)",
+      "label": "Kazakhstan",
       "verificationPhone": "+7 (777) 007-69-77"
     },
     {
       "code": 370,
-      "label": "Lithuania (+370)"
+      "label": "Lithuania"
     },
     {
       "code": 375,
-      "label": "Belarus (+375)",
+      "label": "Belarus",
       "verificationPhone": "+375 (29) 230-87-70"
     },
     {
       "code": 380,
-      "label": "Ukraine (+380)",
+      "label": "Ukraine",
       "verificationPhone": "+380 (93) 177-77-72",
       "verificationOverrides": [
         {
-          "startsWith": ["62", "64", "71", "72"],
+          "startsWith": [
+            "62",
+            "64",
+            "71",
+            "72"
+          ],
           "verificationPhone": "+7 (916) 930-63-59"
         }
       ]
     },
     {
       "code": 93,
-      "label": "Afghanistan (+93)"
+      "label": "Afghanistan"
     },
     {
       "code": 355,
-      "label": "Albania (+355)"
+      "label": "Albania"
     },
     {
       "code": 213,
-      "label": "Algeria (+213)"
+      "label": "Algeria"
     },
     {
       "code": 1,
-      "label": "American Samoa (+1)"
+      "label": "American Samoa"
     },
     {
       "code": 376,
-      "label": "Andorra (+376)"
+      "label": "Andorra"
     },
     {
       "code": 244,
-      "label": "Angola (+244)"
+      "label": "Angola"
     },
     {
       "code": 1,
-      "label": "Anguilla (+1)"
+      "label": "Anguilla"
     },
     {
       "code": 1,
-      "label": "Antigua (+1)"
+      "label": "Antigua"
     },
     {
       "code": 54,
-      "label": "Argentina (+54)"
+      "label": "Argentina"
     },
     {
       "code": 374,
-      "label": "Armenia (+374)"
+      "label": "Armenia"
     },
     {
       "code": 297,
-      "label": "Aruba (+297)"
+      "label": "Aruba"
     },
     {
       "code": 61,
-      "label": "Australia (+61)"
+      "label": "Australia"
     },
     {
       "code": 43,
-      "label": "Austria (+43)"
+      "label": "Austria"
     },
     {
       "code": 994,
-      "label": "Azerbaijan (+994)"
+      "label": "Azerbaijan"
     },
     {
       "code": 973,
-      "label": "Bahrain (+973)"
+      "label": "Bahrain"
     },
     {
       "code": 880,
-      "label": "Bangladesh (+880)"
+      "label": "Bangladesh"
     },
     {
       "code": 1,
-      "label": "Barbados (+1)"
+      "label": "Barbados"
     },
     {
       "code": 32,
-      "label": "Belgium (+32)"
+      "label": "Belgium"
     },
     {
       "code": 501,
-      "label": "Belize (+501)"
+      "label": "Belize"
     },
     {
       "code": 229,
-      "label": "Benin (+229)"
+      "label": "Benin"
     },
     {
       "code": 1,
-      "label": "Bermuda (+1)"
+      "label": "Bermuda"
     },
     {
       "code": 975,
-      "label": "Bhutan (+975)"
+      "label": "Bhutan"
     },
     {
       "code": 591,
-      "label": "Bolivia (+591)"
+      "label": "Bolivia"
     },
     {
       "code": 599,
-      "label": "Bonaire, Sint Eustatius and Saba (+599)"
+      "label": "Bonaire, Sint Eustatius and Saba"
     },
     {
       "code": 387,
-      "label": "Bosnia and Herzegovina (+387)"
+      "label": "Bosnia and Herzegovina"
     },
     {
       "code": 267,
-      "label": "Botswana (+267)"
+      "label": "Botswana"
     },
     {
       "code": 55,
-      "label": "Brazil (+55)"
+      "label": "Brazil"
     },
     {
       "code": 246,
-      "label": "British Indian Ocean Territory (+246)"
+      "label": "British Indian Ocean Territory"
     },
     {
       "code": 1,
-      "label": "British Virgin Islands (+1)"
+      "label": "British Virgin Islands"
     },
     {
       "code": 673,
-      "label": "Brunei (+673)"
+      "label": "Brunei"
     },
     {
       "code": 359,
-      "label": "Bulgaria (+359)"
+      "label": "Bulgaria"
     },
     {
       "code": 226,
-      "label": "Burkina Faso (+226)"
+      "label": "Burkina Faso"
     },
     {
       "code": 257,
-      "label": "Burundi (+257)"
+      "label": "Burundi"
     },
     {
       "code": 855,
-      "label": "Cambodia (+855)"
+      "label": "Cambodia"
     },
     {
       "code": 237,
-      "label": "Cameroon (+237)"
+      "label": "Cameroon"
     },
     {
       "code": 1,
-      "label": "Canada (+1)"
+      "label": "Canada"
     },
     {
       "code": 238,
-      "label": "Cape Verde (+238)"
+      "label": "Cape Verde"
     },
     {
       "code": 1,
-      "label": "Cayman Islands (+1)"
+      "label": "Cayman Islands"
     },
     {
       "code": 236,
-      "label": "Central African Republic (+236)"
+      "label": "Central African Republic"
     },
     {
       "code": 235,
-      "label": "Chad (+235)"
+      "label": "Chad"
     },
     {
       "code": 56,
-      "label": "Chile (+56)"
+      "label": "Chile"
     },
     {
       "code": 86,
-      "label": "China (+86)"
+      "label": "China"
     },
     {
       "code": 57,
-      "label": "Colombia (+57)"
+      "label": "Colombia"
     },
     {
       "code": 269,
-      "label": "Comoros (+269)"
+      "label": "Comoros"
     },
     {
       "code": 682,
-      "label": "Cook Islands (+682)"
+      "label": "Cook Islands"
     },
     {
       "code": 506,
-      "label": "Costa Rica (+506)"
+      "label": "Costa Rica"
     },
     {
       "code": 225,
-      "label": "Côte d'Ivoire (+225)"
+      "label": "Côte d'Ivoire"
     },
     {
       "code": 385,
-      "label": "Croatia (+385)"
+      "label": "Croatia"
     },
     {
       "code": 53,
-      "label": "Cuba (+53)"
+      "label": "Cuba"
     },
     {
       "code": 599,
-      "label": "Curaçao (+599)"
+      "label": "Curaçao"
     },
     {
       "code": 357,
-      "label": "Cyprus (+357)"
+      "label": "Cyprus"
     },
     {
       "code": 420,
-      "label": "Czech Republic (+420)"
+      "label": "Czech Republic"
     },
     {
       "code": 243,
-      "label": "Democratic Republic of the Congo (+243)"
+      "label": "Democratic Republic of the Congo"
     },
     {
       "code": 45,
-      "label": "Denmark (+45)"
+      "label": "Denmark"
     },
     {
       "code": 253,
-      "label": "Djibouti (+253)"
+      "label": "Djibouti"
     },
     {
       "code": 1,
-      "label": "Dominica (+1)"
+      "label": "Dominica"
     },
     {
       "code": 1,
-      "label": "Dominican Republic (+1)"
+      "label": "Dominican Republic"
     },
     {
       "code": 593,
-      "label": "Ecuador (+593)"
+      "label": "Ecuador"
     },
     {
       "code": 20,
-      "label": "Egypt (+20)"
+      "label": "Egypt"
     },
     {
       "code": 503,
-      "label": "El Salvador (+503)"
+      "label": "El Salvador"
     },
     {
       "code": 240,
-      "label": "Equatorial Guinea (+240)"
+      "label": "Equatorial Guinea"
     },
     {
       "code": 291,
-      "label": "Eritrea (+291)"
+      "label": "Eritrea"
     },
     {
       "code": 372,
-      "label": "Estonia (+372)"
+      "label": "Estonia"
     },
     {
       "code": 251,
-      "label": "Ethiopia (+251)"
+      "label": "Ethiopia"
     },
     {
       "code": 500,
-      "label": "Falkland Islands (+500)"
+      "label": "Falkland Islands"
     },
     {
       "code": 298,
-      "label": "Faroe Islands (+298)"
+      "label": "Faroe Islands"
     },
     {
       "code": 691,
-      "label": "Federated States of Micronesia (+691)"
+      "label": "Federated States of Micronesia"
     },
     {
       "code": 679,
-      "label": "Fiji (+679)"
+      "label": "Fiji"
     },
     {
       "code": 358,
-      "label": "Finland (+358)"
+      "label": "Finland"
     },
     {
       "code": 33,
-      "label": "France (+33)"
+      "label": "France"
     },
     {
       "code": 594,
-      "label": "French Guiana (+594)"
+      "label": "French Guiana"
     },
     {
       "code": 689,
-      "label": "French Polynesia (+689)"
+      "label": "French Polynesia"
     },
     {
       "code": 241,
-      "label": "Gabon (+241)"
+      "label": "Gabon"
     },
     {
       "code": 995,
-      "label": "Georgia (+995)"
+      "label": "Georgia"
     },
     {
       "code": 49,
-      "label": "Germany (+49)"
+      "label": "Germany"
     },
     {
       "code": 233,
-      "label": "Ghana (+233)"
+      "label": "Ghana"
     },
     {
       "code": 350,
-      "label": "Gibraltar (+350)"
+      "label": "Gibraltar"
     },
     {
       "code": 30,
-      "label": "Greece (+30)"
+      "label": "Greece"
     },
     {
       "code": 299,
-      "label": "Greenland (+299)"
+      "label": "Greenland"
     },
     {
       "code": 1,
-      "label": "Grenada (+1)"
+      "label": "Grenada"
     },
     {
       "code": 590,
-      "label": "Guadeloupe (+590)"
+      "label": "Guadeloupe"
     },
     {
       "code": 1,
-      "label": "Guam (+1)"
+      "label": "Guam"
     },
     {
       "code": 502,
-      "label": "Guatemala (+502)"
+      "label": "Guatemala"
     },
     {
       "code": 44,
-      "label": "Guernsey (+44)"
+      "label": "Guernsey"
     },
     {
       "code": 224,
-      "label": "Guinea (+224)"
+      "label": "Guinea"
     },
     {
       "code": 245,
-      "label": "Guinea-Bissau (+245)"
+      "label": "Guinea-Bissau"
     },
     {
       "code": 592,
-      "label": "Guyana (+592)"
+      "label": "Guyana"
     },
     {
       "code": 509,
-      "label": "Haiti (+509)"
+      "label": "Haiti"
     },
     {
       "code": 504,
-      "label": "Honduras (+504)"
+      "label": "Honduras"
     },
     {
       "code": 852,
-      "label": "Hong Kong (+852)"
+      "label": "Hong Kong"
     },
     {
       "code": 36,
-      "label": "Hungary (+36)"
+      "label": "Hungary"
     },
     {
       "code": 354,
-      "label": "Iceland (+354)"
+      "label": "Iceland"
     },
     {
       "code": 91,
-      "label": "India (+91)"
+      "label": "India"
     },
     {
       "code": 62,
-      "label": "Indonesia (+62)"
+      "label": "Indonesia"
     },
     {
       "code": 98,
-      "label": "Iran (+98)"
+      "label": "Iran"
     },
     {
       "code": 964,
-      "label": "Iraq (+964)"
+      "label": "Iraq"
     },
     {
       "code": 353,
-      "label": "Ireland (+353)"
+      "label": "Ireland"
     },
     {
       "code": 44,
-      "label": "Isle Of Man (+44)"
+      "label": "Isle Of Man"
     },
     {
       "code": 972,
-      "label": "Israel (+972)"
+      "label": "Israel"
     },
     {
       "code": 39,
-      "label": "Italy (+39)"
+      "label": "Italy"
     },
     {
       "code": 1,
-      "label": "Jamaica (+1)"
+      "label": "Jamaica"
     },
     {
       "code": 81,
-      "label": "Japan (+81)"
+      "label": "Japan"
     },
     {
       "code": 44,
-      "label": "Jersey (+44)"
+      "label": "Jersey"
     },
     {
       "code": 962,
-      "label": "Jordan (+962)"
+      "label": "Jordan"
     },
     {
       "code": 254,
-      "label": "Kenya (+254)"
+      "label": "Kenya"
     },
     {
       "code": 686,
-      "label": "Kiribati (+686)"
+      "label": "Kiribati"
     },
     {
       "code": 383,
-      "label": "Kosovo (+383)"
+      "label": "Kosovo"
     },
     {
       "code": 965,
-      "label": "Kuwait (+965)"
+      "label": "Kuwait"
     },
     {
       "code": 996,
-      "label": "Kyrgyzstan (+996)"
+      "label": "Kyrgyzstan"
     },
     {
       "code": 856,
-      "label": "Laos (+856)"
+      "label": "Laos"
     },
     {
       "code": 371,
-      "label": "Latvia (+371)"
+      "label": "Latvia"
     },
     {
       "code": 961,
-      "label": "Lebanon (+961)"
+      "label": "Lebanon"
     },
     {
       "code": 266,
-      "label": "Lesotho (+266)"
+      "label": "Lesotho"
     },
     {
       "code": 231,
-      "label": "Liberia (+231)"
+      "label": "Liberia"
     },
     {
       "code": 218,
-      "label": "Libya (+218)"
+      "label": "Libya"
     },
     {
       "code": 423,
-      "label": "Liechtenstein (+423)"
+      "label": "Liechtenstein"
     },
     {
       "code": 352,
-      "label": "Luxembourg (+352)"
+      "label": "Luxembourg"
     },
     {
       "code": 853,
-      "label": "Macau (+853)"
+      "label": "Macau"
     },
     {
       "code": 389,
-      "label": "Macedonia (+389)"
+      "label": "Macedonia"
     },
     {
       "code": 261,
-      "label": "Madagascar (+261)"
+      "label": "Madagascar"
     },
     {
       "code": 265,
-      "label": "Malawi (+265)"
+      "label": "Malawi"
     },
     {
       "code": 60,
-      "label": "Malaysia (+60)"
+      "label": "Malaysia"
     },
     {
       "code": 960,
-      "label": "Maldives (+960)"
+      "label": "Maldives"
     },
     {
       "code": 223,
-      "label": "Mali (+223)"
+      "label": "Mali"
     },
     {
       "code": 356,
-      "label": "Malta (+356)"
+      "label": "Malta"
     },
     {
       "code": 692,
-      "label": "Marshall Islands (+692)"
+      "label": "Marshall Islands"
     },
     {
       "code": 596,
-      "label": "Martinique (+596)"
+      "label": "Martinique"
     },
     {
       "code": 222,
-      "label": "Mauritania (+222)"
+      "label": "Mauritania"
     },
     {
       "code": 230,
-      "label": "Mauritius (+230)"
+      "label": "Mauritius"
     },
     {
       "code": 262,
-      "label": "Mayotte (+262)"
+      "label": "Mayotte"
     },
     {
       "code": 52,
-      "label": "Mexico (+52)"
+      "label": "Mexico"
     },
     {
       "code": 373,
-      "label": "Moldova (+373)"
+      "label": "Moldova"
     },
     {
       "code": 377,
-      "label": "Monaco (+377)"
+      "label": "Monaco"
     },
     {
       "code": 976,
-      "label": "Mongolia (+976)"
+      "label": "Mongolia"
     },
     {
       "code": 382,
-      "label": "Montenegro (+382)"
+      "label": "Montenegro"
     },
     {
       "code": 1,
-      "label": "Montserrat (+1)"
+      "label": "Montserrat"
     },
     {
       "code": 212,
-      "label": "Morocco (+212)"
+      "label": "Morocco"
     },
     {
       "code": 258,
-      "label": "Mozambique (+258)"
+      "label": "Mozambique"
     },
     {
       "code": 95,
-      "label": "Myanmar (+95)"
+      "label": "Myanmar"
     },
     {
       "code": 264,
-      "label": "Namibia (+264)"
+      "label": "Namibia"
     },
     {
       "code": 674,
-      "label": "Nauru (+674)"
+      "label": "Nauru"
     },
     {
       "code": 977,
-      "label": "Nepal (+977)"
+      "label": "Nepal"
     },
     {
       "code": 31,
-      "label": "Netherlands (+31)"
+      "label": "Netherlands"
     },
     {
       "code": 687,
-      "label": "New Caledonia (+687)"
+      "label": "New Caledonia"
     },
     {
       "code": 64,
-      "label": "New Zealand (+64)"
+      "label": "New Zealand"
     },
     {
       "code": 505,
-      "label": "Nicaragua (+505)"
+      "label": "Nicaragua"
     },
     {
       "code": 227,
-      "label": "Niger (+227)"
+      "label": "Niger"
     },
     {
       "code": 234,
-      "label": "Nigeria (+234)"
+      "label": "Nigeria"
     },
     {
       "code": 683,
-      "label": "Niue (+683)"
+      "label": "Niue"
     },
     {
       "code": 672,
-      "label": "Norfolk Island (+672)"
+      "label": "Norfolk Island"
     },
     {
       "code": 850,
-      "label": "North Korea (+850)"
+      "label": "North Korea"
     },
     {
       "code": 1,
-      "label": "Northern Mariana Islands (+1)"
+      "label": "Northern Mariana Islands"
     },
     {
       "code": 47,
-      "label": "Norway (+47)"
+      "label": "Norway"
     },
     {
       "code": 968,
-      "label": "Oman (+968)"
+      "label": "Oman"
     },
     {
       "code": 92,
-      "label": "Pakistan (+92)"
+      "label": "Pakistan"
     },
     {
       "code": 680,
-      "label": "Palau (+680)"
+      "label": "Palau"
     },
     {
       "code": 970,
-      "label": "Palestine (+970)"
+      "label": "Palestine"
     },
     {
       "code": 507,
-      "label": "Panama (+507)"
+      "label": "Panama"
     },
     {
       "code": 675,
-      "label": "Papua New Guinea (+675)"
+      "label": "Papua New Guinea"
     },
     {
       "code": 595,
-      "label": "Paraguay (+595)"
+      "label": "Paraguay"
     },
     {
       "code": 51,
-      "label": "Peru (+51)"
+      "label": "Peru"
     },
     {
       "code": 63,
-      "label": "Philippines (+63)"
+      "label": "Philippines"
     },
     {
       "code": 48,
-      "label": "Poland (+48)"
+      "label": "Poland"
     },
     {
       "code": 351,
-      "label": "Portugal (+351)"
+      "label": "Portugal"
     },
     {
       "code": 1,
-      "label": "Puerto Rico (+1)"
+      "label": "Puerto Rico"
     },
     {
       "code": 974,
-      "label": "Qatar (+974)"
+      "label": "Qatar"
     },
     {
       "code": 242,
-      "label": "Republic of the Congo (+242)"
+      "label": "Republic of the Congo"
     },
     {
       "code": 262,
-      "label": "Réunion (+262)"
+      "label": "Réunion"
     },
     {
       "code": 40,
-      "label": "Romania (+40)"
+      "label": "Romania"
     },
     {
       "code": 250,
-      "label": "Rwanda (+250)"
+      "label": "Rwanda"
     },
     {
       "code": 590,
-      "label": "Saint Barthélemy (+590)"
+      "label": "Saint Barthélemy"
     },
     {
       "code": 290,
-      "label": "Saint Helena (+290)"
+      "label": "Saint Helena"
     },
     {
       "code": 1,
-      "label": "Saint Kitts and Nevis (+1)"
+      "label": "Saint Kitts and Nevis"
     },
     {
       "code": 590,
-      "label": "Saint Martin (+590)"
+      "label": "Saint Martin"
     },
     {
       "code": 508,
-      "label": "Saint Pierre and Miquelon (+508)"
+      "label": "Saint Pierre and Miquelon"
     },
     {
       "code": 1,
-      "label": "Saint Vincent and the Grenadines (+1)"
+      "label": "Saint Vincent and the Grenadines"
     },
     {
       "code": 685,
-      "label": "Samoa (+685)"
+      "label": "Samoa"
     },
     {
       "code": 378,
-      "label": "San Marino (+378)"
+      "label": "San Marino"
     },
     {
       "code": 239,
-      "label": "Sao Tome and Principe (+239)"
+      "label": "Sao Tome and Principe"
     },
     {
       "code": 966,
-      "label": "Saudi Arabia (+966)"
+      "label": "Saudi Arabia"
     },
     {
       "code": 221,
-      "label": "Senegal (+221)"
+      "label": "Senegal"
     },
     {
       "code": 381,
-      "label": "Serbia (+381)"
+      "label": "Serbia"
     },
     {
       "code": 248,
-      "label": "Seychelles (+248)"
+      "label": "Seychelles"
     },
     {
       "code": 232,
-      "label": "Sierra Leone (+232)"
+      "label": "Sierra Leone"
     },
     {
       "code": 65,
-      "label": "Singapore (+65)"
+      "label": "Singapore"
     },
     {
       "code": 1,
-      "label": "Sint Maarten (+1)"
+      "label": "Sint Maarten"
     },
     {
       "code": 421,
-      "label": "Slovakia (+421)"
+      "label": "Slovakia"
     },
     {
       "code": 386,
-      "label": "Slovenia (+386)"
+      "label": "Slovenia"
     },
     {
       "code": 677,
-      "label": "Solomon Islands (+677)"
+      "label": "Solomon Islands"
     },
     {
       "code": 252,
-      "label": "Somalia (+252)"
+      "label": "Somalia"
     },
     {
       "code": 27,
-      "label": "South Africa (+27)"
+      "label": "South Africa"
     },
     {
       "code": 82,
-      "label": "South Korea (+82)"
+      "label": "South Korea"
     },
     {
       "code": 211,
-      "label": "South Sudan (+211)"
+      "label": "South Sudan"
     },
     {
       "code": 34,
-      "label": "Spain (+34)"
+      "label": "Spain"
     },
     {
       "code": 94,
-      "label": "Sri Lanka (+94)"
+      "label": "Sri Lanka"
     },
     {
       "code": 1,
-      "label": "St. Lucia (+1)"
+      "label": "St. Lucia"
     },
     {
       "code": 249,
-      "label": "Sudan (+249)"
+      "label": "Sudan"
     },
     {
       "code": 597,
-      "label": "Suriname (+597)"
+      "label": "Suriname"
     },
     {
       "code": 268,
-      "label": "Swaziland (+268)"
+      "label": "Swaziland"
     },
     {
       "code": 46,
-      "label": "Sweden (+46)"
+      "label": "Sweden"
     },
     {
       "code": 41,
-      "label": "Switzerland (+41)"
+      "label": "Switzerland"
     },
     {
       "code": 963,
-      "label": "Syria (+963)"
+      "label": "Syria"
     },
     {
       "code": 886,
-      "label": "Taiwan (+886)"
+      "label": "Taiwan"
     },
     {
       "code": 992,
-      "label": "Tajikistan (+992)"
+      "label": "Tajikistan"
     },
     {
       "code": 255,
-      "label": "Tanzania (+255)"
+      "label": "Tanzania"
     },
     {
       "code": 66,
-      "label": "Thailand (+66)"
+      "label": "Thailand"
     },
     {
       "code": 1,
-      "label": "The Bahamas (+1)"
+      "label": "The Bahamas"
     },
     {
       "code": 220,
-      "label": "The Gambia (+220)"
+      "label": "The Gambia"
     },
     {
       "code": 670,
-      "label": "Timor-Leste (+670)"
+      "label": "Timor-Leste"
     },
     {
       "code": 228,
-      "label": "Togo (+228)"
+      "label": "Togo"
     },
     {
       "code": 690,
-      "label": "Tokelau (+690)"
+      "label": "Tokelau"
     },
     {
       "code": 676,
-      "label": "Tonga (+676)"
+      "label": "Tonga"
     },
     {
       "code": 1,
-      "label": "Trinidad and Tobago (+1)"
+      "label": "Trinidad and Tobago"
     },
     {
       "code": 216,
-      "label": "Tunisia (+216)"
+      "label": "Tunisia"
     },
     {
       "code": 90,
-      "label": "Turkey (+90)"
+      "label": "Turkey"
     },
     {
       "code": 993,
-      "label": "Turkmenistan (+993)"
+      "label": "Turkmenistan"
     },
     {
       "code": 1,
-      "label": "Turks and Caicos Islands (+1)"
+      "label": "Turks and Caicos Islands"
     },
     {
       "code": 688,
-      "label": "Tuvalu (+688)"
+      "label": "Tuvalu"
     },
     {
       "code": 256,
-      "label": "Uganda (+256)"
+      "label": "Uganda"
     },
     {
       "code": 971,
-      "label": "United Arab Emirates (+971)"
+      "label": "United Arab Emirates"
     },
     {
       "code": 44,
-      "label": "United Kingdom (+44)"
+      "label": "United Kingdom"
     },
     {
       "code": 598,
-      "label": "Uruguay (+598)"
+      "label": "Uruguay"
     },
     {
       "code": 1,
-      "label": "US Virgin Islands (+1)"
+      "label": "US Virgin Islands"
     },
     {
       "code": 998,
-      "label": "Uzbekistan (+998)"
+      "label": "Uzbekistan"
     },
     {
       "code": 678,
-      "label": "Vanuatu (+678)"
+      "label": "Vanuatu"
     },
     {
       "code": 39,
-      "label": "Vatican City (+39)"
+      "label": "Vatican City"
     },
     {
       "code": 58,
-      "label": "Venezuela (+58)"
+      "label": "Venezuela"
     },
     {
       "code": 84,
-      "label": "Vietnam (+84)"
+      "label": "Vietnam"
     },
     {
       "code": 681,
-      "label": "Wallis and Futuna (+681)"
+      "label": "Wallis and Futuna"
     },
     {
       "code": 212,
-      "label": "Western Sahara (+212)"
+      "label": "Western Sahara"
     },
     {
       "code": 967,
-      "label": "Yemen (+967)"
+      "label": "Yemen"
     },
     {
       "code": 260,
-      "label": "Zambia (+260)"
+      "label": "Zambia"
     },
     {
       "code": 263,
-      "label": "Zimbabwe (+263)"
+      "label": "Zimbabwe"
     }
   ],
   "topCount": 6

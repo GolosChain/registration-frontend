@@ -6,6 +6,7 @@ import { Title, Input, Footer, Button } from './Common';
 import { Field, FieldLabel, FieldInput, Link } from './Common';
 import Checkbox from './Checkbox';
 import { generateRandomString } from '../utils/random';
+import generatePdf from '../utils/pdf';
 
 const PASSWORD_LENGTH = 52;
 
@@ -94,6 +95,12 @@ const ErrorBlock = styled.div`
     color: #f00;
 `;
 
+const DownloadBlock = styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 5px 0 10px;
+`;
+
 @injectIntl
 export default class Step3 extends PureComponent {
     state = {
@@ -147,6 +154,13 @@ export default class Step3 extends PureComponent {
                         />
                     </FieldInput>
                 </Field>
+                {window.jsPDF ? (
+                    <DownloadBlock>
+                        <Button light onClick={this.downloadPdf}>
+                            <FormattedMessage id="step4.downloadPdf" />
+                        </Button>
+                    </DownloadBlock>
+                ) : null}
                 <Checkboxes>
                     {rulesList.map(rule => (
                         <CheckboxField key={rule.id}>
@@ -297,6 +311,10 @@ export default class Step3 extends PureComponent {
             }
         );
     }
+
+    downloadPdf = () => {
+        generatePdf(window.app.getAccountName(), this.state.password);
+    };
 }
 
 function linkify(message) {

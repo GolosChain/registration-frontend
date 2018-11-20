@@ -11,6 +11,7 @@ export function phoneCodesToSelectItems() {
 
             return {
                 value: i,
+                code: item.code,
                 label: item.label,
             };
         });
@@ -18,6 +19,7 @@ export function phoneCodesToSelectItems() {
         if (phoneCodes.topCount) {
             list.splice(phoneCodes.topCount, 0, {
                 value: '',
+                code: 0,
                 label: '',
             });
         }

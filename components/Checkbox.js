@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { focusStyle } from './Common';
 
 const Root = styled.div`
     display: flex;
@@ -10,6 +11,7 @@ const Img = styled.img`
     width: 18px;
     height: 18px;
     margin-right: 12px;
+    border-radius: 2px;
     flex-shrink: 0;
     cursor: pointer;
 `;
@@ -19,8 +21,7 @@ const Input = styled.input`
     opacity: 0;
 
     &:focus + ${Img} {
-        outline: #3b99fc auto 5px;
-        outline-offset: -2px;
+        ${focusStyle};
     }
 `;
 

@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import is from 'styled-is';
 
 const rotateAnimation = keyframes`
     0% {
@@ -18,6 +19,11 @@ const Root = styled.div`
     border-top-color: transparent;
     animation: ${rotateAnimation} 625ms infinite linear;
     pointer-events: none;
+
+    ${is('big')`
+        width: 100px;
+        height: 100px;
+    `};
 `;
 
 export default function Loader(props) {

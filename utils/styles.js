@@ -13,8 +13,8 @@ ol {
   padding: 0;
 }
 :focus {
-  outline: #3b99fc auto 5px;
-  outline-offset: -2px;
+  outline: none;
+  box-shadow: 0 0 4px 1px rgba(59, 153, 252, 0.6);
 }
 
 /*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */

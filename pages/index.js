@@ -15,6 +15,9 @@ import StepTimeout from '../components/StepTimeout';
 import Application from '../app/Application';
 import LangSwitch from '../components/LangSwitch';
 import ChangePhoneDialog from '../components/ChangePhoneDialog';
+import EnterCode from '../components/steps/EnterCode';
+import Download from '../components/steps/Download';
+import SplashLoader from '../components/SplashLoader';
 
 // For development
 const FORCE_STEP = null;
@@ -42,10 +45,20 @@ const Steps = {
         img: 3,
         dot: 3,
     },
+    'enter-code': {
+        Comp: EnterCode,
+        img: 2,
+        hideDots: true,
+    },
     '4': {
         Comp: Step4,
         img: 3,
         dot: 4,
+    },
+    download: {
+        Comp: Download,
+        img: 4,
+        dot: 3,
     },
     final: {
         Comp: StepFinal,
@@ -153,7 +166,7 @@ const SideImage = styled.div`
     width: 431px;
     height: 426px;
     background: url('/images/step_${props => props.step}.svg') no-repeat center;
-    ${props => props.size ? `background-size: ${props.size}px` : ''};
+    ${props => (props.size ? `background-size: ${props.size}px` : '')};
     opacity: ${props => props.opacity};
     transition: opacity ${ANIMATION_DURATION}ms;
 `;
@@ -185,19 +198,32 @@ export default class Index extends PureComponent {
 
     state = {
         locale: getLocale(this.props),
-        step: FORCE_STEP || '1',
+        step: '1',
         fadeIn: false,
         fadeOut: false,
         showChangePhoneDialog: false,
+        loading: true,
     };
 
-    componentWillMount() {
+    async componentWillMount() {
         if (process.browser) {
             const app = new Application(this);
 
-            app.init().catch(err => {
+            try {
+                await app.init();
+            } catch (err) {
                 console.error(err);
+            }
+
+            this.setState({
+                loading: false,
             });
+        }
+    }
+
+    componentDidMount() {
+        if (FORCE_STEP) {
+            this.goTo(FORCE_STEP);
         }
     }
 
@@ -208,6 +234,7 @@ export default class Index extends PureComponent {
             fadeOut,
             locale,
             showChangePhoneDialog,
+            loading,
         } = this.state;
 
         const { Comp, img, imgSize, dot, hideDots } = Steps[step];
@@ -263,6 +290,7 @@ export default class Index extends PureComponent {
                     {showChangePhoneDialog ? (
                         <ChangePhoneDialog onClose={this._onDialogClose} />
                     ) : null}
+                    {loading ? <SplashLoader /> : null}
                 </Root>
             </IntlProvider>
         );

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import is from 'styled-is';
 
+export const focusStyle = `box-shadow: 0 0 4px 1px rgba(59, 153, 252, 0.6);`;
+
 export const B = styled.b`
     font-weight: 700;
     white-space: nowrap;
@@ -9,11 +11,14 @@ export const B = styled.b`
 
 export const Title = styled.h1`
     margin: 18px 0 22px;
-    font-size: 34px;
-    font-weight: 700;
-    letter-spacing: 0.52px;
-    color: #393636;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.2;
+    letter-spacing: 0.3px;
     text-align: center;
+    color: #393636;
 `;
 
 export const SubTitle = styled.div`
@@ -33,11 +38,11 @@ export const Footer = styled.div`
 `;
 
 export const Button = styled.button.attrs({ type: 'button' })`
-    height: 34px;
+    height: 40px;
     padding: 8px 28px;
     border-radius: 50px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: bold;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: #fff;
@@ -49,6 +54,17 @@ export const Button = styled.button.attrs({ type: 'button' })`
         cursor: not-allowed;
         background: #89cbff;
     }
+
+    ${is('light')`
+        color: #393636;
+        border: 1px solid #e1e1e1;
+        background: #fff;
+        
+        &[disabled] {
+            color: #999;
+            background: #f5f5f5;
+        }
+    `};
 `;
 
 export const Dots = styled.div`
@@ -67,7 +83,7 @@ export const Dot = styled.div`
 
 export const Field = styled.label`
     display: block;
-    margin: 24px 0;
+    margin: 20px 0;
 `;
 
 export const FieldLabel = styled.div`
@@ -87,10 +103,10 @@ export const FieldInput = styled.div``;
 export const Input = styled.input`
     display: block;
     width: 100%;
-    height: 32px;
-    padding: 0 14px;
+    height: 40px;
+    padding: 0 16px;
     border: 1px solid #e1e1e1;
-    border-radius: 6px;
+    border-radius: 8px;
     color: #333;
     background: #fff;
 
@@ -114,6 +130,12 @@ export const Input = styled.input`
 
 export const Link = styled.a`
     color: #2879ff;
+`;
+
+export const StrongLink = styled.a`
+    text-decoration: underline;
+    color: #2879ff;
+    cursor: pointer;
 `;
 
 export const PseudoLink = styled.a`
