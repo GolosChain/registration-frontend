@@ -20,7 +20,7 @@ export default class Application extends EventEmitter {
         this._conn.connect();
 
         this._conn.addEventHandler('registration.phoneVerified', () => {
-            this._root.goTo('3');
+            this._root.goTo('4');
         });
 
         window.app = this;
@@ -172,11 +172,7 @@ export default class Application extends EventEmitter {
                         this._passwordRulesAccepted =
                             savedData.passwordRulesAccepted;
 
-                        if (savedData.passwordRulesAccepted) {
-                            this._root.goTo('4');
-                        } else {
-                            this._root.goTo('3');
-                        }
+                        this._root.goTo('4');
                         break;
                     default:
                         this._clear();
@@ -214,7 +210,7 @@ export default class Application extends EventEmitter {
         if (result.currentState) {
             if (result.currentState === 'toBlockChain') {
                 this._saveRegData();
-                this._root.goTo('3');
+                this._root.goTo('4');
             }
             return;
         }
@@ -370,7 +366,7 @@ export default class Application extends EventEmitter {
             throw response.error;
         }
 
-        this._root.goTo('3');
+        this._root.goTo('4');
     }
 
     async resendSms() {

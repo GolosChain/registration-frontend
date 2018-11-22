@@ -8,7 +8,7 @@ import { Dot, Dots } from '../components/Common';
 import Step1 from '../components/Step1';
 import Step2 from '../components/Step2';
 import Step2_Wait from '../components/Step2_Wait';
-import Step3 from '../components/Step3';
+//import Step3 from '../components/Step3';
 import Step4 from '../components/Step4';
 import StepFinal from '../components/StepFinal';
 import StepTimeout from '../components/StepTimeout';
@@ -40,11 +40,11 @@ const Steps = {
         img: 2,
         hideDots: true,
     },
-    '3': {
-        Comp: Step3,
-        img: 3,
-        dot: 3,
-    },
+    // '3': {
+    //     Comp: Step3,
+    //     img: 3,
+    //     dot: 3,
+    // },
     'enter-code': {
         Comp: EnterCode,
         img: 2,
@@ -53,7 +53,7 @@ const Steps = {
     '4': {
         Comp: Step4,
         img: 3,
-        dot: 4,
+        dot: 3,
     },
     download: {
         Comp: Download,
@@ -267,11 +267,10 @@ export default class Index extends PureComponent {
                             >
                                 <Comp onStepChange={this._onStepChange} />
                                 {hideDots ? null : (
-                                    <Dots title={`${dot}/4`}>
+                                    <Dots title={`${dot}/3`}>
                                         <Dot active={dot === 1} />
                                         <Dot active={dot === 2} />
                                         <Dot active={dot === 3} />
-                                        <Dot active={dot === 4} />
                                     </Dots>
                                 )}
                             </Column>
