@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import is from 'styled-is';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { Title, Footer, Button } from './Common';
-import Checkbox from './Checkbox';
+import { Title, Footer, Button } from '../Common';
+import Checkbox from '../Checkbox';
 
 const TitleStyled = styled(Title)`
     margin-left: -15px;

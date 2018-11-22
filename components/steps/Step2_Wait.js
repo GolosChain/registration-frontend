@@ -2,10 +2,10 @@ import React, { PureComponent } from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import styled, { keyframes } from 'styled-components';
 import is from 'styled-is';
-import { fadeIn } from '../utils/keyFrames';
-import { B, Link, PseudoLink } from './Common';
-import { formatPhone } from '../utils/phone';
-import phoneCodes from '../app/phoneCodes.json';
+import { fadeIn } from '../../utils/keyFrames';
+import { B, Link, PseudoLink } from '../Common';
+import { formatPhone } from '../../utils/phone';
+import phoneCodes from '../../app/phoneCodes.json';
 
 const SHOW_SECOND_INTERVAL = 60 * 1000;
 

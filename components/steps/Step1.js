@@ -4,12 +4,12 @@ import golos from 'golos-js';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import debounce from 'lodash/debounce';
 
-import phoneCodes from '../app/phoneCodes.json';
-import { Title, Input, Footer, Button, Field, Link } from './Common';
-import AccountNameInput from './AccountNameInput';
-import Loader from './Loader';
-import Captcha from './Captcha';
-import PhoneBlock from './PhoneBlock';
+import phoneCodes from '../../app/phoneCodes.json';
+import { Title, Input, Footer, Button, Field, Link } from '../Common';
+import AccountNameInput from '../AccountNameInput';
+import Loader from '../Loader';
+import Captcha from '../Captcha';
+import PhoneBlock from '../PhoneBlock';
 
 export const FieldDiv = styled.div`
     margin: 20px 0;

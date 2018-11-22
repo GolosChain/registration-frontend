@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import is from 'styled-is';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { Title, Input, Footer, Button } from './Common';
-import { Field, FieldLabel, FieldInput, Link } from './Common';
-import Checkbox from './Checkbox';
-import { generateRandomString } from '../utils/random';
-import generatePdf from '../utils/pdf';
+import { Title, Input, Footer, Button } from '../Common';
+import { Field, FieldLabel, FieldInput, Link } from '../Common';
+import Checkbox from '../Checkbox';
+import { generateRandomString } from '../../utils/random';
+import generatePdf from '../../utils/pdf';
 
 const PASSWORD_LENGTH = 52;
 

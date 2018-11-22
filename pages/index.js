@@ -5,18 +5,18 @@ import { IntlProvider, addLocaleData } from 'react-intl';
 
 import { fadeIn, fromRight, toLeft } from '../utils/keyFrames';
 import { Dot, Dots } from '../components/Common';
-import Step1 from '../components/Step1';
-import Step2 from '../components/Step2';
-import Step2_Wait from '../components/Step2_Wait';
-//import Step3 from '../components/Step3';
-import Step4 from '../components/Step4';
-import StepFinal from '../components/StepFinal';
-import StepTimeout from '../components/StepTimeout';
+import Step1 from '../components/steps/Step1';
+import Step2 from '../components/steps/Step2';
+import Step2_Wait from '../components/steps/Step2_Wait';
+//import Step3 from '../components/steps/Step3';
+import Step4 from '../components/steps/Step4';
+import StepFinal from '../components/steps/StepFinal';
+import StepTimeout from '../components/steps/StepTimeout';
+import EnterCode from '../components/steps/EnterCode';
+import Download from '../components/steps/Download';
 import Application from '../app/Application';
 import LangSwitch from '../components/LangSwitch';
 import ChangePhoneDialog from '../components/ChangePhoneDialog';
-import EnterCode from '../components/steps/EnterCode';
-import Download from '../components/steps/Download';
 import SplashLoader from '../components/SplashLoader';
 
 // For development

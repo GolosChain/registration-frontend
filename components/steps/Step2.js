@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
-import { B, Title, SubTitle, Footer, Button } from './Common';
-import QuestionBlock from './QuestionBlock';
+import { B, Title, SubTitle, Footer, Button } from '../Common';
+import QuestionBlock from '../QuestionBlock';
 
 const OneWord = styled(B)`
     white-space: nowrap;
