@@ -13,7 +13,7 @@ import Step4 from '../components/steps/Step4';
 import StepFinal from '../components/steps/StepFinal';
 import StepTimeout from '../components/steps/StepTimeout';
 import EnterCode from '../components/steps/EnterCode';
-import Download from '../components/steps/Download';
+//import Download from '../components/steps/Download';
 import Application from '../app/Application';
 import LangSwitch from '../components/LangSwitch';
 import ChangePhoneDialog from '../components/ChangePhoneDialog';
@@ -55,11 +55,11 @@ const Steps = {
         img: 3,
         dot: 3,
     },
-    download: {
-        Comp: Download,
-        img: 4,
-        dot: 3,
-    },
+    // download: {
+    //     Comp: Download,
+    //     img: 4,
+    //     dot: 3,
+    // },
     final: {
         Comp: StepFinal,
         img: 4,
