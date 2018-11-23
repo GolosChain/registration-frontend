@@ -95,6 +95,7 @@ export default class ChangePhoneDialog extends PureComponent {
             phone,
             errorText: null,
             withCaptcha: window.app.getStrategy() === STRATEGIES.SMS_TO_USER,
+            lock: false,
         };
     }
 
@@ -105,11 +106,12 @@ export default class ChangePhoneDialog extends PureComponent {
     }
 
     componentWillUnmount() {
+        this.unmount = true;
         document.body.style.overflowY = 'auto';
     }
 
     render() {
-        const { codeIndex, phone, errorText, withCaptcha } = this.state;
+        const { codeIndex, phone, errorText, lock, withCaptcha } = this.state;
 
         return (
             <Root>
@@ -136,7 +138,7 @@ export default class ChangePhoneDialog extends PureComponent {
                             <ErrorBlock>{errorText}</ErrorBlock>
                         ) : null}
                         <Footer>
-                            <Button onClick={this._onOkClick}>
+                            <Button disabled={lock} onClick={this._onOkClick}>
                                 <FormattedMessage id="step2_change.ok" />
                             </Button>
                         </Footer>
@@ -175,6 +177,7 @@ export default class ChangePhoneDialog extends PureComponent {
         const params = {
             code,
             phone,
+            codeIndex,
         };
 
         if (withCaptcha) {
@@ -190,6 +193,10 @@ export default class ChangePhoneDialog extends PureComponent {
             params.captcha = captchaCode;
         }
 
+        this.setState({
+            lock: true,
+        });
+
         try {
             await window.app.updatePhone(params);
         } catch (err) {
@@ -202,6 +209,12 @@ export default class ChangePhoneDialog extends PureComponent {
                     errorText: (err && err.message) || 'Error',
                 });
             }
+        }
+
+        if (!this.unmount) {
+            this.setState({
+                lock: false,
+            });
         }
     };
 }

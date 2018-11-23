@@ -55,6 +55,11 @@ export const Button = styled.button.attrs({ type: 'button' })`
     color: #fff;
     background: #3684ff;
     cursor: pointer;
+    ${inputTransitions};
+
+    &:focus {
+        ${focusStyle};
+    }
 
     &[disabled] {
         cursor: default;

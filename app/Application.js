@@ -72,7 +72,7 @@ export default class Application extends EventEmitter {
         this._root.goTo('4');
     }
 
-    async updatePhone({ code, phone, captcha }) {
+    async updatePhone({ code, phone, codeIndex, captcha }) {
         const response = await this._conn.request('registration.changePhone', {
             user: this._accountName,
             phone: `${code}${phone}`,
@@ -93,6 +93,7 @@ export default class Application extends EventEmitter {
 
         this._code = code;
         this._phone = phone;
+        this._codeIndex = codeIndex;
 
         this._saveRegData();
 
@@ -348,19 +349,21 @@ export default class Application extends EventEmitter {
         });
     }
 
-    async codeEntered(code) {
+    async codeEntered(code, silent) {
         const response = await this._conn.request('registration.verify', {
             user: this._accountName,
             code,
         });
 
         if (response.error) {
-            console.error(response.error);
+            if (!silent) {
+                console.error(response.error);
 
-            if (response.error.code === 404) {
-                this._clear();
-                this._root.goTo('timeout');
-                return;
+                if (response.error.code === 404) {
+                    this._clear();
+                    this._root.goTo('timeout');
+                    return;
+                }
             }
 
             throw response.error;

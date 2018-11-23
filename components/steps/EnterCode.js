@@ -26,36 +26,67 @@ const Text = styled.div`
 `;
 
 const CodeInputStyled = styled(CodeInput)`
-    margin: 40px 0;
+    margin-top: 40px;
 `;
 
 const ResendTimerStyled = styled(ResendTimer)`
     margin: 30px 0 40px;
 `;
 
+const ErrorBlock = styled.div`
+    padding: 20px 0;
+    text-align: center;
+    color: #f00;
+`;
+
 @injectIntl
 export default class EnterCode extends PureComponent {
     state = {
+        lock: 0,
         code: null,
         isValid: false,
+        errorMessage: null,
     };
 
     button = createRef();
+    isFirstFill = true;
 
     componentDidMount() {
         window.app.on('phoneChanged', this.onPhoneChange);
     }
 
     componentWillUnmount() {
+        this.unmount = true;
         window.app.off('phoneChanged', this.onPhoneChange);
+    }
+
+    async continue(silent = false) {
+        await window.app.codeEntered(this.state.code, silent);
     }
 
     onPhoneChange = () => {
         this.forceUpdate();
     };
 
-    onOkClick = () => {
-        window.app.codeEntered(this.state.code);
+    onOkClick = async () => {
+        this.setState({
+            lock: this.state.lock + 1,
+            errorMessage: null,
+        });
+
+        try {
+            await this.continue();
+        } catch (err) {
+            this.setState({
+                errorMessage: err.message,
+            });
+        }
+
+        if (!this.unmount) {
+            this.setState({
+                lock: Math.max(0, this.state.lock - 1),
+            });
+        }
     };
 
     onChangePhoneClick = () => {
@@ -67,20 +98,39 @@ export default class EnterCode extends PureComponent {
 
         this.setState(
             {
+                lock: 0,
                 code,
                 isValid,
+                errorMessage: null,
             },
-            () => {
-                if (isValid) {
+            async () => {
+                if (isValid && this.isFirstFill) {
+                    this.isFirstFill = false;
                     this.button.current.focus();
+                }
+
+                if (isValid) {
+                    try {
+                        await this.continue(true);
+                    } catch (err) {}
                 }
             }
         );
     };
 
+    processError(errorMessage) {
+        const { intl } = this.props;
+
+        if (errorMessage === 'Forbidden') {
+            return intl.messages['step.enterCode.wrongCode'];
+        }
+
+        return errorMessage;
+    }
+
     render() {
         const { intl } = this.props;
-        const { isValid } = this.state;
+        const { isValid, errorMessage, lock } = this.state;
 
         return (
             <>
@@ -102,10 +152,18 @@ export default class EnterCode extends PureComponent {
                 </Text>
                 <ResendTimerStyled />
                 <CodeInputStyled onChange={this.onCodeChange} />
+                <ErrorBlock>
+                    {errorMessage ? (
+                        <>
+                            <FormattedMessage id="error" />:{' '}
+                            {this.processError(errorMessage)}
+                        </>
+                    ) : null}
+                </ErrorBlock>
                 <Footer>
                     <Button
                         innerRef={this.button}
-                        disabled={!isValid}
+                        disabled={!isValid || lock}
                         onClick={this.onOkClick}
                     >
                         <FormattedMessage id="step.enterCode.ok" />
