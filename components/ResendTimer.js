@@ -10,7 +10,7 @@ const Root = styled.div`
 `;
 
 const Text = styled.div`
-    line-height: 1.2rem;
+    line-height: 1.3rem;
 `;
 
 const Error = styled.div`
@@ -28,11 +28,12 @@ export default class ResendTimer extends PureComponent {
     };
 
     componentDidMount() {
-        window.app.on('resendTsChanged', this._forceUpdate);
+        window.app.on('resendTsChanged', this.needUpdate);
+        this.checkNext();
     }
 
     componentWillUnmount() {
-        window.app.off('resendTsChanged', this._forceUpdate);
+        window.app.off('resendTsChanged', this.needUpdate);
         clearTimeout(this._updateTimeout);
     }
 
@@ -52,9 +53,7 @@ export default class ResendTimer extends PureComponent {
         }
     };
 
-    _forceUpdate = () => {
-        this.forceUpdate();
-
+    checkNext() {
         const nextResend = window.app.getNextResendSmsTimestamp();
 
         if (nextResend) {
@@ -67,6 +66,11 @@ export default class ResendTimer extends PureComponent {
                 }, delta);
             }
         }
+    }
+
+    needUpdate = () => {
+        this.forceUpdate();
+        this.checkNext();
     };
 
     render() {
