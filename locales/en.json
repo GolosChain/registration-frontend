@@ -1,7 +1,6 @@
 {
   "change_phone": "Change number",
   "error": "Error",
-  "required": "Required field",
   "step.enterCode.change": "change it",
   "step.enterCode.ok": "Continue",
   "step.enterCode.resend": "Resend code",
