@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 import is from 'styled-is';
 
-export const focusStyle = `box-shadow: 0 0 4px 1px rgba(59, 153, 252, 0.6);`;
+export const inputTransitions = `
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+`;
+
+export const focusStyle = `
+   border-color: #3684ff;
+   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+`;
 
 export const B = styled.b`
     font-weight: 700;
@@ -106,19 +113,25 @@ export const Input = styled.input`
     height: 40px;
     padding: 0 16px;
     border: 1px solid #e1e1e1;
-    border-radius: 8px;
+    border-radius: 6px;
     color: #333;
     background: #fff;
+    ${inputTransitions};
 
     ${is('blue')`
         color: #2879ff;
     `};
 
+    &:focus {
+        ${focusStyle};
+    }
+
     ${is('error')`
-        border-color: #f00;
+        border-color: #fc5d16;
         
         &:focus {
-            border-color: #e1e1e1;
+            border-color: #fc5d16;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, .25);
         }
     `};
 

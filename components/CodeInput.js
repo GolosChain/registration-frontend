@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { injectIntl } from 'react-intl';
 
 import keyCodes from '../app/keyCodes';
+import { inputTransitions, focusStyle } from './Common';
 
 const LENGTH = 4;
 
@@ -18,6 +19,11 @@ const Cell = styled.input`
     border: 1px solid #e1e1e1;
     border-radius: 6px;
     text-align: center;
+    ${inputTransitions};
+
+    &:focus {
+        ${focusStyle};
+    }
 `;
 
 @injectIntl

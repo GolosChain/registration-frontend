@@ -4,33 +4,12 @@ import is from 'styled-is';
 
 import { UP, DOWN } from '../utils/keyCodes';
 import { isMobile } from '../utils/browser';
-import { Input, focusStyle } from './Common';
+import { Input, focusStyle, inputTransitions } from './Common';
 import { phoneCodesToSelectItems } from '../utils/phoneCodes';
 import SelectList from './SelectList';
 
 const Root = styled.div`
     position: relative;
-`;
-
-const SelectBlock = styled.label`
-    position: relative;
-    display: flex;
-    width: 84px;
-    height: 40px;
-    padding-left: 14px;
-    padding-right: 10px;
-    border-radius: 8px;
-    border: 1px solid #e1e1e1;
-    background: #fff;
-    cursor: pointer;
-    transition: width 0.3s ease-in;
-    will-change: width;
-    z-index: 1;
-
-    ${is('wide')`
-        width: 100%;
-        z-index: 1;
-    `};
 `;
 
 const Highlight = styled.div`
@@ -40,9 +19,38 @@ const Highlight = styled.div`
     left: -1px;
     right: -1px;
     bottom: -1px;
-    border-radius: 8px;
-    ${focusStyle};
+    border: 1px solid #e1e1e1;
+    border-radius: 6px;
     pointer-events: none;
+    ${inputTransitions};
+
+    ${is('focus')`
+        ${focusStyle};        
+    `};
+`;
+
+const SelectBlock = styled.label`
+    position: relative;
+    display: flex;
+    width: 84px;
+    height: 40px;
+    padding-left: 14px;
+    padding-right: 10px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background: #fff;
+    cursor: pointer;
+    transition: width 0.3s ease-in;
+    will-change: width;
+    z-index: 1;
+
+    ${is('wide')`
+        width: 100%;
+    `};
+
+    &:focus ${Highlight} {
+        ${focusStyle};
+    }
 `;
 
 const SelectWrapper = styled.div`
@@ -234,7 +242,7 @@ export default class PhoneBlock extends PureComponent {
                             </InnerSelect>
                         </SelectWrapper>
                     ) : null}
-                    {focus ? <Highlight /> : null}
+                    <Highlight focus={focus} />
                 </SelectBlock>
                 {!isMobile && open ? (
                     <SelectList

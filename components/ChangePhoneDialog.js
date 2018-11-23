@@ -84,8 +84,8 @@ const CaptchaWrapper = styled.div`
 
 @injectIntl
 export default class ChangePhoneDialog extends PureComponent {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         const { code, phone, codeIndex } = window.app.getPhoneData();
 

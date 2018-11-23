@@ -9,7 +9,7 @@ const Root = styled.div`
     top: 0;
     left: 0;
     right: 0;
-    border-radius: 8px;
+    border-radius: 6px;
     padding-top: 40px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.06);
 `;
@@ -19,7 +19,7 @@ const List = styled.ul`
     max-height: 50vh;
     padding: 0;
     margin: 0;
-    border-radius: 0 0 8px 8px;
+    border-radius: 0 0 6px 6px;
     background: #fff;
     overflow: auto;
     overflow-x: hidden;
