@@ -229,7 +229,7 @@ export default class Step1 extends PureComponent {
                 ) : null}
                 <Comment>
                     <FormattedMessage id="step1.alreadyHaveAccount" />{' '}
-                    <Link href="https://golos.io/login.html">
+                    <Link href="https://golos.io/login">
                         <FormattedMessage id="step1.login" />
                     </Link>
                 </Comment>
