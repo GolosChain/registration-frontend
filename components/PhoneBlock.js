@@ -256,7 +256,7 @@ export default class PhoneBlock extends PureComponent {
     }
 
     renderInput() {
-        const { disabled, phone, phoneError, onPhoneBlur } = this.props;
+        const { disabled, phone, phoneError, onPhoneFocus, onPhoneBlur } = this.props;
 
         return (
             <PhoneInputWrapper>
@@ -269,6 +269,7 @@ export default class PhoneBlock extends PureComponent {
                     spellCheck="false"
                     value={phone}
                     onChange={this.onPhoneChange}
+                    onFocus={onPhoneFocus}
                     onBlur={onPhoneBlur}
                 />
             </PhoneInputWrapper>

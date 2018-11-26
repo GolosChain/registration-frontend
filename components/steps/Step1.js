@@ -10,8 +10,12 @@ import AccountNameInput from '../AccountNameInput';
 import Loader from '../Loader';
 import Captcha from '../Captcha';
 import PhoneBlock from '../PhoneBlock';
+import Hint from '../Hint';
+
+const MIN_HINT_TIME = 3000;
 
 export const FieldDiv = styled.div`
+    position: relative;
     margin: 20px 0;
 `;
 
@@ -66,6 +70,7 @@ const CaptchaBlock = styled(Field)`
 export default class Step1 extends PureComponent {
     state = {
         accountName: '',
+        accountNameHint: false,
         accountNameChecking: false,
         accountNameVacant: null,
         accountNameError: null,
@@ -75,6 +80,7 @@ export default class Step1 extends PureComponent {
         emailError: null,
         emailErrorText: null,
         phone: '',
+        phoneHint: false,
         phoneError: null,
         phoneErrorText: null,
         codeIndex: phoneCodes.list.findIndex(p => p.default),
@@ -91,6 +97,7 @@ export default class Step1 extends PureComponent {
 
         const {
             accountName,
+            accountNameHint,
             accountNameError,
             accountNameChecking,
             accountNameVacant,
@@ -114,6 +121,7 @@ export default class Step1 extends PureComponent {
         return (
             <Field>
                 <InputWrapper>
+                    {accountNameHint ? <Hint textId="step1.loginHint" /> : null}
                     <AccountNameInput
                         autoFocus
                         disabled={lock}
@@ -150,6 +158,7 @@ export default class Step1 extends PureComponent {
         const {
             codeIndex,
             phone,
+            phoneHint,
             phoneError,
             phoneErrorText,
             lock,
@@ -157,6 +166,7 @@ export default class Step1 extends PureComponent {
 
         return (
             <FieldDiv>
+                {phoneHint ? <Hint textId="step1.phoneHint" /> : null}
                 <PhoneBlock
                     disabled={lock}
                     codeIndex={codeIndex}
@@ -164,6 +174,7 @@ export default class Step1 extends PureComponent {
                     phone={phone}
                     phoneError={phoneError}
                     onPhoneChange={this._onPhoneChange}
+                    onPhoneFocus={this._onPhoneFocus}
                     onPhoneBlur={this._onPhoneBlur}
                 />
                 {phoneErrorText ? (
@@ -275,6 +286,10 @@ export default class Step1 extends PureComponent {
                 }
             }
         );
+
+        if (!this._accountNameBlur) {
+            this.showAccountHint();
+        }
     };
 
     __validateAccountName(accountName) {
@@ -372,6 +387,42 @@ export default class Step1 extends PureComponent {
     _onAccountNameBlur = () => {
         this._accountNameBlur = true;
         this._validateAccountName();
+
+        if (this.state.accountNameHint) {
+            const timePassed = Date.now() - this.hintShowTs;
+
+            if (timePassed > MIN_HINT_TIME) {
+                this.hideAccountHint();
+            } else {
+                setTimeout(this.hideAccountHint, MIN_HINT_TIME - timePassed);
+            }
+        }
+    };
+
+    showAccountHint = () => {
+        this.hintShowTs = Date.now();
+        this.setState({
+            accountNameHint: true,
+        });
+    };
+
+    hideAccountHint = () => {
+        this.setState({
+            accountNameHint: false,
+        });
+    };
+
+    showPhoneHint = () => {
+        this.phoneHintShowTs = Date.now();
+        this.setState({
+            phoneHint: true,
+        });
+    };
+
+    hidePhoneHint = () => {
+        this.setState({
+            phoneHint: false,
+        });
     };
 
     _onEmailChange = e => {
@@ -512,6 +563,12 @@ export default class Step1 extends PureComponent {
         );
     };
 
+    _onPhoneFocus = () => {
+        if (!this._phoneBlur) {
+            this.showPhoneHint();
+        }
+    };
+
     _onCodeChange = value => {
         if (value === '') {
             return;
@@ -525,6 +582,16 @@ export default class Step1 extends PureComponent {
     _onPhoneBlur = () => {
         this._phoneBlur = true;
         this._validatePhone();
+
+        if (this.state.phoneHint) {
+            const timePassed = Date.now() - this.phoneHintShowTs;
+
+            if (timePassed > MIN_HINT_TIME) {
+                this.hidePhoneHint();
+            } else {
+                setTimeout(this.hidePhoneHint, MIN_HINT_TIME - timePassed);
+            }
+        }
     };
 
     _validatePhone() {

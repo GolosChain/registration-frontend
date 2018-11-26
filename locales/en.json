@@ -16,6 +16,8 @@
   "step1.error.fillAllFields": "Fill all fields",
   "step1.error.nameExists": "Good choice! But this username is already in use. Try to enter another one.",
   "step1.login": "Please sign in",
+  "step1.loginHint": "Think carefully about your username. You can't change it once signed up.",
+  "step1.phoneHint": "Enter your phone number without country code",
   "step1.phoneInRegistration": "Each phone number can match only one account.",
   "step1.rules.containsOnly": "Please use only letters, digits, dot, dash.",
   "step1.rules.invalidEmail": "Enter the correct email address",

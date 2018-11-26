@@ -1,20 +1,12 @@
 import React, { PureComponent, createRef } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Button } from './Common';
 import phoneCodes from '../app/phoneCodes.json';
 import PhoneBlock from './PhoneBlock';
 import Captcha from './Captcha';
 import { STRATEGIES } from '../app/Application';
-
-const fadeIn = keyframes`
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-`;
+import { fadeIn } from '../utils/keyFrames';
 
 export const Root = styled.div`
     position: fixed;
