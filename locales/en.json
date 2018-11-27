@@ -6,7 +6,7 @@
   "step.enterCode.resend": "Resend code",
   "step.enterCode.text": "A verification code has been sent to the phone number {phone}. If you've entered your phone number incorrectly, you can {change}.",
   "step.enterCode.title": "Code from SMS",
-  "step.enterCode.wait": "You could resend code in {time}.",
+  "step.enterCode.wait": "You could resend code {time}.",
   "step.enterCode.wrongCode": "Wrong code",
   "step1.accountNamePlaceholder": "Enter your username",
   "step1.alreadyHaveAccount": "Have an account already?",

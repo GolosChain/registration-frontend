@@ -6,7 +6,7 @@
   "step.enterCode.resend": "Відправити ще раз",
   "step.enterCode.text": "На вказаний вами номер {phone} було вислано код. Ви можете {change}, якщо він був введений невірно.",
   "step.enterCode.title": "Код із SMS",
-  "step.enterCode.wait": "Повтоно відправити SMS можно буде через {time}.",
+  "step.enterCode.wait": "Повтоно відправити SMS можно буде {time}.",
   "step1.accountNamePlaceholder": "Придумайте логін",
   "step1.alreadyHaveAccount": "У вас вже є аккаунт?",
   "step1.continue": "Продовжити",
