@@ -123,8 +123,9 @@ export const Input = styled.input`
     background: #fff;
     ${inputTransitions};
 
-    ${is('blue')`
-        color: #2879ff;
+    ${is('gray')`
+        font-weight: 500;
+        color: #757575;
     `};
 
     &:focus {

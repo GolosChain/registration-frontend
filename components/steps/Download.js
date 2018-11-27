@@ -10,22 +10,6 @@ const TitleStyled = styled(Title)`
     margin-right: -15px;
 `;
 
-const Warning = styled.div`
-    padding: 18px 20px;
-    margin: 0 -4px;
-    border: 1px solid #fc5d16;
-    border-radius: 6px;
-    line-height: 1.4em;
-    font-size: 14px;
-    font-weight: 300;
-    color: #393636;
-`;
-
-const Red = styled.span`
-    font-weight: bold;
-    color: #fc5d16;
-`;
-
 const CheckboxField = styled.label`
     display: flex;
     align-items: center;
@@ -77,12 +61,6 @@ export default class Download extends PureComponent {
                 <TitleStyled>
                     <FormattedMessage id="step3.title" />
                 </TitleStyled>
-                <Warning>
-                    <Red>
-                        <FormattedMessage id="step3.warning" />
-                    </Red>{' '}
-                    <FormattedMessage id="step3.warningText" />
-                </Warning>
                 <CheckboxField>
                     <Checkbox
                         value={isAgree}

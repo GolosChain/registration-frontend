@@ -66,12 +66,6 @@ export default class Application extends EventEmitter {
         };
     }
 
-    passwordRulesAgreed() {
-        this._passwordRulesAccepted = true;
-        this._saveRegData();
-        this._root.goTo('4');
-    }
-
     async updatePhone({ code, phone, codeIndex, captcha }) {
         const response = await this._conn.request('registration.changePhone', {
             user: this._accountName,

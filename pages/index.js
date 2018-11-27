@@ -8,7 +8,6 @@ import { Dot, Dots } from '../components/Common';
 import Step1 from '../components/steps/Step1';
 import Step2 from '../components/steps/Step2';
 import Step2_Wait from '../components/steps/Step2_Wait';
-//import Step3 from '../components/steps/Step3';
 import Step4 from '../components/steps/Step4';
 import StepFinal from '../components/steps/StepFinal';
 import StepTimeout from '../components/steps/StepTimeout';
@@ -40,11 +39,6 @@ const Steps = {
         img: 2,
         hideDots: true,
     },
-    // '3': {
-    //     Comp: Step3,
-    //     img: 3,
-    //     dot: 3,
-    // },
     'enter-code': {
         Comp: EnterCode,
         img: 2,

@@ -4,13 +4,12 @@ import { focusStyle } from './Common';
 
 const Root = styled.div`
     display: flex;
-    align-items: center;
 `;
 
 const Img = styled.img`
     width: 18px;
     height: 18px;
-    margin-right: 12px;
+    margin: 2px 12px 0 0;
     border-radius: 2px;
     flex-shrink: 0;
     cursor: pointer;
