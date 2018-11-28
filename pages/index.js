@@ -42,7 +42,7 @@ const Steps = {
     'enter-code': {
         Comp: EnterCode,
         img: 2,
-        hideDots: true,
+        dot: 2,
     },
     '4': {
         Comp: Step4,
