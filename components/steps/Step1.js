@@ -2,15 +2,22 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import golos from 'golos-js';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Title, SubTitle, Input, Footer, Button } from './Common';
-import { Field, FieldLabel, FieldInput, Link } from './Common';
-import PhoneInput from './PhoneInput';
-import Select from './Select';
 import debounce from 'lodash/debounce';
-import phoneCodes from '../app/phoneCodes.json';
-import Loader from './Loader';
-import Captcha from './Captcha';
-import { phoneCodesToSelectItems } from '../utils/phoneCodes';
+
+import phoneCodes from '../../app/phoneCodes.json';
+import { Title, Input, Footer, Button, Field, Link } from '../Common';
+import AccountNameInput from '../AccountNameInput';
+import Loader from '../Loader';
+import Captcha from '../Captcha';
+import PhoneBlock from '../PhoneBlock';
+import Hint from '../Hint';
+
+const MIN_HINT_TIME = 3000;
+
+export const FieldDiv = styled.div`
+    position: relative;
+    margin: 20px 0;
+`;
 
 const FieldError = styled.div`
     margin-top: 10px;
@@ -28,12 +35,14 @@ const TotalError = styled.div`
 `;
 
 const Comment = styled.div`
-    margin: 14px 0 24px;
+    margin: 14px 0 19px;
     text-align: center;
-    font-size: 14px;
-    font-weight: 300;
-    letter-spacing: 0.3px;
-    color: #393636;
+    font-size: 12px;
+    color: #959595;
+`;
+
+const ButtonStyled = styled(Button)`
+    min-width: 210px;
 `;
 
 const InputWrapper = styled.div`
@@ -42,12 +51,8 @@ const InputWrapper = styled.div`
 
 const InputStatus = styled.div`
     position: absolute;
-    top: 8px;
-    right: 8px;
-`;
-
-const Red = styled.span`
-    color: #f00;
+    top: 12px;
+    right: 12px;
 `;
 
 const Check = styled.div`
@@ -61,16 +66,11 @@ const CaptchaBlock = styled(Field)`
     justify-content: center;
 `;
 
-const Required = props => (
-    <span title={props.title}>
-        (<Red>*</Red>)
-    </span>
-);
-
 @injectIntl
 export default class Step1 extends PureComponent {
     state = {
         accountName: '',
+        accountNameHint: false,
         accountNameChecking: false,
         accountNameVacant: null,
         accountNameError: null,
@@ -80,6 +80,7 @@ export default class Step1 extends PureComponent {
         emailError: null,
         emailErrorText: null,
         phone: '',
+        phoneHint: false,
         phoneError: null,
         phoneErrorText: null,
         codeIndex: phoneCodes.list.findIndex(p => p.default),
@@ -91,24 +92,17 @@ export default class Step1 extends PureComponent {
         clearTimeout(this._tempNameErrorTimeout);
     }
 
-    render() {
+    renderAccountNameBlock() {
         const { intl } = this.props;
 
         const {
             accountName,
+            accountNameHint,
+            accountNameError,
             accountNameChecking,
             accountNameVacant,
-            accountNameError,
             accountNameErrorText,
             accountNameTempErrorText,
-            email,
-            emailError,
-            emailErrorText,
-            codeIndex,
-            phone,
-            phoneError,
-            phoneErrorText,
-            errorText,
             lock,
         } = this.state;
 
@@ -123,131 +117,121 @@ export default class Step1 extends PureComponent {
         }
 
         const nameError = accountNameError || accountNameVacant === false;
-        const code = phoneCodes.list[codeIndex].code;
+
+        return (
+            <Field>
+                <InputWrapper>
+                    {accountNameHint ? <Hint textId="step1.loginHint" /> : null}
+                    <AccountNameInput
+                        autoFocus
+                        disabled={lock}
+                        error={nameError}
+                        value={accountName}
+                        placeholder={
+                            intl.messages['step1.accountNamePlaceholder']
+                        }
+                        onChange={this._onAccountNameChange}
+                        onBlur={this._onAccountNameBlur}
+                    />
+                    {accountStatus ? (
+                        <InputStatus>{accountStatus}</InputStatus>
+                    ) : null}
+                </InputWrapper>
+                {accountNameErrorText ? (
+                    <FieldError>
+                        <FormattedMessage id={accountNameErrorText} />
+                    </FieldError>
+                ) : accountNameVacant === false ? (
+                    <FieldError>
+                        <FormattedMessage id="step1.error.nameExists" />
+                    </FieldError>
+                ) : accountNameTempErrorText ? (
+                    <FieldError>
+                        <FormattedMessage id={accountNameTempErrorText} />
+                    </FieldError>
+                ) : null}
+            </Field>
+        );
+    }
+
+    renderPhoneBlock() {
+        const {
+            codeIndex,
+            phone,
+            phoneHint,
+            phoneError,
+            phoneErrorText,
+            lock,
+        } = this.state;
+
+        return (
+            <FieldDiv>
+                {phoneHint ? <Hint textId="step1.phoneHint" /> : null}
+                <PhoneBlock
+                    disabled={lock}
+                    codeIndex={codeIndex}
+                    onCodeChange={this._onCodeChange}
+                    phone={phone}
+                    phoneError={phoneError}
+                    onPhoneChange={this._onPhoneChange}
+                    onPhoneFocus={this._onPhoneFocus}
+                    onPhoneBlur={this._onPhoneBlur}
+                />
+                {phoneErrorText ? (
+                    <FieldError>
+                        <FormattedMessage id={phoneErrorText} />
+                    </FieldError>
+                ) : null}
+            </FieldDiv>
+        );
+    }
+
+    renderEmailBlock() {
+        const { intl } = this.props;
+
+        const { email, emailError, emailErrorText, lock } = this.state;
+
+        return (
+            <Field>
+                <Input
+                    disabled={lock}
+                    placeholder={intl.messages['step1.emailPlaceholder']}
+                    type="email"
+                    value={email}
+                    error={emailError}
+                    autoCorrect="off"
+                    autoCapitalize="off"
+                    spellCheck="false"
+                    onChange={this._onEmailChange}
+                    onBlur={this._onEmailBlur}
+                />
+                {emailErrorText ? (
+                    <FieldError>
+                        <FormattedMessage id={emailErrorText} />
+                    </FieldError>
+                ) : null}
+            </Field>
+        );
+    }
+
+    render() {
+        const { errorText, lock } = this.state;
 
         return (
             <>
                 <Title>
                     <FormattedMessage id="step1.title" />
                 </Title>
-                <SubTitle>
-                    <FormattedMessage id="step1.subTitle" />
-                </SubTitle>
-                <Field>
-                    <FieldLabel>
-                        <FormattedMessage id="step1.accountNameLabel" />{' '}
-                        <Required title={intl.messages.required} />
-                    </FieldLabel>
-                    <FieldInput>
-                        <InputWrapper>
-                            <Input
-                                disabled={lock}
-                                autoFocus
-                                error={nameError}
-                                value={accountName}
-                                autoCorrect="off"
-                                autoCapitalize="off"
-                                spellCheck="false"
-                                placeholder={
-                                    intl.messages[
-                                        'step1.accountNamePlaceholder'
-                                    ]
-                                }
-                                onChange={this._onAccountNameChange}
-                                onBlur={this._onAccountNameBlur}
-                            />
-                            {accountStatus ? (
-                                <InputStatus>{accountStatus}</InputStatus>
-                            ) : null}
-                        </InputWrapper>
-                        {accountNameErrorText ? (
-                            <FieldError>
-                                <FormattedMessage id={accountNameErrorText} />
-                            </FieldError>
-                        ) : accountNameVacant === false ? (
-                            <FieldError>
-                                <FormattedMessage id="step1.error.nameExists" />
-                            </FieldError>
-                        ) : accountNameTempErrorText ? (
-                            <FieldError>
-                                <FormattedMessage
-                                    id={accountNameTempErrorText}
-                                />
-                            </FieldError>
-                        ) : null}
-                    </FieldInput>
-                </Field>
-                <Field>
-                    <FieldLabel>
-                        <FormattedMessage id="step1.emailLabel" />{' '}
-                        <Required title={intl.messages.required} />
-                    </FieldLabel>
-                    <FieldInput>
-                        <Input
-                            disabled={lock}
-                            placeholder={
-                                intl.messages['step1.emailPlaceholder']
-                            }
-                            type="email"
-                            value={email}
-                            error={emailError}
-                            autoCorrect="off"
-                            autoCapitalize="off"
-                            spellCheck="false"
-                            onChange={this._onEmailChange}
-                            onBlur={this._onEmailBlur}
-                        />
-                        {emailErrorText ? (
-                            <FieldError>
-                                <FormattedMessage id={emailErrorText} />
-                            </FieldError>
-                        ) : null}
-                    </FieldInput>
-                </Field>
-                <Field>
-                    <FieldLabel>
-                        <FormattedMessage id="step1.phoneCodeLabel" />
-                    </FieldLabel>
-                    <FieldInput>
-                        <Select
-                            disabled={lock}
-                            value={codeIndex}
-                            items={phoneCodesToSelectItems()}
-                            onChange={this._onCodeChange}
-                        />
-                    </FieldInput>
-                </Field>
-                <Field>
-                    <FieldLabel>
-                        <FormattedMessage id="step1.phoneLabel" />{' '}
-                        <Required title={intl.messages.required} />
-                    </FieldLabel>
-                    <FieldInput>
-                        <PhoneInput
-                            disabled={lock}
-                            code={`+${code}`}
-                            error={phoneError}
-                            value={phone}
-                            autoCorrect="off"
-                            autoCapitalize="off"
-                            spellCheck="false"
-                            onChange={this._onPhoneChange}
-                            onBlur={this._onPhoneBlur}
-                        />
-                        {phoneErrorText ? (
-                            <FieldError>
-                                <FormattedMessage id={phoneErrorText} />
-                            </FieldError>
-                        ) : null}
-                    </FieldInput>
-                </Field>
+                {this.renderAccountNameBlock()}
+                {this.renderPhoneBlock()}
+                {this.renderEmailBlock()}
                 <CaptchaBlock>
                     <Captcha ref="captcha" />
                 </CaptchaBlock>
                 <Footer>
-                    <Button disabled={lock} onClick={this._onOkClick}>
+                    <ButtonStyled disabled={lock} onClick={this._onOkClick}>
                         <FormattedMessage id="step1.continue" />
-                    </Button>
+                    </ButtonStyled>
                 </Footer>
                 {errorText ? (
                     <TotalError innerRef={el => (this._errorEl = el)}>
@@ -256,7 +240,7 @@ export default class Step1 extends PureComponent {
                 ) : null}
                 <Comment>
                     <FormattedMessage id="step1.alreadyHaveAccount" />{' '}
-                    <Link href="https://golos.io/login.html">
+                    <Link href="https://golos.io/login">
                         <FormattedMessage id="step1.login" />
                     </Link>
                 </Comment>
@@ -302,6 +286,10 @@ export default class Step1 extends PureComponent {
                 }
             }
         );
+
+        if (!this._accountNameBlur) {
+            this.showAccountHint();
+        }
     };
 
     __validateAccountName(accountName) {
@@ -399,6 +387,42 @@ export default class Step1 extends PureComponent {
     _onAccountNameBlur = () => {
         this._accountNameBlur = true;
         this._validateAccountName();
+
+        if (this.state.accountNameHint) {
+            const timePassed = Date.now() - this.hintShowTs;
+
+            if (timePassed > MIN_HINT_TIME) {
+                this.hideAccountHint();
+            } else {
+                setTimeout(this.hideAccountHint, MIN_HINT_TIME - timePassed);
+            }
+        }
+    };
+
+    showAccountHint = () => {
+        this.hintShowTs = Date.now();
+        this.setState({
+            accountNameHint: true,
+        });
+    };
+
+    hideAccountHint = () => {
+        this.setState({
+            accountNameHint: false,
+        });
+    };
+
+    showPhoneHint = () => {
+        this.phoneHintShowTs = Date.now();
+        this.setState({
+            phoneHint: true,
+        });
+    };
+
+    hidePhoneHint = () => {
+        this.setState({
+            phoneHint: false,
+        });
     };
 
     _onEmailChange = e => {
@@ -539,6 +563,12 @@ export default class Step1 extends PureComponent {
         );
     };
 
+    _onPhoneFocus = () => {
+        if (!this._phoneBlur) {
+            this.showPhoneHint();
+        }
+    };
+
     _onCodeChange = value => {
         if (value === '') {
             return;
@@ -552,6 +582,16 @@ export default class Step1 extends PureComponent {
     _onPhoneBlur = () => {
         this._phoneBlur = true;
         this._validatePhone();
+
+        if (this.state.phoneHint) {
+            const timePassed = Date.now() - this.phoneHintShowTs;
+
+            if (timePassed > MIN_HINT_TIME) {
+                this.hidePhoneHint();
+            } else {
+                setTimeout(this.hidePhoneHint, MIN_HINT_TIME - timePassed);
+            }
+        }
     };
 
     _validatePhone() {

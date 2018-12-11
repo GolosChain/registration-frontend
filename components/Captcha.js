@@ -5,7 +5,8 @@ const CAPTCHA_SITE_KEY = '6Lef7W0UAAAAAGzvOltqH7Ydeyae6MP3z55l03fB';
 
 const Root = styled.div`
     height: 78px;
-    margin-right: -2px;
+    margin-right: -3px;
+    margin-bottom: -2px;
 `;
 
 export default class Captcha extends PureComponent {
@@ -37,7 +38,9 @@ export default class Captcha extends PureComponent {
     };
 
     getCode() {
-        const input = this.refs.captcha.querySelector('[name="g-recaptcha-response"]');
+        const input = this.refs.captcha.querySelector(
+            '[name="g-recaptcha-response"]'
+        );
 
         if (input && input.value) {
             return input.value;

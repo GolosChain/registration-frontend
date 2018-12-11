@@ -2,28 +2,12 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import is from 'styled-is';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { Title, Footer, Button } from './Common';
-import Checkbox from './Checkbox';
+import { Title, Footer, Button } from '../Common';
+import Checkbox from '../Checkbox';
 
 const TitleStyled = styled(Title)`
     margin-left: -15px;
     margin-right: -15px;
-`;
-
-const Warning = styled.div`
-    padding: 18px 20px;
-    margin: 0 -4px;
-    border: 1px solid #fc5d16;
-    border-radius: 6px;
-    line-height: 1.4em;
-    font-size: 14px;
-    font-weight: 300;
-    color: #393636;
-`;
-
-const Red = styled.span`
-    font-weight: bold;
-    color: #fc5d16;
 `;
 
 const CheckboxField = styled.label`
@@ -62,7 +46,7 @@ const ButtonStyled = styled(Button)`
 `;
 
 @injectIntl
-export default class Step3 extends PureComponent {
+export default class Download extends PureComponent {
     state = {
         error: false,
         isAgree: false,
@@ -77,12 +61,6 @@ export default class Step3 extends PureComponent {
                 <TitleStyled>
                     <FormattedMessage id="step3.title" />
                 </TitleStyled>
-                <Warning>
-                    <Red>
-                        <FormattedMessage id="step3.warning" />
-                    </Red>{' '}
-                    <FormattedMessage id="step3.warningText" />
-                </Warning>
                 <CheckboxField>
                     <Checkbox
                         value={isAgree}
@@ -103,6 +81,7 @@ export default class Step3 extends PureComponent {
                     <ButtonStyled blocked={!isAgree} onClick={this._onOkClick}>
                         {intl.messages['step3.generate']}
                     </ButtonStyled>
+                    <a href="/sample-pdf.pdf" target="_blank" download>Download</a>
                 </Footer>
             </>
         );
@@ -129,6 +108,6 @@ export default class Step3 extends PureComponent {
             return;
         }
 
-        window.app.passwordRulesAgreed();
+        window.print();
     };
 }

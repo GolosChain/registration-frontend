@@ -5,6 +5,11 @@ import phoneCodes from './phoneCodes.json';
 
 const REG_KEY = 'golos.registration';
 
+export const STRATEGIES = {
+    SMS_FROM_USER: 'smsFromUser',
+    SMS_TO_USER: 'smsToUser',
+};
+
 export default class Application extends EventEmitter {
     constructor(root) {
         super();
@@ -15,13 +20,14 @@ export default class Application extends EventEmitter {
         this._conn.connect();
 
         this._conn.addEventHandler('registration.phoneVerified', () => {
-            this._root.goTo('3');
+            this._root.goTo('4');
         });
 
         window.app = this;
     }
 
     _clear() {
+        this._strategy = null;
         this._accountName = null;
         this._code = null;
         this._codeIndex = null;
@@ -54,105 +60,124 @@ export default class Application extends EventEmitter {
 
     getPhoneData() {
         return {
+            codeIndex: this._codeIndex,
             code: this._code,
             phone: this._phone,
         };
     }
 
-    passwordRulesAgreed() {
-        this._passwordRulesAccepted = true;
-        this._saveRegData();
-        this._root.goTo('4');
-    }
-
-    async updatePhone({ code, phone }) {
-        const data = await this._conn.request('registration.changePhone', {
+    async updatePhone({ code, phone, codeIndex, captcha }) {
+        const response = await this._conn.request('registration.changePhone', {
             user: this._accountName,
             phone: `${code}${phone}`,
+            captcha,
         });
 
-        if (data.error) {
-            console.error(data.error);
+        if (response.error) {
+            console.error(response.error);
 
-            if (data.error.code === 404) {
+            if (response.error.code === 404) {
                 this._clear();
                 this._root.goTo('timeout');
                 return;
             }
 
-            throw data.error;
+            throw response.error;
         }
 
         this._code = code;
         this._phone = phone;
+        this._codeIndex = codeIndex;
 
         this._saveRegData();
 
-        this._startWaitVerification();
+        if (this._strategy === STRATEGIES.SMS_FROM_USER) {
+            this._startWaitVerification();
+        } else if (this._strategy === STRATEGIES.SMS_TO_USER) {
+            this.setNextResendTs(response.result.nextSmsRetry);
+        }
 
         this.emit('phoneChanged');
 
         this._root.closeChangePhoneDialog();
-        this._root.goTo('2');
+
+        if (this._strategy === STRATEGIES.SMS_FROM_USER) {
+            this._root.goTo('2');
+        }
     }
 
     async init() {
+        let savedData = null;
+
         try {
             const json = localStorage.getItem(REG_KEY);
 
             if (json) {
-                const savedData = JSON.parse(json);
-
-                if (savedData) {
-                    const data = await this._conn.request(
-                        'registration.getState',
-                        {
-                            user: savedData.accountName,
-                            phone: `${savedData.code}${savedData.phone}`,
-                        }
-                    );
-
-                    if (data.error) {
-                        throw data.error;
-                    }
-
-                    switch (data.result.currentState) {
-                        case 'firstStep':
-                            this._clear();
-                            this._root.goTo('1');
-                            break;
-                        case 'verify':
-                            this._accountName = savedData.accountName;
-                            this._code = savedData.code;
-                            this._codeIndex = savedData.codeIndex;
-                            this._phone = savedData.phone;
-                            this._secret = savedData.secret;
-                            this._passwordRulesAccepted = null;
-                            this._startWaitVerification();
-                            this._root.goTo('2');
-                            break;
-                        case 'toBlockChain':
-                            this._accountName = savedData.accountName;
-                            this._code = savedData.code;
-                            this._codeIndex = savedData.codeIndex;
-                            this._phone = savedData.phone;
-                            this._secret = null;
-                            this._passwordRulesAccepted =
-                                savedData.passwordRulesAccepted;
-
-                            if (savedData.passwordRulesAccepted) {
-                                this._root.goTo('4');
-                            } else {
-                                this._root.goTo('3');
-                            }
-
-                            break;
-                    }
-                }
+                savedData = JSON.parse(json);
             }
-        } catch (err) {
-            console.error(err);
-            this._root.goTo('1');
+        } catch (err) {}
+
+        if (savedData) {
+            try {
+                const params = {
+                    user: savedData.accountName,
+                    phone: `${savedData.code}${savedData.phone}`,
+                };
+
+                const response = await this._conn.request(
+                    'registration.getState',
+                    params
+                );
+
+                if (response.error) {
+                    throw response.error;
+                }
+
+                const result = response.result;
+
+                switch (result.currentState) {
+                    case 'verify':
+                        this._strategy = result.strategy;
+                        this._accountName = savedData.accountName;
+                        this._code = savedData.code;
+                        this._codeIndex = savedData.codeIndex;
+                        this._phone = savedData.phone;
+                        this._secret = savedData.secret;
+                        this._passwordRulesAccepted = null;
+
+                        switch (this._strategy) {
+                            case STRATEGIES.SMS_FROM_USER:
+                                this._startWaitVerification();
+                                this._root.goTo('2');
+                                break;
+                            case STRATEGIES.SMS_TO_USER:
+                                this.setNextResendTs(result.nextSmsRetry);
+                                this._root.goTo('enter-code');
+                                break;
+                            default:
+                                throw new Error('STRATEGY');
+                        }
+                        break;
+                    case 'toBlockChain':
+                        this._accountName = savedData.accountName;
+                        this._code = savedData.code;
+                        this._codeIndex = savedData.codeIndex;
+                        this._phone = savedData.phone;
+                        this._secret = null;
+                        this._passwordRulesAccepted =
+                            savedData.passwordRulesAccepted;
+
+                        this._root.goTo('4');
+                        break;
+                    default:
+                        this._clear();
+                        this._root.goTo('1');
+                }
+            } catch (err) {
+                console.error(err);
+                this._clear();
+                this._root.goTo('1');
+            }
         }
     }
 
@@ -168,24 +193,51 @@ export default class Application extends EventEmitter {
             return response;
         }
 
-        if (response.result) {
-            this._accountName = data.accountName;
-            this._code = data.code;
-            this._codeIndex = data.codeIndex;
-            this._phone = data.phone;
+        const result = response.result;
 
-            if (response.result.currentState === 'toBlockChain') {
+        this._strategy = null;
+        this._accountName = data.accountName;
+        this._code = data.code;
+        this._codeIndex = data.codeIndex;
+        this._phone = data.phone;
+
+        // if redirect to another state
+        if (result.currentState) {
+            if (result.currentState === 'toBlockChain') {
                 this._saveRegData();
-                this._root.goTo('3');
-            } else {
+                this._root.goTo('4');
+            }
+            return;
+        }
+
+        this._strategy = result.strategy;
+
+        switch (result.strategy) {
+            case STRATEGIES.SMS_FROM_USER:
                 this._secret = generateRandomCode();
                 this._saveRegData();
                 this._root.goTo('2');
                 this._startWaitVerification();
-            }
-
-            return null;
+                break;
+            case STRATEGIES.SMS_TO_USER:
+                this._saveRegData();
+                this.setNextResendTs(result.nextSmsRetry);
+                this._root.goTo('enter-code');
+                break;
+            default:
+                throw new Error('STRATEGY');
         }
+
+        return null;
+    }
+
+    setNextResendTs(ts) {
+        this._nextResendTs = ts;
+        this.emit('resendTsChanged');
+    }
+
+    getStrategy() {
+        return this._strategy;
     }
 
     _saveRegData() {
@@ -200,6 +252,10 @@ export default class Application extends EventEmitter {
                 passwordRulesAccepted: this._passwordRulesAccepted,
             })
         );
+    }
+
+    getNextResendSmsTimestamp() {
+        return this._nextResendTs;
     }
 
     async finishRegistration(password) {
@@ -285,6 +341,50 @@ export default class Application extends EventEmitter {
             user: this._accountName,
             phone: `${this._code}${this._phone}`,
         });
+    }
+
+    async codeEntered(code, silent) {
+        const response = await this._conn.request('registration.verify', {
+            user: this._accountName,
+            code,
+        });
+
+        if (response.error) {
+            if (!silent) {
+                console.error(response.error);
+
+                if (response.error.code === 404) {
+                    this._clear();
+                    this._root.goTo('timeout');
+                    return;
+                }
+            }
+
+            throw response.error;
+        }
+
+        this._root.goTo('4');
+    }
+
+    async resendSms() {
+        const response = await this._conn.request(
+            'registration.resendSmsCode',
+            {
+                user: this._accountName,
+            }
+        );
+
+        if (response.error) {
+            if (response.error.code === 404) {
+                this._clear();
+                this._root.goTo('timeout');
+                return;
+            }
+
+            return response.error;
+        }
+
+        this.setNextResendTs(response.result.nextSmsRetry);
     }
 }
 

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import is from 'styled-is';
+import { focusStyle } from './Common';
 
 const LANGS = ['en', 'ru', 'ua'];
 
@@ -55,7 +56,7 @@ const List = styled.div`
     padding: 38px 0 4px;
     border-radius: 8px;
     background: #fff;
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
+    ${focusStyle};
     opacity: 0;
     transition: opacity 0.4s;
     pointer-events: none;

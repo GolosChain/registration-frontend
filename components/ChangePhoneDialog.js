@@ -1,20 +1,12 @@
-import React, { PureComponent } from 'react';
-import styled, { keyframes } from 'styled-components';
+import React, { PureComponent, createRef } from 'react';
+import styled from 'styled-components';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { Field, FieldLabel, FieldInput, Button } from './Common';
-import Select from './Select';
+import { Button } from './Common';
 import phoneCodes from '../app/phoneCodes.json';
-import PhoneInput from './PhoneInput';
-import { phoneCodesToSelectItems } from '../utils/phoneCodes';
-
-const fadeIn = keyframes`
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-`;
+import PhoneBlock from './PhoneBlock';
+import Captcha from './Captcha';
+import { STRATEGIES } from '../app/Application';
+import { fadeIn } from '../utils/keyFrames';
 
 export const Root = styled.div`
     position: fixed;
@@ -46,7 +38,7 @@ const DialogWrapper = styled.div`
 
 const Dialog = styled.div`
     position: relative;
-    width: 400px;
+    flex-basis: 290px;
     padding: 28px;
     border-radius: 8px;
     background: #fff;
@@ -58,10 +50,14 @@ const Dialog = styled.div`
 `;
 
 const Header = styled.div`
-    padding: 4px 0 24px 0;
+    padding-top: 4px;
     text-align: center;
     font-size: 24px;
     font-weight: 700;
+`;
+
+const Wrapper = styled.div`
+    margin: 30px 0;
 `;
 
 const Footer = styled.div`
@@ -70,36 +66,44 @@ const Footer = styled.div`
 `;
 
 const ErrorBlock = styled.div`
-    padding-top: 10px;
+    margin: 20px 0;
     color: #f00;
+`;
+
+const CaptchaWrapper = styled.div`
+    margin: 30px 0;
 `;
 
 @injectIntl
 export default class ChangePhoneDialog extends PureComponent {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
-        const { code, phone } = window.app.getPhoneData();
+        const { code, phone, codeIndex } = window.app.getPhoneData();
 
         this.state = {
-            codeIndex: phoneCodes.list.findIndex(c => c.code === code),
+            codeIndex:
+                codeIndex || phoneCodes.list.findIndex(c => c.code === code),
             phone,
             errorText: null,
+            withCaptcha: window.app.getStrategy() === STRATEGIES.SMS_TO_USER,
+            lock: false,
         };
     }
+
+    captcha = createRef();
 
     componentDidMount() {
         document.body.style.overflowY = 'hidden';
     }
 
     componentWillUnmount() {
+        this.unmount = true;
         document.body.style.overflowY = 'auto';
     }
 
     render() {
-        const { codeIndex, phone, errorText } = this.state;
-
-        const code = phoneCodes.list[codeIndex].code;
+        const { codeIndex, phone, errorText, lock, withCaptcha } = this.state;
 
         return (
             <Root>
@@ -109,39 +113,27 @@ export default class ChangePhoneDialog extends PureComponent {
                         <Header>
                             <FormattedMessage id="change_phone" />
                         </Header>
-                        <FieldLabel>
-                            <FormattedMessage id="step1.phoneCodeLabel" />
-                        </FieldLabel>
-                        <FieldInput>
-                            <Select
-                                value={codeIndex}
-                                items={phoneCodesToSelectItems()}
-                                onChange={this._onCodeChange}
+                        <Wrapper>
+                            <PhoneBlock
+                                codeIndex={codeIndex}
+                                onCodeChange={this._onCodeChange}
+                                phone={phone}
+                                onPhoneChange={this._onPhoneChange}
                             />
-                        </FieldInput>
-                        <Field>
-                            <FieldLabel>
-                                <FormattedMessage id="step1.phoneLabel" />{' '}
-                            </FieldLabel>
-                            <FieldInput>
-                                <PhoneInput
-                                    code={`+${code}`}
-                                    value={phone}
-                                    autoCorrect="off"
-                                    autoCapitalize="off"
-                                    spellCheck="false"
-                                    onChange={this._onPhoneChange}
-                                />
-                            </FieldInput>
-                        </Field>
-                        <Footer>
-                            <Button onClick={this._onOkClick}>
-                                <FormattedMessage id="step2_change.ok" />
-                            </Button>
-                        </Footer>
+                        </Wrapper>
+                        {withCaptcha ? (
+                            <CaptchaWrapper>
+                                <Captcha ref={this.captcha} />
+                            </CaptchaWrapper>
+                        ) : null}
                         {errorText ? (
                             <ErrorBlock>{errorText}</ErrorBlock>
                         ) : null}
+                        <Footer>
+                            <Button disabled={lock} onClick={this._onOkClick}>
+                                <FormattedMessage id="step2_change.ok" />
+                            </Button>
+                        </Footer>
                     </Dialog>
                 </DialogWrapper>
             </Root>
@@ -170,12 +162,35 @@ export default class ChangePhoneDialog extends PureComponent {
 
     _onOkClick = async () => {
         const { intl } = this.props;
-        const { codeIndex, phone } = this.state;
+        const { codeIndex, phone, withCaptcha } = this.state;
 
         const code = phoneCodes.list[codeIndex].code;
 
+        const params = {
+            code,
+            phone,
+            codeIndex,
+        };
+
+        if (withCaptcha) {
+            const captchaCode = this.captcha.current.getCode();
+
+            if (!captchaCode) {
+                this.setState({
+                    errorText: 'Captcha error',
+                });
+                return;
+            }
+
+            params.captcha = captchaCode;
+        }
+
+        this.setState({
+            lock: true,
+        });
+
         try {
-            await window.app.updatePhone({ code, phone });
+            await window.app.updatePhone(params);
         } catch (err) {
             if (err && err.message === 'Phone already registered.') {
                 this.setState({
@@ -186,6 +201,12 @@ export default class ChangePhoneDialog extends PureComponent {
                     errorText: (err && err.message) || 'Error',
                 });
             }
+        }
+
+        if (!this.unmount) {
+            this.setState({
+                lock: false,
+            });
         }
     };
 }

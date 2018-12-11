@@ -13,8 +13,7 @@ ol {
   padding: 0;
 }
 :focus {
-  outline: #3b99fc auto 5px;
-  outline-offset: -2px;
+  outline: 0;
 }
 
 /*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */

@@ -1,25 +1,21 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, createRef } from 'react';
 import styled from 'styled-components';
-import is from 'styled-is';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { Title, Input, Footer, Button } from './Common';
-import { Field, FieldLabel, FieldInput, Link } from './Common';
-import Checkbox from './Checkbox';
-import { generateRandomString } from '../utils/random';
+import { Title, Input, Footer, Button, Link } from '../Common';
+import Checkbox from '../Checkbox';
+import { generateRandomString } from '../../utils/random';
+import generatePdf from '../../utils/pdf';
 
 const PASSWORD_LENGTH = 52;
 
 const CheckboxField = styled.label`
     display: flex;
-    align-items: center;
-    height: 48px;
     user-select: none;
 `;
 
 const CheckboxText = styled.div`
-    line-height: 1.3em;
-    font-size: 14px;
-    font-weight: 300;
+    line-height: 1.33em;
+    font-size: 13px;
     color: #393636;
 
     @media (max-width: 500px) {
@@ -29,24 +25,23 @@ const CheckboxText = styled.div`
 `;
 
 const Rules = styled.div`
-    max-height: 190px;
-    padding: 18px 20px;
-    margin: 0 -4px;
+    padding: 16px 20px;
     border: 1px solid #e1e1e1;
-    border-radius: 6px;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
     line-height: 1.4em;
     font-size: 14px;
     font-weight: 300;
     color: #393636;
-    overflow-y: auto;
 `;
 
-const RulesTitle = styled.div`
+const AnswerTitle = styled.div`
+    margin-top: 14px;
     font-weight: bold;
 `;
 
 const AnswerList = styled.ol`
-    margin: 10px 0 0;
+    margin: 9px 0 0;
     line-height: 1.3em;
     font-size: 14px;
     font-weight: 300;
@@ -58,7 +53,7 @@ const Li = styled.li`
     font-weight: 300;
     font-size: 14px;
     color: #393636;
-    margin-bottom: 14px;
+    margin-bottom: 6px;
 
     &:last-child {
         margin-bottom: 0;
@@ -68,7 +63,7 @@ const Li = styled.li`
 const Number = styled.div`
     width: 16px;
     margin-left: -4px;
-    margin-right: 8px;
+    margin-right: 5px;
     text-align: center;
     flex-shrink: 0;
     font-weight: 700;
@@ -76,14 +71,7 @@ const Number = styled.div`
 `;
 
 const Checkboxes = styled.div`
-    margin-bottom: 20px;
-`;
-
-const InputPassword2 = styled(Input)`
-    ${is('pass')`
-        border-color: #11b506;
-        background: #ecffd0;
-    `};
+    margin: 26px 0 22px;
 `;
 
 const ErrorBlock = styled.div`
@@ -94,20 +82,63 @@ const ErrorBlock = styled.div`
     color: #f00;
 `;
 
+const TextBlock = styled.div``;
+
+const Caution = styled.span`
+    font-weight: bold;
+    color: #fc5d16;
+`;
+
+const Text = styled.span``;
+
+const PasswordWrapper = styled.div`
+    position: relative;
+`;
+
+const PasswordInput = styled(Input)`
+    padding-right: 64px;
+    border-radius: 0 0 6px 6px;
+`;
+
+const CopyButton = styled.button.attrs({ type: 'button' })`
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+    border-radius: 0 0 5px 0;
+    background: #e1e1e1;
+    cursor: pointer;
+    transition: background-color 0.15s;
+
+    &:hover {
+        background: #ccc;
+    }
+`;
+
+const CopyIcon = styled.div`
+    width: 20px;
+    height: 20px;
+    background: url('/images/copy.svg') no-repeat;
+`;
+
 @injectIntl
 export default class Step3 extends PureComponent {
     state = {
         password: 'P' + generateRandomString(PASSWORD_LENGTH - 1),
-        password2: '',
-        rules: new Set(),
+        agreed: false,
         errorText: null,
         lock: false,
     };
 
-    render() {
-        const { password, password2, rules, errorText, lock } = this.state;
+    password = createRef();
 
-        const rulesList = this._getRulesList();
+    render() {
+        const { intl } = this.props;
+        const { password, errorText, lock } = this.state;
 
         return (
             <>
@@ -115,53 +146,37 @@ export default class Step3 extends PureComponent {
                     <FormattedMessage id="step4.title" />
                 </Title>
                 <Rules>
-                    <RulesTitle>
-                        <FormattedMessage id="step4.qa2.title" />
-                    </RulesTitle>
+                    <TextBlock>
+                        <Caution>
+                            <FormattedMessage id="step3.warning" />
+                        </Caution>{' '}
+                        <Text>
+                            <FormattedMessage id="step4.text" />
+                        </Text>
+                    </TextBlock>
+                    <AnswerTitle>
+                        <FormattedMessage id="step4.answerTitle" />
+                    </AnswerTitle>
                     <AnswerList>{this._renderAnswers()}</AnswerList>
                 </Rules>
-                <Field>
-                    <FieldLabel readOnly>
-                        <FormattedMessage id="step4.passwordLabel" />
-                    </FieldLabel>
-                    <FieldInput>
-                        <Input
-                            blue
-                            readOnly
-                            value={password}
-                            onFocus={this._onPasswordFocus}
-                        />
-                    </FieldInput>
-                </Field>
-                <Field>
-                    <FieldLabel>
-                        <FormattedMessage id="step4.password2Label" />
-                    </FieldLabel>
-                    <FieldInput>
-                        <InputPassword2
-                            type="password"
-                            disabled={lock}
-                            pass={password && password === password2}
-                            value={password2}
-                            onChange={this._onPassword2Change}
-                        />
-                    </FieldInput>
-                </Field>
-                <Checkboxes>
-                    {rulesList.map(rule => (
-                        <CheckboxField key={rule.id}>
-                            <Checkbox
-                                disabled={lock}
-                                value={rules.has(rule.id)}
-                                onChange={value =>
-                                    this._onCheckChange(rule.id, value)
-                                }
-                            >
-                                <CheckboxText>{rule.content}</CheckboxText>
-                            </Checkbox>
-                        </CheckboxField>
-                    ))}
-                </Checkboxes>
+                <PasswordWrapper>
+                    <PasswordInput
+                        innerRef={this.password}
+                        gray
+                        readOnly
+                        value={password}
+                        onFocus={this._onPasswordFocus}
+                    />
+                    {document.execCommand ? (
+                        <CopyButton
+                            title={intl.messages['step4.copy']}
+                            onClick={this.onCopyClick}
+                        >
+                            <CopyIcon />
+                        </CopyButton>
+                    ) : null}
+                </PasswordWrapper>
+                {this.renderCheckboxesBlock()}
                 <Footer>
                     <Button disabled={lock} onClick={this._onOkClick}>
                         <FormattedMessage id="step4.create" />
@@ -173,6 +188,27 @@ export default class Step3 extends PureComponent {
                     ) : null}
                 </Footer>
             </>
+        );
+    }
+
+    renderCheckboxesBlock() {
+        const { intl } = this.props;
+        const { lock, agreed } = this.state;
+
+        return (
+            <Checkboxes>
+                <CheckboxField>
+                    <Checkbox
+                        disabled={lock}
+                        value={agreed}
+                        onChange={this._onCheckChange}
+                    >
+                        <CheckboxText>
+                            {linkify(intl.messages['step4.terms'])}
+                        </CheckboxText>
+                    </Checkbox>
+                </CheckboxField>
+            </Checkboxes>
         );
     }
 
@@ -199,38 +235,9 @@ export default class Step3 extends PureComponent {
         return lines;
     }
 
-    _getRulesList() {
-        const { intl } = this.props;
-
-        return [
-            {
-                id: 'recovery',
-                content: intl.messages['step4.term1'],
-            },
-            {
-                id: 'terms',
-                content: linkify(intl.messages['step4.term2']),
-            },
-        ];
-    }
-
-    _onPassword2Change = e => {
+    _onCheckChange = value => {
         this.setState({
-            password2: e.target.value,
-        });
-    };
-
-    _onCheckChange = (ruleId, value) => {
-        const rules = new Set(this.state.rules);
-
-        if (value) {
-            rules.add(ruleId);
-        } else {
-            rules.delete(ruleId);
-        }
-
-        this.setState({
-            rules,
+            agreed: value,
         });
     };
 
@@ -242,7 +249,7 @@ export default class Step3 extends PureComponent {
 
     _onOkClick = async () => {
         const { intl } = this.props;
-        const { password, password2, rules } = this.state;
+        const { password, agreed } = this.state;
 
         let isError = false;
         let errorText = null;
@@ -250,10 +257,7 @@ export default class Step3 extends PureComponent {
         if (!password) {
             isError = true;
             errorText = intl.messages['step4.error.createPassword'];
-        } else if (password !== password2) {
-            isError = true;
-            errorText = intl.messages['step4.error.passwordsNotEqual'];
-        } else if (rules.size < this._getRulesList().length) {
+        } else if (!agreed) {
             isError = true;
             errorText = intl.messages['step4.error.checkAll'];
         }
@@ -276,6 +280,8 @@ export default class Step3 extends PureComponent {
                 this._showError(
                     `${intl.messages.error}: ${error.code} ${error.message}`
                 );
+            } else {
+                this.downloadPdf();
             }
         } catch (err) {
             this.setState({ lock: false });
@@ -297,6 +303,17 @@ export default class Step3 extends PureComponent {
             }
         );
     }
+
+    downloadPdf = () => {
+        generatePdf(window.app.getAccountName(), this.state.password);
+    };
+
+    onCopyClick = e => {
+        e.preventDefault();
+
+        this.password.current.select();
+        document.execCommand('copy');
+    };
 }
 
 function linkify(message) {

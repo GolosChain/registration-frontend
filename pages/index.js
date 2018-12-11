@@ -5,16 +5,18 @@ import { IntlProvider, addLocaleData } from 'react-intl';
 
 import { fadeIn, fromRight, toLeft } from '../utils/keyFrames';
 import { Dot, Dots } from '../components/Common';
-import Step1 from '../components/Step1';
-import Step2 from '../components/Step2';
-import Step2_Wait from '../components/Step2_Wait';
-import Step3 from '../components/Step3';
-import Step4 from '../components/Step4';
-import StepFinal from '../components/StepFinal';
-import StepTimeout from '../components/StepTimeout';
+import Step1 from '../components/steps/Step1';
+import Step2 from '../components/steps/Step2';
+import Step2_Wait from '../components/steps/Step2_Wait';
+import Step4 from '../components/steps/Step4';
+import StepFinal from '../components/steps/StepFinal';
+import StepTimeout from '../components/steps/StepTimeout';
+import EnterCode from '../components/steps/EnterCode';
+//import Download from '../components/steps/Download';
 import Application from '../app/Application';
 import LangSwitch from '../components/LangSwitch';
 import ChangePhoneDialog from '../components/ChangePhoneDialog';
+import SplashLoader from '../components/SplashLoader';
 
 // For development
 const FORCE_STEP = null;
@@ -37,16 +39,21 @@ const Steps = {
         img: 2,
         hideDots: true,
     },
-    '3': {
-        Comp: Step3,
-        img: 3,
-        dot: 3,
+    'enter-code': {
+        Comp: EnterCode,
+        img: 2,
+        dot: 2,
     },
     '4': {
         Comp: Step4,
         img: 3,
-        dot: 4,
+        dot: 3,
     },
+    // download: {
+    //     Comp: Download,
+    //     img: 4,
+    //     dot: 3,
+    // },
     final: {
         Comp: StepFinal,
         img: 4,
@@ -153,7 +160,7 @@ const SideImage = styled.div`
     width: 431px;
     height: 426px;
     background: url('/images/step_${props => props.step}.svg') no-repeat center;
-    ${props => props.size ? `background-size: ${props.size}px` : ''};
+    ${props => (props.size ? `background-size: ${props.size}px` : '')};
     opacity: ${props => props.opacity};
     transition: opacity ${ANIMATION_DURATION}ms;
 `;
@@ -185,19 +192,32 @@ export default class Index extends PureComponent {
 
     state = {
         locale: getLocale(this.props),
-        step: FORCE_STEP || '1',
+        step: '1',
         fadeIn: false,
         fadeOut: false,
         showChangePhoneDialog: false,
+        loading: true,
     };
 
-    componentWillMount() {
+    async componentWillMount() {
         if (process.browser) {
             const app = new Application(this);
 
-            app.init().catch(err => {
+            try {
+                await app.init();
+            } catch (err) {
                 console.error(err);
+            }
+
+            this.setState({
+                loading: false,
             });
+        }
+    }
+
+    componentDidMount() {
+        if (FORCE_STEP) {
+            this.goTo(FORCE_STEP);
         }
     }
 
@@ -208,6 +228,7 @@ export default class Index extends PureComponent {
             fadeOut,
             locale,
             showChangePhoneDialog,
+            loading,
         } = this.state;
 
         const { Comp, img, imgSize, dot, hideDots } = Steps[step];
@@ -240,11 +261,10 @@ export default class Index extends PureComponent {
                             >
                                 <Comp onStepChange={this._onStepChange} />
                                 {hideDots ? null : (
-                                    <Dots title={`${dot}/4`}>
+                                    <Dots title={`${dot}/3`}>
                                         <Dot active={dot === 1} />
                                         <Dot active={dot === 2} />
                                         <Dot active={dot === 3} />
-                                        <Dot active={dot === 4} />
                                     </Dots>
                                 )}
                             </Column>
@@ -263,6 +283,7 @@ export default class Index extends PureComponent {
                     {showChangePhoneDialog ? (
                         <ChangePhoneDialog onClose={this._onDialogClose} />
                     ) : null}
+                    {loading ? <SplashLoader /> : null}
                 </Root>
             </IntlProvider>
         );
