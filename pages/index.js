@@ -12,18 +12,25 @@ import Step4 from '../components/steps/Step4';
 import StepFinal from '../components/steps/StepFinal';
 import StepTimeout from '../components/steps/StepTimeout';
 import EnterCode from '../components/steps/EnterCode';
+import ErrorPage from '../components/steps/ErrorPage';
 //import Download from '../components/steps/Download';
 import Application from '../app/Application';
 import LangSwitch from '../components/LangSwitch';
 import ChangePhoneDialog from '../components/ChangePhoneDialog';
 import SplashLoader from '../components/SplashLoader';
 
+const INITIAL_STEP = 'error-page';
 // For development
-const FORCE_STEP = null;
+const FORCE_STEP = 'error-page';
 
 const ANIMATION_DURATION = 250;
 
 const Steps = {
+    'error-page': {
+        Comp: ErrorPage,
+        img: 'help',
+        hideDots: true,
+    },
     '1': {
         Comp: Step1,
         img: 1,
@@ -159,8 +166,9 @@ const Column = styled.div`
 const SideImage = styled.div`
     width: 431px;
     height: 426px;
+    margin: 0 18px;
     background: url('/images/step_${props => props.step}.svg') no-repeat center;
-    ${props => (props.size ? `background-size: ${props.size}px` : '')};
+    background-size: ${props => (props.size ? props.size + 'px' : 'contain')};
     opacity: ${props => props.opacity};
     transition: opacity ${ANIMATION_DURATION}ms;
 `;
@@ -192,7 +200,7 @@ export default class Index extends PureComponent {
 
     state = {
         locale: getLocale(this.props),
-        step: '1',
+        step: INITIAL_STEP,
         fadeIn: false,
         fadeOut: false,
         showChangePhoneDialog: false,
