@@ -14,3 +14,4 @@ services:
     - GLS_GATE_HOST
     - GLS_GATE_PORT
     - GLS_GATE_CONNECT
+    - GLS_GA_ID
