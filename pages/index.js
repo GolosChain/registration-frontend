@@ -19,9 +19,9 @@ import LangSwitch from '../components/LangSwitch';
 import ChangePhoneDialog from '../components/ChangePhoneDialog';
 import SplashLoader from '../components/SplashLoader';
 
-const INITIAL_STEP = 'error-page';
+const INITIAL_STEP = '1';
 // For development
-const FORCE_STEP = 'error-page';
+const FORCE_STEP = null;
 
 const ANIMATION_DURATION = 250;
 
