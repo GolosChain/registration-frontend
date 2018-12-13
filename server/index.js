@@ -2,6 +2,9 @@ const path = require('path');
 const express = require('express');
 const next = require('next');
 const cookieParser = require('cookie-parser');
+const { checkRegistration } = require('../server/checkRegistation');
+
+const CHECK_REGISTRATION_INTERVAL = 5 * 60 * 1000;
 
 const nextApp = next({
     dev: process.env.NODE_ENV !== 'production',
@@ -34,8 +37,19 @@ nextApp
 
             console.log(`> Listen on ${address.host}:${address.port}`);
         });
+
+        checkRegistrationIteration();
+        setInterval(checkRegistrationIteration, CHECK_REGISTRATION_INTERVAL);
     })
     .catch(err => {
         console.error(err.stack);
         process.exit(1);
     });
+
+async function checkRegistrationIteration() {
+    try {
+        await checkRegistration();
+    } catch (err) {
+        console.error('checkRegistration:', err);
+    }
+}

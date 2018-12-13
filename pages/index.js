@@ -196,11 +196,34 @@ const ImageWrapper = styled.div`
 `;
 
 export default class Index extends PureComponent {
+    static async getInitialProps() {
+        let disabled = false;
+
+        if (!process.browser) {
+            const {
+                checkRegistration,
+                isDisabled,
+            } = require('../server/checkRegistation');
+
+            try {
+                await Promise.race([checkRegistration(), timeout(500)]);
+            } catch (err) {
+                console.error('Check registration status failed:', err.message);
+            }
+
+            disabled = isDisabled();
+        }
+
+        return {
+            disabled,
+        };
+    }
+
     _nextStep = null;
 
     state = {
         locale: getLocale(this.props),
-        step: INITIAL_STEP,
+        step: this.props.disabled ? 'error-page' : INITIAL_STEP,
         fadeIn: false,
         fadeOut: false,
         showChangePhoneDialog: false,
@@ -366,6 +389,10 @@ export default class Index extends PureComponent {
     };
 
     goTo(step) {
+        if (this.props.disabled) {
+            return;
+        }
+
         if (FORCE_STEP) {
             step = FORCE_STEP;
         }
@@ -404,4 +431,10 @@ function getLocale(props) {
     }
 
     return locale;
+}
+
+function timeout(ms) {
+    return new Promise((resolve, reject) =>
+        setTimeout(() => reject(new Error('TIMEOUT')), ms)
+    );
 }
