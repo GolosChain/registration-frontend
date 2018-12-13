@@ -19,7 +19,7 @@ import LangSwitch from '../components/LangSwitch';
 import ChangePhoneDialog from '../components/ChangePhoneDialog';
 import SplashLoader from '../components/SplashLoader';
 import { checkRegistration, isDisabled } from '../utils/registrationCheck';
-import { timeout } from '../utils/time';
+import { errorTimeout } from '../utils/time';
 
 const INITIAL_STEP = '1';
 // For development
@@ -203,7 +203,7 @@ export default class Index extends PureComponent {
 
         if (!process.browser) {
             try {
-                await Promise.race([checkRegistration(), timeout(500)]);
+                await Promise.race([checkRegistration(), errorTimeout(500)]);
             } catch (err) {
                 console.error('Check registration status failed:', err.message);
             }
