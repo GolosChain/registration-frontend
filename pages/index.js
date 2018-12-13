@@ -200,11 +200,6 @@ export default class Index extends PureComponent {
         let disabled = false;
 
         if (!process.browser) {
-            const {
-                checkRegistration,
-                isDisabled,
-            } = require('../server/checkRegistation');
-
             try {
                 await Promise.race([checkRegistration(), timeout(500)]);
             } catch (err) {
@@ -437,4 +432,42 @@ function timeout(ms) {
     return new Promise((resolve, reject) =>
         setTimeout(() => reject(new Error('TIMEOUT')), ms)
     );
+}
+
+let lastDisabledResponse = false;
+
+async function checkRegistration() {
+    const response = await require('request-promise-native').post({
+        url: process.env.GLS_REGISTRATION_CONNECT,
+        json: true,
+        body: {
+            jsonrpc: '2.0',
+            id: 1,
+            method: 'isRegistrationEnabled',
+            params: {},
+        },
+    });
+
+    lastDisabledResponse = !response.result.enabled;
+}
+
+function isDisabled() {
+    return lastDisabledResponse;
+}
+
+async function checkRegistrationIteration() {
+    try {
+        await checkRegistration();
+    } catch (err) {
+        console.error('checkRegistration:', err);
+    }
+}
+
+if (!process.browser) {
+    const CHECK_REGISTRATION_INTERVAL = 5 * 60 * 1000;
+
+    setTimeout(() => {
+        checkRegistrationIteration();
+        setInterval(checkRegistrationIteration, CHECK_REGISTRATION_INTERVAL);
+    }, 500);
 }
