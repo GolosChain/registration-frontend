@@ -1,6 +1,7 @@
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 import styles from '../utils/styles';
+import { startCheckLoop } from '../utils/registrationCheck';
 
 const LOCALES = ['en', 'ru', 'ua', 'uk'];
 
@@ -122,4 +123,10 @@ export default class MyDocument extends Document {
             </html>
         );
     }
+}
+
+if (!process.browser) {
+    setTimeout(() => {
+        startCheckLoop();
+    }, 500);
 }

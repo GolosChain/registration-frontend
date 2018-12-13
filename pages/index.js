@@ -18,6 +18,8 @@ import Application from '../app/Application';
 import LangSwitch from '../components/LangSwitch';
 import ChangePhoneDialog from '../components/ChangePhoneDialog';
 import SplashLoader from '../components/SplashLoader';
+import { checkRegistration, isDisabled } from '../utils/registrationCheck';
+import { errorTimeout } from '../utils/time';
 
 const INITIAL_STEP = '1';
 // For development
@@ -196,11 +198,29 @@ const ImageWrapper = styled.div`
 `;
 
 export default class Index extends PureComponent {
+    static async getInitialProps() {
+        let disabled = false;
+
+        if (!process.browser) {
+            try {
+                await Promise.race([checkRegistration(), errorTimeout(500)]);
+            } catch (err) {
+                console.error('Check registration status failed:', err.message);
+            }
+
+            disabled = isDisabled();
+        }
+
+        return {
+            disabled,
+        };
+    }
+
     _nextStep = null;
 
     state = {
         locale: getLocale(this.props),
-        step: INITIAL_STEP,
+        step: this.props.disabled ? 'error-page' : INITIAL_STEP,
         fadeIn: false,
         fadeOut: false,
         showChangePhoneDialog: false,
@@ -366,6 +386,10 @@ export default class Index extends PureComponent {
     };
 
     goTo(step) {
+        if (this.props.disabled) {
+            return;
+        }
+
         if (FORCE_STEP) {
             step = FORCE_STEP;
         }
