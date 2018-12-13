@@ -64,6 +64,12 @@ export default class MyDocument extends Document {
     render() {
         const { locale } = this.props;
 
+        const globalParams = {
+            GLS_GATE_CONNECT:
+                process.env.GLS_GATE_CONNECT || 'wss://gate.golos.io/',
+            GLS_GA_ID: process.env.GLS_GA_ID,
+        };
+
         return (
             <html lang={locale}>
                 <Head>
@@ -97,13 +103,18 @@ export default class MyDocument extends Document {
                         src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"
                         crossOrigin="anonymous"
                     />
+                    <script
+                        async
+                        src="https://www.google-analytics.com/analytics.js"
+                    />
                 </Head>
                 <body>
                     <Main locale={locale} />
                     <script
                         dangerouslySetInnerHTML={{
-                            __html: `window.GLS_GATE_CONNECT='${process.env
-                                .GLS_GATE_CONNECT || 'wss://gate.golos.io/'}'`,
+                            __html: `window.vars=${JSON.stringify(
+                                globalParams
+                            )};`,
                         }}
                     />
                     <NextScript />

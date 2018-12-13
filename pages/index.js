@@ -209,6 +209,8 @@ export default class Index extends PureComponent {
 
     async componentWillMount() {
         if (process.browser) {
+            this.initGoogleAnalytics();
+
             const app = new Application(this);
 
             try {
@@ -226,6 +228,21 @@ export default class Index extends PureComponent {
     componentDidMount() {
         if (FORCE_STEP) {
             this.goTo(FORCE_STEP);
+        }
+    }
+
+    initGoogleAnalytics() {
+        const id = window.vars.GLS_GA_ID;
+
+        if (id) {
+            window.ga =
+                window.ga ||
+                function() {
+                    (ga.q = ga.q || []).push(arguments);
+                };
+            ga.l = Date.now();
+            ga('create', id, 'auto');
+            ga('send', 'pageview');
         }
     }
 

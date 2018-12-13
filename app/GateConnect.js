@@ -8,7 +8,7 @@ export default class GateConnect {
     }
 
     connect() {
-        const address = window.GLS_GATE_CONNECT;
+        const address = window.vars.GLS_GATE_CONNECT;
 
         if (!address) {
             console.error('GLS_GATE_CONNECT not specified');
