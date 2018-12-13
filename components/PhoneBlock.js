@@ -178,7 +178,9 @@ export default class PhoneBlock extends PureComponent {
     };
 
     onPhoneChange = e => {
-        this.props.onPhoneChange(e.target.value.replace(/[^\d ()-]+/g, ''));
+        this.props.onPhoneChange(
+            e.target.value.replace(/[^\d ()-]+/g, '').replace(/^0+/, '')
+        );
     };
 
     onListClose = () => {
@@ -256,7 +258,13 @@ export default class PhoneBlock extends PureComponent {
     }
 
     renderInput() {
-        const { disabled, phone, phoneError, onPhoneFocus, onPhoneBlur } = this.props;
+        const {
+            disabled,
+            phone,
+            phoneError,
+            onPhoneFocus,
+            onPhoneBlur,
+        } = this.props;
 
         return (
             <PhoneInputWrapper>
